@@ -74,13 +74,33 @@ Open [http://localhost:3000](http://localhost:3000) to see the site.
 
 ```
 src/
-├── app/
-│   ├── page.tsx          # Homepage
-│   ├── projects/         # All projects page
-│   └── docs/             # Documentation
-├── components/           # Reusable UI components
-└── lib/                  # Utilities and data
+	app/                # Main Next.js app (pages, layouts, API routes)
+		about/            # About page components
+		api/              # API routes (e.g., /api/og)
+			og/             # Open Graph image API
+			metadata/       # API route for future use
+		docs/             # Documentation pages
+		projects/         # Projects listing and detail pages
+			[slug]/         # Dynamic project detail pages
+			dynamic-og-images/  # OG image generator UI
+			url-metadata-api/   # URL metadata API UI
+		globals.css       # Global styles
+		layout.tsx        # App layout
+		manifest.ts       # PWA manifest
+		not-found.tsx     # 404 page
+		robots.ts         # Robots.txt config
+		sitemap.ts        # Sitemap config
+	components/         # Reusable React UI components (Navbar, Footer, Hero, etc.)
+	lib/                # Utility functions and data (e.g., projects list)
+	types/              # TypeScript type definitions
+	styles/             # CSS modules for components and pages
+public/               # Static assets (icons, images)
+workers/              # Standalone Cloudflare Worker projects
+	og-image-generator/ # Worker for dynamic OG images
+	url-metadata-api/   # Worker for URL metadata extraction
 ```
+
+> Note: The folder `src/app/api/metadata` is currently empty and can be safely deleted or used for future API routes.
 
 ## Tech Stack
 
@@ -92,7 +112,13 @@ src/
 
 ## Why Cloudflare Workers?
 
-Workers run your code at the edge — meaning your users get responses from servers close to them, not from one central location. This makes everything faster and opens up new possibilities for what you can build.
+### What are Cloudflare Workers?
+
+**Beginner:**
+Cloudflare Workers let you run your code on servers all around the world, so your site and APIs are super fast for everyone. You don’t need to manage any servers—just write your code and deploy. It’s perfect for building tools, APIs, and microservices that need to be fast and reliable.
+
+**Expert:**
+Cloudflare Workers are serverless functions running at Cloudflare’s edge network (300+ locations). They enable ultra-low-latency APIs, microservices, and dynamic content, with instant cold starts and global scaling. Workers are ideal for edge-first architectures, JAMstack, and modern web apps that demand performance and resilience.
 
 We're proving that you can build genuinely useful tools with Workers, and we want to show you how.
 

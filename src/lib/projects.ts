@@ -25,42 +25,7 @@ export const projects: Project[] = [
     url: "https://og-image-generator.brogee9o9.workers.dev/",
     github: "https://github.com"
   },
-  {
-    id: 3,
-    name: "QR Code Generator",
-    slug: "qr-code-generator",
-    description: "Generate QR codes instantly via Workers",
-    tag: "Generator",
-    status: "coming",
-    day: 3
-  },
-  {
-    id: 4,
-    name: "JSON Formatter",
-    slug: "json-formatter",
-    description: "Format and validate JSON on the fly",
-    tag: "Developer",
-    status: "coming",
-    day: 4
-  },
-  {
-    id: 5,
-    name: "Markdown Preview",
-    slug: "markdown-preview",
-    description: "Real-time markdown to HTML conversion",
-    tag: "Developer",
-    status: "coming",
-    day: 5
-  },
-  {
-    id: 6,
-    name: "Color Palette",
-    slug: "color-palette",
-    description: "Generate beautiful color palettes instantly",
-    tag: "Design",
-    status: "coming",
-    day: 6
-  }
+  // ...only live projects kept
 ];
 
 export const getProjectBySlug = (slug: string): Project | undefined => {

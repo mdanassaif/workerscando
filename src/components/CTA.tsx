@@ -18,7 +18,7 @@ const CTA: React.FC = () => {
         
         <div className={styles.actionsContainer}>
           <a 
-            href="https://github.com" 
+            href="https://github.com/mdanassaif/workerscando" 
             target="_blank"
             rel="noopener noreferrer"
             className={`btn-primary ${styles.primaryButton}`}
@@ -30,7 +30,7 @@ const CTA: React.FC = () => {
           </a>
           
           <a 
-            href="https://twitter.com" 
+            href="https://x.com/mdanassaif" 
             target="_blank"
             rel="noopener noreferrer"
             className={styles.secondaryButton}
