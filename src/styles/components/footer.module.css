@@ -1,0 +1,55 @@
+.footer {
+  padding: 40px 48px;
+  background: white;
+  border-top: 1px solid #E5E5E5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logoText {
+  font-size: 15px;
+  font-weight: 600;
+  color: #18181B;
+}
+
+.builtWith {
+  font-size: 14px;
+  color: #71717A;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.iconWrapper {
+  display: inline-flex;
+  vertical-align: middle;
+  line-height: 0;
+}
+
+.icon {
+  display: block;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.socialLink {
+  color: #71717A;
+}

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Navbar, Footer } from '@/components';
+import styles from '@/styles/pages/docs.module.css';
 
 interface DocItem {
   id: string;
@@ -18,30 +19,24 @@ export default function DocsClient() {
       title: 'Getting Started',
       content: (
         <div>
-          <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#18181B', marginBottom: '16px' }}>
+          <h2 className={styles.sectionTitle}>
             Getting Started
           </h2>
-          <p style={{ fontSize: '16px', color: '#52525B', lineHeight: 1.8, marginBottom: '24px' }}>
+          <p className={styles.sectionText}>
             Welcome to WorkersCanDo! This documentation will help you understand how to use our tools 
             and potentially contribute your own.
           </p>
           
-          <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#18181B', marginBottom: '12px' }}>
+          <h3 className={styles.subsectionTitle}>
             What is WorkersCanDo?
           </h3>
-          <p style={{ fontSize: '16px', color: '#52525B', lineHeight: 1.8, marginBottom: '24px' }}>
+          <p className={styles.sectionText}>
             WorkersCanDo is a collection of 100 micro-tools built on Cloudflare Workers. 
             Each tool is designed to be fast, focused, and free to use.
           </p>
 
-          <div style={{
-            background: '#FFF7ED',
-            border: '1px solid #FED7AA',
-            borderRadius: '12px',
-            padding: '20px',
-            marginBottom: '24px'
-          }}>
-            <p style={{ fontSize: '14px', color: '#EA580C', fontWeight: 500 }}>
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
               💡 All tools are deployed at the edge and respond in milliseconds from 300+ locations worldwide.
             </p>
           </div>
@@ -53,66 +48,34 @@ export default function DocsClient() {
       title: 'URL Metadata API',
       content: (
         <div>
-          <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#18181B', marginBottom: '16px' }}>
+          <h2 className={styles.sectionTitle}>
             URL Metadata API
           </h2>
-          <span style={{
-            display: 'inline-block',
-            padding: '4px 10px',
-            background: '#DCFCE7',
-            color: '#16A34A',
-            borderRadius: '6px',
-            fontSize: '12px',
-            fontWeight: 600,
-            marginBottom: '16px'
-          }}>
+          <span className={styles.statusBadge}>
             LIVE
           </span>
           
-          <p style={{ fontSize: '16px', color: '#52525B', lineHeight: 1.8, marginBottom: '24px' }}>
+          <p className={styles.sectionText}>
             Extract metadata from any URL instantly. Get title, description, Open Graph tags, 
             favicons, and more.
           </p>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#18181B', marginBottom: '12px' }}>
+          <h3 className={styles.subsectionTitle}>
             Endpoint
           </h3>
-          <div style={{
-            background: '#18181B',
-            borderRadius: '8px',
-            padding: '16px',
-            marginBottom: '24px',
-            fontFamily: "var(--font-mono)",
-            fontSize: '14px',
-            color: '#22C55E',
-            overflowX: 'auto'
-          }}>
+          <div className={styles.codeBlock}>
             GET https://url-metadata-api.brogee9o9.workers.dev/?url=YOUR_URL
           </div>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#18181B', marginBottom: '12px' }}>
+          <h3 className={styles.subsectionTitle}>
             Example
           </h3>
-          <div style={{
-            background: '#18181B',
-            borderRadius: '8px',
-            padding: '16px',
-            marginBottom: '24px',
-            fontFamily: "var(--font-mono)",
-            fontSize: '13px',
-            color: '#E5E5E5',
-            overflowX: 'auto'
-          }}>
-            <pre style={{ margin: 0 }}>{`curl "https://url-metadata-api.brogee9o9.workers.dev/?url=https://example.com"`}</pre>
+          <div className={styles.codeBlockLight}>
+            <pre>{`curl "https://url-metadata-api.brogee9o9.workers.dev/?url=https://example.com"`}</pre>
           </div>
 
-          <div style={{
-            background: '#FFF7ED',
-            border: '1px solid #FED7AA',
-            borderRadius: '12px',
-            padding: '20px'
-          }}>
-            <p style={{ fontSize: '14px', color: '#EA580C', fontWeight: 500 }}>
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
               📖 More documentation coming soon...
             </p>
           </div>
@@ -124,80 +87,51 @@ export default function DocsClient() {
       title: 'Dynamic OG Images',
       content: (
         <div>
-          <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#18181B', marginBottom: '16px' }}>
+          <h2 className={styles.sectionTitle}>
             Dynamic OG Images
           </h2>
-          <span style={{
-            display: 'inline-block',
-            padding: '4px 10px',
-            background: '#DCFCE7',
-            color: '#16A34A',
-            borderRadius: '6px',
-            fontSize: '12px',
-            fontWeight: 600,
-            marginBottom: '16px'
-          }}>
+          <span className={styles.statusBadge}>
             LIVE
           </span>
           
-          <p style={{ fontSize: '16px', color: '#52525B', lineHeight: 1.8, marginBottom: '24px' }}>
+          <p className={styles.sectionText}>
             Generate beautiful Open Graph images on the fly. Perfect for blogs, social sharing, 
             and dynamic content.
           </p>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#18181B', marginBottom: '12px' }}>
+          <h3 className={styles.subsectionTitle}>
             Endpoint
           </h3>
-          <div style={{
-            background: '#18181B',
-            borderRadius: '8px',
-            padding: '16px',
-            marginBottom: '24px',
-            fontFamily: "var(--font-mono)",
-            fontSize: '14px',
-            color: '#22C55E',
-            overflowX: 'auto'
-          }}>
+          <div className={styles.codeBlock}>
             GET https://og-image-generator.brogee9o9.workers.dev/
           </div>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#18181B', marginBottom: '12px' }}>
+          <h3 className={styles.subsectionTitle}>
             Parameters
           </h3>
-          <div style={{
-            background: '#FAFAFA',
-            borderRadius: '8px',
-            border: '1px solid #E5E5E5',
-            overflow: 'hidden',
-            marginBottom: '24px'
-          }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-              <thead>
-                <tr style={{ background: '#F4F4F5' }}>
-                  <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 600, color: '#18181B' }}>Parameter</th>
-                  <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: 600, color: '#18181B' }}>Description</th>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
+                <tr>
+                  <th className={styles.tableHeaderCell}>Parameter</th>
+                  <th className={styles.tableHeaderCell}>Description</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ borderTop: '1px solid #E5E5E5' }}>
-                  <td style={{ padding: '12px 16px', fontFamily: "var(--font-mono)", color: '#F97316' }}>title</td>
-                  <td style={{ padding: '12px 16px', color: '#52525B' }}>The main title text</td>
+                <tr className={styles.tableRow}>
+                  <td className={`${styles.tableCell} ${styles.tableCellCode}`}>title</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>The main title text</td>
                 </tr>
-                <tr style={{ borderTop: '1px solid #E5E5E5' }}>
-                  <td style={{ padding: '12px 16px', fontFamily: "var(--font-mono)", color: '#F97316' }}>subtitle</td>
-                  <td style={{ padding: '12px 16px', color: '#52525B' }}>Optional subtitle text</td>
+                <tr className={styles.tableRow}>
+                  <td className={`${styles.tableCell} ${styles.tableCellCode}`}>subtitle</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Optional subtitle text</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div style={{
-            background: '#FFF7ED',
-            border: '1px solid #FED7AA',
-            borderRadius: '12px',
-            padding: '20px'
-          }}>
-            <p style={{ fontSize: '14px', color: '#EA580C', fontWeight: 500 }}>
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
               📖 More documentation coming soon...
             </p>
           </div>
@@ -209,38 +143,33 @@ export default function DocsClient() {
       title: 'Contributing',
       content: (
         <div>
-          <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#18181B', marginBottom: '16px' }}>
+          <h2 className={styles.sectionTitle}>
             Contributing
           </h2>
-          <p style={{ fontSize: '16px', color: '#52525B', lineHeight: 1.8, marginBottom: '24px' }}>
+          <p className={styles.sectionText}>
             Want to suggest a tool or contribute to the project? Here&apos;s how you can help.
           </p>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#18181B', marginBottom: '12px' }}>
+          <h3 className={styles.subsectionTitle}>
             Suggest a Tool
           </h3>
-          <p style={{ fontSize: '16px', color: '#52525B', lineHeight: 1.8, marginBottom: '24px' }}>
+          <p className={styles.sectionText}>
             Have an idea for a useful micro-tool? Open an issue on GitHub with your suggestion. 
             Include what problem it solves and a brief description of how it should work.
           </p>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#18181B', marginBottom: '12px' }}>
+          <h3 className={styles.subsectionTitle}>
             Guidelines
           </h3>
-          <ul style={{ fontSize: '16px', color: '#52525B', lineHeight: 2, marginBottom: '24px', paddingLeft: '24px' }}>
+          <ul className={styles.list}>
             <li>Tools should be small and focused on one task</li>
             <li>Must be deployable on Cloudflare Workers</li>
             <li>Should be useful to developers or general users</li>
             <li>Free to use with no authentication required</li>
           </ul>
 
-          <div style={{
-            background: '#FFF7ED',
-            border: '1px solid #FED7AA',
-            borderRadius: '12px',
-            padding: '20px'
-          }}>
-            <p style={{ fontSize: '14px', color: '#EA580C', fontWeight: 500 }}>
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
               🚧 Contribution guidelines coming soon...
             </p>
           </div>
@@ -254,22 +183,11 @@ export default function DocsClient() {
   return (
     <main>
       <Navbar />
-      <div style={{ display: 'flex', minHeight: 'calc(100vh - 80px)' }}>
+      <div className={styles.main}>
         {/* Sidebar: always visible on all screens */}
-        <aside
-          style={{
-            width: '220px',
-            borderRight: '1px solid #E5E5E5',
-            background: 'white',
-            padding: '24px 0',
-            minHeight: '100%',
-            position: 'relative',
-            zIndex: 2,
-          }}
-          className="doc-sidebar"
-        >
-          <div style={{ padding: '0 18px', marginBottom: '18px' }}>
-            <span style={{ fontSize: '11px', fontWeight: 600, color: '#A1A1AA', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarHeader}>
+            <span className={styles.sidebarLabel}>
               Documentation
             </span>
           </div>
@@ -278,20 +196,7 @@ export default function DocsClient() {
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                style={{
-                  display: 'block',
-                  width: '100%',
-                  padding: '8px 18px',
-                  textAlign: 'left',
-                  background: activeSection === section.id ? '#FFF7ED' : 'transparent',
-                  border: 'none',
-                  borderLeft: activeSection === section.id ? '3px solid #F97316' : '3px solid transparent',
-                  color: activeSection === section.id ? '#F97316' : '#52525B',
-                  fontSize: '14px',
-                  fontWeight: activeSection === section.id ? 600 : 500,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease'
-                }}
+                className={`${styles.sidebarButton} ${activeSection === section.id ? styles.sidebarButtonActive : ''}`}
               >
                 {section.title}
               </button>
@@ -299,34 +204,10 @@ export default function DocsClient() {
           </nav>
         </aside>
         {/* Content */}
-        <div style={{ flex: 1, padding: '32px 18px', maxWidth: '900px', margin: '0 auto' }} className="doc-content">
+        <div className={styles.content}>
           {activeDoc?.content}
         </div>
       </div>
-      <style jsx>{`
-        @media (max-width: 900px) {
-          .doc-content {
-            max-width: 100vw;
-          }
-        }
-        @media (max-width: 768px) {
-          .doc-sidebar {
-            width: 100vw;
-            border-right: none;
-            border-bottom: 1px solid #E5E5E5;
-            padding: 12px 0;
-            min-height: auto;
-          }
-          .doc-content {
-            padding: 18px 8px !important;
-          }
-        }
-        @media (max-width: 480px) {
-          .doc-content {
-            padding: 10px 4px !important;
-          }
-        }
-      `}</style>
       <Footer />
     </main>
   );

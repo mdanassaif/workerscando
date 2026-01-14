@@ -1,0 +1,35 @@
+.heroSection {
+  padding: 80px 48px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%);
+  text-align: center;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #F97316;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+}
+
+.title {
+  font-size: 44px;
+  font-weight: 700;
+  color: #18181B;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.description {
+  font-size: 18px;
+  color: #71717A;
+  line-height: 1.7;
+}

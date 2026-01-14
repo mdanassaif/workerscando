@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Navbar, ProjectCard, Footer } from '@/components';
 import { projects } from '@/lib/projects';
+import styles from '@/styles/pages/projects-client.module.css';
 
 type FilterType = 'all' | 'live' | 'coming';
 
@@ -24,115 +25,44 @@ export default function ProjectsClient() {
     <main>
       <Navbar />
       {/* Header */}
-      <section style={{
-        padding: '60px 48px 40px',
-        background: 'linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%)'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <span style={{
-            fontSize: '12px',
-            fontWeight: 600,
-            color: '#F97316',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            fontFamily: "var(--font-mono)"
-          }}>All Projects</span>
-          <h1 style={{
-            fontSize: '40px',
-            fontWeight: 700,
-            color: '#18181B',
-            marginTop: '8px',
-            marginBottom: '12px',
-            letterSpacing: '-0.02em'
-          }}>Tools Collection</h1>
-          <p style={{
-            fontSize: '17px',
-            color: '#71717A',
-            maxWidth: '500px'
-          }}>
+      <section className={styles.headerSection}>
+        <div className={styles.headerContainer}>
+          <span className={styles.label}>All Projects</span>
+          <h1 className={styles.title}>Tools Collection</h1>
+          <p className={styles.subtitle}>
             Every tool built with Cloudflare Workers. Filter by status or browse them all.
           </p>
         </div>
       </section>
 
       {/* Projects Grid */}
-      <section style={{
-        padding: '40px 48px 80px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
+      <section className={styles.projectsSection}>
         {/* Filters */}
-        <div style={{
-          display: 'flex',
-          gap: '10px',
-          marginBottom: '40px',
-          flexWrap: 'wrap'
-        }}>
+        <div className={styles.filtersContainer}>
           <button 
             onClick={() => setFilter('all')}
-            style={{
-              padding: '10px 20px',
-              borderRadius: '10px',
-              border: filter === 'all' ? 'none' : '1px solid #E5E5E5',
-              background: filter === 'all' ? '#F97316' : 'white',
-              color: filter === 'all' ? 'white' : '#52525B',
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            className={`${styles.filterButton} ${filter === 'all' ? styles.filterButtonActive : ''}`}
           >
             All ({projects.length})
           </button>
           <button 
             onClick={() => setFilter('live')}
-            style={{
-              padding: '10px 20px',
-              borderRadius: '10px',
-              border: filter === 'live' ? 'none' : '1px solid #E5E5E5',
-              background: filter === 'live' ? '#22C55E' : 'white',
-              color: filter === 'live' ? 'white' : '#52525B',
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s ease'
-            }}
+            className={`${styles.filterButton} ${filter === 'live' ? styles.filterButtonLive : ''} ${filter !== 'live' ? styles.filterButtonLiveInactive : ''}`}
           >
-            <span style={{
-              width: '8px',
-              height: '8px',
-              background: filter === 'live' ? 'white' : '#22C55E',
-              borderRadius: '50%'
-            }} />
+            {filter !== 'live' && <span className={styles.liveDot} />}
+            {filter === 'live' && <span className={styles.liveDotWhite} />}
             Live ({liveCount})
           </button>
           <button 
             onClick={() => setFilter('coming')}
-            style={{
-              padding: '10px 20px',
-              borderRadius: '10px',
-              border: filter === 'coming' ? 'none' : '1px solid #E5E5E5',
-              background: filter === 'coming' ? '#71717A' : 'white',
-              color: filter === 'coming' ? 'white' : '#52525B',
-              fontSize: '14px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            className={`${styles.filterButton} ${filter === 'coming' ? styles.filterButtonComing : ''}`}
           >
             Coming Soon ({comingCount})
           </button>
         </div>
 
         {/* Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
-          gap: '20px'
-        }}>
+        <div className={styles.projectsGrid}>
           {filteredProjects.map((project) => (
             <ProjectCard 
               key={project.id}
@@ -144,13 +74,9 @@ export default function ProjectsClient() {
         </div>
 
         {filteredProjects.length === 0 && (
-          <div style={{
-            textAlign: 'center',
-            padding: '80px 20px',
-            color: '#71717A'
-          }}>
-            <p style={{ fontSize: '18px', marginBottom: '8px' }}>No projects found</p>
-            <p style={{ fontSize: '14px' }}>Try a different filter</p>
+          <div className={styles.emptyState}>
+            <p className={styles.emptyStateTitle}>No projects found</p>
+            <p className={styles.emptyStateText}>Try a different filter</p>
           </div>
         )}
       </section>

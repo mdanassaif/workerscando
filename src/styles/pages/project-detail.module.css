@@ -1,0 +1,137 @@
+.heroSection {
+  padding: 80px 24px 60px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.badgesContainer {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.statusBadge {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statusBadgeLive {
+  background: #DCFCE7;
+  color: #16A34A;
+}
+
+.statusBadgeComing {
+  background: #FEF3C7;
+  color: #CA8A04;
+}
+
+.tagBadge {
+  padding: 6px 14px;
+  background: #F4F4F5;
+  color: #52525B;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dayBadge {
+  font-size: 14px;
+  color: #71717A;
+  font-family: var(--font-mono);
+}
+
+.title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  color: #18181B;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.description {
+  font-size: 18px;
+  color: #52525B;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.actionsContainer {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  padding: 12px 24px;
+  background: #F97316;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  padding: 12px 24px;
+  background: white;
+  color: #18181B;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid #E5E5E5;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.docsSection {
+  padding: 60px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.docsCard {
+  background: #FFF7ED;
+  border: 1px solid #FED7AA;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+}
+
+.docsTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #18181B;
+  margin-bottom: 12px;
+}
+
+.docsText {
+  font-size: 16px;
+  color: #71717A;
+  line-height: 1.6;
+}
+
+.docsLink {
+  color: #F97316;
+  font-weight: 600;
+}

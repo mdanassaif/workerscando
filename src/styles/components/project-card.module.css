@@ -1,0 +1,103 @@
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #E5E5E5;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.cardLive {
+  cursor: pointer;
+}
+
+.dayBadge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #FFF7ED;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #F97316;
+  font-family: var(--font-mono);
+}
+
+.iconContainer {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #18181B;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  background: #22C55E;
+  border-radius: 50%;
+}
+
+.description {
+  font-size: 14px;
+  color: #71717A;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag {
+  padding: 4px 10px;
+  background: #F4F4F5;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #52525B;
+}
+
+.actionText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #A1A1AA;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.card:hover .actionText {
+  color: #F97316;
+}
+
+.cardLink {
+  text-decoration: none;
+}

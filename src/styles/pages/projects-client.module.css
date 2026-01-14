@@ -1,0 +1,117 @@
+.headerSection {
+  padding: 60px 48px 40px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%);
+}
+
+.headerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #F97316;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #18181B;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: #71717A;
+  max-width: 500px;
+}
+
+.projectsSection {
+  padding: 40px 48px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filtersContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.filterButton {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #E5E5E5;
+  background: white;
+  color: #52525B;
+}
+
+.filterButtonActive {
+  border: none;
+  background: #F97316;
+  color: white;
+}
+
+.filterButtonLive {
+  border: none;
+  background: #22C55E;
+  color: white;
+}
+
+.filterButtonComing {
+  border: none;
+  background: #71717A;
+  color: white;
+}
+
+.filterButtonLiveInactive {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  background: #22C55E;
+  border-radius: 50%;
+}
+
+.liveDotWhite {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  color: #71717A;
+}
+
+.emptyStateTitle {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.emptyStateText {
+  font-size: 14px;
+}

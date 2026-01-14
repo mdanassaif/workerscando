@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '@/styles/components/why-workers.module.css';
 
 interface Feature {
   icon: React.ReactNode;
@@ -51,84 +52,31 @@ const WhyWorkers: React.FC = () => {
   ];
 
   return (
-    <section style={{
-      padding: '80px 48px',
-      background: 'linear-gradient(180deg, #FAFAFA 0%, #FFF7ED 100%)'
-    }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <span style={{
-            display: 'inline-block',
-            fontSize: '12px',
-            fontWeight: 600,
-            color: '#F97316',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            marginBottom: '12px',
-            fontFamily: "var(--font-mono)"
-          }}>
+    <section className={styles.section}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <span className={styles.label}>
             About This Project
           </span>
-          <h2 style={{
-            fontSize: '36px',
-            fontWeight: 700,
-            color: '#18181B',
-            marginBottom: '16px',
-            letterSpacing: '-0.02em'
-          }}>Why Workers?</h2>
-          <p style={{
-            fontSize: '17px',
-            color: '#71717A',
-            lineHeight: 1.7,
-            maxWidth: '600px',
-            margin: '0 auto'
-          }}>
+          <h2 className={styles.title}>Why Workers?</h2>
+          <p className={styles.description}>
             Cloudflare Workers run at the edge — closer to users, faster than traditional servers. 
             This project explores what&apos;s possible when you build tiny, focused tools 
             that leverage the power of edge computing.
           </p>
         </div>
         
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '20px'
-        }}>
+        <div className={styles.featuresGrid}>
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="project-card"
-              style={{
-                background: 'white',
-                borderRadius: '16px',
-                padding: '28px',
-                border: '1px solid #E5E5E5',
-                textAlign: 'center'
-              }}
+              className={`project-card ${styles.featureCard}`}
             >
-              <div style={{
-                width: '56px',
-                height: '56px',
-                background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
-                borderRadius: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 16px'
-              }}>
+              <div className={styles.iconContainer}>
                 {feature.icon}
               </div>
-              <h3 style={{
-                fontSize: '17px',
-                fontWeight: 600,
-                color: '#18181B',
-                marginBottom: '6px'
-              }}>{feature.title}</h3>
-              <p style={{
-                fontSize: '14px',
-                color: '#71717A',
-                lineHeight: 1.5
-              }}>{feature.description}</p>
+              <h3 className={styles.featureTitle}>{feature.title}</h3>
+              <p className={styles.featureDescription}>{feature.description}</p>
             </div>
           ))}
         </div>
