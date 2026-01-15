@@ -19,63 +19,112 @@ export default function DocsClient() {
       title: 'Getting Started',
       content: (
         <div>
-          <h2 className={styles.sectionTitle}>
-            Getting Started
-          </h2>
+          <h2 className={styles.sectionTitle}>Getting Started</h2>
           <p className={styles.sectionText}>
-            Welcome to WorkersCanDo! This documentation will help you understand how to use our tools 
-            and potentially contribute your own.
+            Welcome to WorkersCanDo! We&apos;re building 100 micro-tools in 100 days, all powered by Cloudflare Workers.
           </p>
 
-          <h3 className={styles.subsectionTitle}>Project Folder Structure</h3>
-          <pre className={styles.codeBlockLight}>
-{`
-src/
-  app/                # Main Next.js app (pages, layouts, API routes)
-    about/            # About page components
-    api/              # API routes (e.g., /api/og)
-      og/             # Open Graph image API
-      metadata/       # (Currently empty, can be deleted or used for future APIs)
-    docs/             # Documentation pages
-    projects/         # Projects listing and detail pages
-      [slug]/         # Dynamic project detail pages
-      dynamic-og-images/  # OG image generator UI
-      url-metadata-api/   # URL metadata API UI
-    globals.css       # Global styles
-    layout.tsx        # App layout
-    manifest.ts       # PWA manifest
-    not-found.tsx     # 404 page
-    robots.ts         # Robots.txt config
-    sitemap.ts        # Sitemap config
-  components/         # Reusable React UI components (Navbar, Footer, Hero, etc.)
-  lib/                # Utility functions and data (e.g., projects list)
-  types/              # TypeScript type definitions
-  styles/             # CSS modules for components and pages
-public/               # Static assets (icons, images)
-workers/              # Standalone Cloudflare Worker projects
-  og-image-generator/ # Worker for dynamic OG images
-  url-metadata-api/   # Worker for URL metadata extraction
-`}
-          </pre>
-
-
-          <h3 className={styles.subsectionTitle}>What is WorkersCanDo?</h3>
+          <h3 className={styles.subsectionTitle}>How It Works</h3>
           <p className={styles.sectionText}>
-            WorkersCanDo is a collection of 100 micro-tools built on Cloudflare Workers. 
-            Each tool is designed to be fast, focused, and free to use.
+            Each tool runs on Cloudflare&apos;s global edge network. When you make a request, it&apos;s handled by the server closest to you—making everything incredibly fast.
           </p>
 
-          <h3 className={styles.subsectionTitle}>What are Cloudflare Workers?</h3>
+          <h3 className={styles.subsectionTitle}>Using the APIs</h3>
           <p className={styles.sectionText}>
-            <b>Beginner:</b> Cloudflare Workers let you run your code on servers all around the world, so your site and APIs are super fast for everyone. You don’t need to manage any servers—just write your code and deploy. It’s perfect for building tools, APIs, and microservices that need to be fast and reliable.
+            All tools are accessible via simple REST APIs:
           </p>
-          <p className={styles.sectionText}>
-            <b>Expert:</b> Cloudflare Workers are serverless functions running at Cloudflare’s edge network (300+ locations). They enable ultra-low-latency APIs, microservices, and dynamic content, with instant cold starts and global scaling. Workers are ideal for edge-first architectures, JAMstack, and modern web apps that demand performance and resilience.
-          </p>
+          <div className={styles.codeBlockLight}>
+            <pre>{`# URL Metadata API
+https://workerscando.com/api/metadata?url={your-url}
+
+# OG Image Generator  
+https://workerscando.com/api/og-image?title={your-title}`}</pre>
+          </div>
 
           <div className={styles.infoBox}>
             <p className={styles.infoText}>
-              💡 All tools are deployed at the edge and respond in milliseconds from 300+ locations worldwide.
+              💡 All APIs are free, require no authentication, and have CORS enabled for browser use.
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'what-are-workers',
+      title: 'What Are Workers?',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>What Are Cloudflare Workers?</h2>
+
+          <p className={styles.sectionText}>
+            Cloudflare Workers are serverless functions that run at the <strong>edge</strong>—meaning your code executes on servers distributed across 300+ cities worldwide, as close to your users as possible.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>Why Edge Computing?</h3>
+          <p className={styles.sectionText}>
+            Traditional servers are in one location. If your server is in New York but your user is in Tokyo, the request travels thousands of miles. With Workers, code runs in Tokyo for Tokyo users, New York for New York users.
+          </p>
+
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
+                <tr>
+                  <th className={styles.tableHeaderCell}>Traditional Server</th>
+                  <th className={styles.tableHeaderCell}>Cloudflare Workers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}>Single location</td>
+                  <td className={styles.tableCell}>300+ global locations</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}>100-500ms latency</td>
+                  <td className={styles.tableCell}>10-50ms latency</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}>Cold starts: 500ms+</td>
+                  <td className={styles.tableCell}>Cold starts: 0ms</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}>You manage scaling</td>
+                  <td className={styles.tableCell}>Auto-scales infinitely</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Key Benefits</h3>
+          <ul className={styles.list}>
+            <li><strong>⚡ Blazing Fast</strong> — Sub-50ms response times globally</li>
+            <li><strong>🌍 Global by Default</strong> — No regional configuration needed</li>
+            <li><strong>💰 Cost Effective</strong> — Pay only for what you use</li>
+            <li><strong>🔒 Secure</strong> — Runs in isolated V8 environments</li>
+            <li><strong>📈 Scalable</strong> — Handles millions of requests automatically</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>How Workers Run</h3>
+          <p className={styles.sectionText}>
+            Workers use the V8 JavaScript engine (same as Chrome). They start in under 5ms and can handle thousands of concurrent requests. Your code is deployed globally with a single command.
+          </p>
+
+          <div className={styles.codeBlockLight}>
+            <pre>{`// A simple Worker that returns JSON
+export default {
+  async fetch(request) {
+    return new Response(JSON.stringify({
+      message: "Hello from the edge!",
+      location: request.cf?.city
+    }), {
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}`}</pre>
+          </div>
+
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
+              🚀 Workers are perfect for APIs, redirects, A/B testing, image optimization, and any latency-sensitive operations.
             </p>
           </div>
         </div>
@@ -86,29 +135,19 @@ workers/              # Standalone Cloudflare Worker projects
       title: 'URL Metadata API',
       content: (
         <div>
-          <h2 className={styles.sectionTitle}>
-            URL Metadata API
-          </h2>
-          <span className={styles.statusBadge}>
-            LIVE
-          </span>
-          
+          <h2 className={styles.sectionTitle}>URL Metadata API</h2>
+          <span className={styles.statusBadge}>LIVE</span>
+
           <p className={styles.sectionText}>
-            Extract metadata from any URL instantly. Get title, description, Open Graph tags, 
-            Twitter cards, favicons, and more. Perfect for building link previews, bookmark managers, 
-            or content aggregators.
+            Extract metadata from any URL instantly. Get title, description, Open Graph tags, Twitter cards, favicons, and more.
           </p>
 
-          <h3 className={styles.subsectionTitle}>
-            Endpoint
-          </h3>
+          <h3 className={styles.subsectionTitle}>Endpoint</h3>
           <div className={styles.codeBlock}>
-            GET /api/metadata?url={'{url}'}
+            GET https://workerscando.com/api/metadata?url={'{url}'}
           </div>
 
-          <h3 className={styles.subsectionTitle}>
-            Parameters
-          </h3>
+          <h3 className={styles.subsectionTitle}>Parameters</h3>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
               <thead className={styles.tableHeader}>
@@ -120,106 +159,78 @@ workers/              # Standalone Cloudflare Worker projects
               <tbody>
                 <tr className={styles.tableRow}>
                   <td className={`${styles.tableCell} ${styles.tableCellCode}`}>url</td>
-                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>The URL to extract metadata from (must be URL-encoded, required)</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>The URL to extract metadata from (required, URL-encoded)</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <h3 className={styles.subsectionTitle}>
-            Example Request
-          </h3>
+          <h3 className={styles.subsectionTitle}>Examples</h3>
           <div className={styles.codeBlockLight}>
-            <pre>{`curl "https://workerscando.com/api/metadata?url=https://example.com"
+            <pre>{`# cURL
+curl "https://workerscando.com/api/metadata?url=https://github.com"
 
-# Or with URL encoding
-curl "https://workerscando.com/api/metadata?url=https%3A%2F%2Fexample.com"`}</pre>
+# JavaScript
+fetch('https://workerscando.com/api/metadata?url=' + encodeURIComponent('https://github.com'))
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+# HTML (for link previews)
+<meta property="og:url" content="https://workerscando.com/api/metadata?url=https://github.com" />`}</pre>
           </div>
 
-          <h3 className={styles.subsectionTitle}>
-            Response Format
-          </h3>
+          <h3 className={styles.subsectionTitle}>Response</h3>
           <div className={styles.codeBlockLight}>
             <pre>{`{
-  "url": "https://example.com",
-  "title": "Example Domain",
-  "description": "This domain is for use in illustrative examples...",
-  "image": "https://example.com/image.jpg",
-  "favicon": "https://example.com/favicon.ico",
-  "siteName": "Example",
+  "url": "https://github.com",
+  "title": "GitHub",
+  "description": "Where the world builds software",
+  "favicon": "https://github.com/favicon.ico",
   "openGraph": {
-    "title": "Example Domain",
-    "description": "...",
-    "image": "https://example.com/og-image.jpg",
-    "type": "website",
-    "url": "https://example.com"
+    "title": "GitHub",
+    "description": "Where the world builds software",
+    "image": "https://github.githubassets.com/images/og-image.png",
+    "type": "website"
   },
   "twitter": {
     "card": "summary_large_image",
-    "title": "Example Domain",
-    "description": "...",
-    "image": "https://example.com/twitter-image.jpg"
-  },
-  "favicons": {
-    "icon": "https://example.com/favicon.ico",
-    "appleTouchIcon": "https://example.com/apple-touch-icon.png"
+    "title": "GitHub"
   }
 }`}</pre>
           </div>
 
-          <h3 className={styles.subsectionTitle}>
-            Features
-          </h3>
+          <h3 className={styles.subsectionTitle}>Use Cases</h3>
           <ul className={styles.list}>
-            <li><strong>Open Graph</strong> - Extracts all OG tags (title, description, image, type, etc.)</li>
-            <li><strong>Twitter Cards</strong> - Supports Twitter card metadata (card type, creator, site)</li>
-            <li><strong>Favicons</strong> - Detects standard favicons and Apple touch icons</li>
-            <li><strong>Edge Fast</strong> - Runs on Cloudflare Workers at 300+ global locations</li>
-            <li><strong>CORS Enabled</strong> - Use directly from browsers</li>
+            <li>Building link preview cards (like Slack, Discord)</li>
+            <li>Bookmark managers and reading lists</li>
+            <li>Content aggregation and curation tools</li>
+            <li>SEO analysis tools</li>
           </ul>
 
-          <h3 className={styles.subsectionTitle}>
-            Try It
-          </h3>
           <p className={styles.sectionText}>
-            Visit the <a href="/projects/url-metadata-api" className={styles.infoText} style={{ textDecoration: 'underline' }}>URL Metadata API page</a> to try it out interactively.
+            <a href="/projects/url-metadata-api" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
           </p>
-
-          <div className={styles.infoBox}>
-            <p className={styles.infoText}>
-              💡 This API is built on Cloudflare Workers for lightning-fast global response times. All metadata extraction happens at the edge!
-            </p>
-          </div>
         </div>
       )
     },
     {
       id: 'og-image-generator',
-      title: 'Dynamic OG Images',
+      title: 'OG Image Generator',
       content: (
         <div>
-          <h2 className={styles.sectionTitle}>
-            Dynamic OG Images
-          </h2>
-          <span className={styles.statusBadge}>
-            LIVE
-          </span>
-          
+          <h2 className={styles.sectionTitle}>OG Image Generator</h2>
+          <span className={styles.statusBadge}>LIVE</span>
+
           <p className={styles.sectionText}>
-            Generate beautiful Open Graph images on the fly. Perfect for blogs, social sharing, 
-            and dynamic content.
+            Generate beautiful Open Graph images dynamically. Perfect for blogs, social sharing, and automated content.
           </p>
 
-          <h3 className={styles.subsectionTitle}>
-            Endpoint
-          </h3>
+          <h3 className={styles.subsectionTitle}>Endpoint</h3>
           <div className={styles.codeBlock}>
-            GET https://og-image-generator.brogee9o9.workers.dev/
+            GET https://workerscando.com/api/og-image
           </div>
 
-          <h3 className={styles.subsectionTitle}>
-            Parameters
-          </h3>
+          <h3 className={styles.subsectionTitle}>Parameters</h3>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
               <thead className={styles.tableHeader}>
@@ -231,21 +242,59 @@ curl "https://workerscando.com/api/metadata?url=https%3A%2F%2Fexample.com"`}</pr
               <tbody>
                 <tr className={styles.tableRow}>
                   <td className={`${styles.tableCell} ${styles.tableCellCode}`}>title</td>
-                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>The main title text</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Main title text</td>
                 </tr>
                 <tr className={styles.tableRow}>
                   <td className={`${styles.tableCell} ${styles.tableCellCode}`}>subtitle</td>
-                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Optional subtitle text</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Secondary text below title</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={`${styles.tableCell} ${styles.tableCellCode}`}>author</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Author name</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={`${styles.tableCell} ${styles.tableCellCode}`}>domain</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Website domain</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={`${styles.tableCell} ${styles.tableCellCode}`}>theme</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>midnight, sunset, ocean, forest, minimal, rose</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={`${styles.tableCell} ${styles.tableCellCode}`}>layout</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>standard, centered, split, minimal, bold</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={`${styles.tableCell} ${styles.tableCellCode}`}>emoji</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Decorative emoji</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div className={styles.infoBox}>
-            <p className={styles.infoText}>
-              � More documentation coming soon...
-            </p>
+          <h3 className={styles.subsectionTitle}>Examples</h3>
+          <div className={styles.codeBlockLight}>
+            <pre>{`# Generate an image
+https://workerscando.com/api/og-image?title=My+Blog+Post&theme=midnight
+
+# Use in HTML
+<meta property="og:image" content="https://workerscando.com/api/og-image?title=Hello+World&theme=ocean" />
+
+# Full example with all params
+https://workerscando.com/api/og-image?title=Building+APIs&subtitle=A+Guide&author=John&theme=sunset&layout=bold`}</pre>
           </div>
+
+          <h3 className={styles.subsectionTitle}>Use Cases</h3>
+          <ul className={styles.list}>
+            <li>Dynamic blog post images</li>
+            <li>Social media sharing cards</li>
+            <li>Automated marketing materials</li>
+            <li>Documentation and guides</li>
+          </ul>
+
+          <p className={styles.sectionText}>
+            <a href="/projects/dynamic-og-images" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
+          </p>
         </div>
       )
     },
@@ -254,36 +303,33 @@ curl "https://workerscando.com/api/metadata?url=https%3A%2F%2Fexample.com"`}</pr
       title: 'Contributing',
       content: (
         <div>
-          <h2 className={styles.sectionTitle}>
-            Contributing
-          </h2>
+          <h2 className={styles.sectionTitle}>Contributing</h2>
           <p className={styles.sectionText}>
-            Want to suggest a tool or contribute to the project? Here&apos;s how you can help.
+            Want to suggest a tool or contribute? Here&apos;s how.
           </p>
 
-          <h3 className={styles.subsectionTitle}>
-            Suggest a Tool
-          </h3>
+          <h3 className={styles.subsectionTitle}>Suggest a Tool</h3>
           <p className={styles.sectionText}>
-            Have an idea for a useful micro-tool? Open an issue on GitHub with your suggestion. 
-            Include what problem it solves and a brief description of how it should work.
+            Open an issue on <a href="https://github.com/mdanassaif/workerscando" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>GitHub</a> with:
           </p>
-
-          <h3 className={styles.subsectionTitle}>
-            Guidelines
-          </h3>
           <ul className={styles.list}>
-            <li>Tools should be small and focused on one task</li>
-            <li>Must be deployable on Cloudflare Workers</li>
-            <li>Should be useful to developers or general users</li>
-            <li>Free to use with no authentication required</li>
+            <li>What problem does it solve?</li>
+            <li>Brief description of how it works</li>
+            <li>Example use cases</li>
           </ul>
 
-          <div className={styles.infoBox}>
-            <p className={styles.infoText}>
-              🚧 Contribution guidelines coming soon...
-            </p>
-          </div>
+          <h3 className={styles.subsectionTitle}>Good Tool Ideas</h3>
+          <ul className={styles.list}>
+            <li>Small and focused on one task</li>
+            <li>Deployable on Cloudflare Workers</li>
+            <li>Useful for developers or everyday users</li>
+            <li>Free with no auth required</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Follow Along</h3>
+          <p className={styles.sectionText}>
+            Star the repo and follow <a href="https://x.com/mdanassaif" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>@mdanassaif</a> for daily updates on the 100 tools journey.
+          </p>
         </div>
       )
     }
@@ -317,9 +363,9 @@ curl "https://workerscando.com/api/metadata?url=https%3A%2F%2Fexample.com"`}</pr
         {/* Content */}
         <div className={styles.content}>
           {activeDoc?.content}
+          <Footer />
         </div>
       </div>
-      <Footer />
     </main>
   );
 }

@@ -8,10 +8,11 @@
   border-right: 1px solid #E5E5E5;
   background: white;
   padding: 24px 0;
-  min-height: 100vh;
+  height: calc(100vh - 80px);
   position: sticky;
-  top: 0;
+  top: 80px;
   align-self: flex-start;
+  overflow-y: auto;
   z-index: 2;
 }
 
@@ -52,9 +53,18 @@
 
 .content {
   flex: 1;
-  padding: 32px 18px;
-  max-width: 900px;
-  margin: 0 auto;
+  padding: 32px 40px 0;
+  overflow-y: auto;
+}
+
+.content>div {
+  max-width: 800px;
+}
+
+/* Footer takes full width in docs */
+.content>footer {
+  margin: 60px -40px 0;
+  width: calc(100% + 80px);
 }
 
 .sectionTitle {
@@ -193,7 +203,7 @@
     padding: 12px 0;
     min-height: auto;
   }
-  
+
   .content {
     padding: 18px 8px !important;
   }

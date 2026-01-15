@@ -70,37 +70,39 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to see the site.
 
+## Architecture
+
+This project uses a **decoupled architecture**:
+
+- **Frontend**: Next.js deployed on **Vercel**
+- **Backend APIs**: Cloudflare Workers deployed separately
+
+### API Endpoints (Cloudflare Workers)
+
+| Tool | API URL |
+|------|---------|
+| URL Metadata API | `https://url-metadata-api.brogee9o9.workers.dev/api/metadata` |
+| OG Image Generator | `https://og-image-generator.brogee9o9.workers.dev/api/og` |
+
 ## Project Structure
 
 ```
 src/
-	app/                # Main Next.js app (pages, layouts, API routes)
-		about/            # About page components
-		api/              # API routes (e.g., /api/og)
-			og/             # Open Graph image API
-			metadata/       # API route for future use
-		docs/             # Documentation pages
-		projects/         # Projects listing and detail pages
-			[slug]/         # Dynamic project detail pages
-			dynamic-og-images/  # OG image generator UI
-			url-metadata-api/   # URL metadata API UI
-		globals.css       # Global styles
-		layout.tsx        # App layout
-		manifest.ts       # PWA manifest
-		not-found.tsx     # 404 page
-		robots.ts         # Robots.txt config
-		sitemap.ts        # Sitemap config
-	components/         # Reusable React UI components (Navbar, Footer, Hero, etc.)
-	lib/                # Utility functions and data (e.g., projects list)
-	types/              # TypeScript type definitions
-	styles/             # CSS modules for components and pages
-public/               # Static assets (icons, images)
-workers/              # Standalone Cloudflare Worker projects
-	og-image-generator/ # Worker for dynamic OG images
-	url-metadata-api/   # Worker for URL metadata extraction
+  app/                  # Next.js App Router pages
+    about/              # About page
+    api/og/             # Local OG image route for site metadata
+    docs/               # Documentation pages
+    projects/           # Tool UI pages
+      dynamic-og-images/  # OG image generator UI
+      url-metadata-api/   # URL metadata API UI
+    globals.css         # Global styles
+    layout.tsx          # App layout
+  components/           # Reusable UI components
+  lib/                  # Utility functions and data
+  types/                # TypeScript type definitions
+  styles/               # CSS modules
+public/                 # Static assets
 ```
-
-> Note: The folder `src/app/api/metadata` is currently empty and can be safely deleted or used for future API routes.
 
 ## Tech Stack
 

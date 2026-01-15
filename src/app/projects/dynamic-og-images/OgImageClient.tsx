@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Project } from '@/types';
+import { API } from '@/lib/api';
 import styles from './og-image.module.css';
 
 interface OgImageClientProps {
@@ -22,6 +23,19 @@ export default function OgImageClient({ project }: OgImageClientProps) {
   const [date, setDate] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [copied, setCopied] = useState(false);
+  const [exampleTab, setExampleTab] = useState<'html' | 'curl'>('html');
+  const [exampleCopied, setExampleCopied] = useState(false);
+
+  const exampleCode = {
+    html: `<meta property="og:image" content="https://workerscando.com/api/og-image?title=My+Post&theme=midnight" />`,
+    curl: `curl "https://workerscando.com/api/og-image?title=My+Post&theme=midnight"`
+  };
+
+  const copyExample = async () => {
+    await navigator.clipboard.writeText(exampleCode[exampleTab]);
+    setExampleCopied(true);
+    setTimeout(() => setExampleCopied(false), 2000);
+  };
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -33,7 +47,7 @@ export default function OgImageClient({ project }: OgImageClientProps) {
     if (layout) params.set('layout', layout);
     if (emoji) params.set('emoji', emoji);
     if (date) params.set('date', date);
-    setImageUrl(`https://og-image-generator.brogee9o9.workers.dev/api/og?${params.toString()}`);
+    setImageUrl(`${API.OG_IMAGE}?${params.toString()}`);
   }, [title, subtitle, author, domain, theme, layout, emoji, date]);
 
   const handleCopyUrl = async () => {
@@ -75,8 +89,8 @@ export default function OgImageClient({ project }: OgImageClientProps) {
             <div className={styles.previewContainer}>
               <div className={styles.imagePreview}>
                 {imageUrl && (
-                  <img 
-                    src={imageUrl} 
+                  <img
+                    src={imageUrl}
                     alt="OG Image Preview"
                     className={styles.previewImage}
                   />
@@ -229,10 +243,29 @@ export default function OgImageClient({ project }: OgImageClientProps) {
                 </div>
               </div>
             </div>
-            <div className={styles.sampleApiBox}>
-              <div className={styles.sampleApiLabel}>Example Usage</div>
-              <div className={styles.sampleApiUrl}>
-                <code>{`<meta property="og:image" content="https://og-image-generator.brogee9o9.workers.dev/api/og?title=My+Blog+Post&author=John&theme=midnight" />`}</code>
+            {/* Example Usage - simplified */}
+            <div className={styles.exampleBox}>
+              <div className={styles.exampleHeader}>
+                <div className={styles.exampleTabs}>
+                  <button
+                    className={`${styles.exampleTab} ${exampleTab === 'html' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setExampleTab('html')}
+                  >
+                    HTML
+                  </button>
+                  <button
+                    className={`${styles.exampleTab} ${exampleTab === 'curl' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setExampleTab('curl')}
+                  >
+                    cURL
+                  </button>
+                </div>
+                <button className={styles.exampleCopy} onClick={copyExample}>
+                  {exampleCopied ? '✓' : 'Copy'}
+                </button>
+              </div>
+              <div className={styles.exampleCode}>
+                <code>{exampleCode[exampleTab]}</code>
               </div>
             </div>
           </div>
@@ -243,9 +276,9 @@ export default function OgImageClient({ project }: OgImageClientProps) {
         <div className={styles.container}>
           <div className={styles.linksContent}>
             <p className={styles.linkLine}>
-              Wanna contribute or learn? <a 
-                href="https://github.com/mdanassaif/workerscando" 
-                target="_blank" 
+              Wanna contribute or learn? <a
+                href="https://github.com/mdanassaif/workerscando"
+                target="_blank"
                 rel="noopener noreferrer"
                 className={styles.inlineLink}
               >
@@ -253,9 +286,9 @@ export default function OgImageClient({ project }: OgImageClientProps) {
               </a>
             </p>
             <p className={styles.linkLine}>
-              Support me on <a 
-                href="https://x.com/mdanassaif" 
-                target="_blank" 
+              Support me on <a
+                href="https://x.com/mdanassaif"
+                target="_blank"
                 rel="noopener noreferrer"
                 className={styles.inlineLink}
               >
@@ -263,7 +296,7 @@ export default function OgImageClient({ project }: OgImageClientProps) {
               </a> for daily updates
             </p>
             <p className={styles.linkLine}>
-              Wanna learn why it&apos;s the best solution? <a 
+              Wanna learn why it&apos;s the best solution? <a
                 href="/docs"
                 className={styles.inlineLink}
               >

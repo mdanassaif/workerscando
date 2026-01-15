@@ -431,6 +431,81 @@
   margin-left: 8px;
 }
 
+/* Simplified Example Box */
+.exampleBox {
+  margin-top: 24px;
+  background: #1a1a2e;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.exampleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  background: #252540;
+  border-bottom: 1px solid #2d2d44;
+}
+
+.exampleTabs {
+  display: flex;
+  gap: 0;
+}
+
+.exampleTab {
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  color: #71717a;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.exampleTab:hover {
+  color: #a1a1aa;
+}
+
+.exampleTabActive {
+  color: #F97316;
+  border-bottom-color: #F97316;
+}
+
+.exampleCopy {
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid #3d3d5c;
+  border-radius: 6px;
+  color: #a1a1aa;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exampleCopy:hover {
+  background: #3d3d5c;
+  color: #F97316;
+}
+
+.exampleCode {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.exampleCode code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #e4e4e7;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
 .featuresSection {
   padding: 60px 40px;
   background: #FAFAFA;
@@ -546,7 +621,7 @@
   .previewImageCropped {
     height: 200px;
   }
-  
+
   .imageToggle {
     top: 8px;
     right: 8px;
@@ -554,7 +629,7 @@
     width: 32px;
     height: 32px;
   }
-  
+
   .imageToggle svg {
     width: 14px;
     height: 14px;
