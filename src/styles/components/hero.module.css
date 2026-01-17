@@ -118,6 +118,35 @@
   transition: all 0.2s ease;
 }
 
+.secondaryButton:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.suggestButton {
+  background: rgba(249, 115, 22, 0.08);
+  color: #F97316;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.1);
+}
+
+.suggestButton:hover {
+  color: #EA580C;
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+  transform: translateY(-1px);
+}
+
 .statsContainer {
   display: flex;
   justify-content: center;

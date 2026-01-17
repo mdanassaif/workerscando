@@ -38,7 +38,10 @@ export default function DocsClient() {
 https://workerscando.com/api/metadata?url={your-url}
 
 # OG Image Generator  
-https://workerscando.com/api/og-image?title={your-title}`}</pre>
+https://workerscando.com/api/og-image?title={your-title}
+
+# URL Shortener
+https://workerscando.com/api/shorten`}</pre>
           </div>
 
           <div className={styles.infoBox}>
@@ -294,6 +297,205 @@ https://workerscando.com/api/og-image?title=Building+APIs&subtitle=A+Guide&autho
 
           <p className={styles.sectionText}>
             <a href="/projects/dynamic-og-images" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
+          </p>
+        </div>
+      )
+    },
+    {
+      id: 'url-shortener',
+      title: 'URL Shortener',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>URL Shortener API</h2>
+          <span className={styles.statusBadge}>LIVE</span>
+
+          <p className={styles.sectionText}>
+            Create branded short links with real-time analytics. Track clicks, referrers, devices, and countries—all at the edge with instant redirects.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>Endpoints</h3>
+          
+          <div style={{ marginBottom: 32 }}>
+            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>1. Create Short Link</h4>
+            <div className={styles.codeBlock}>
+              POST https://workerscando.com/api/shorten
+            </div>
+            
+            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Request Body</h4>
+            <div className={styles.tableContainer}>
+              <table className={styles.table}>
+                <thead className={styles.tableHeader}>
+                  <tr>
+                    <th className={styles.tableHeaderCell}>Parameter</th>
+                    <th className={styles.tableHeaderCell}>Type</th>
+                    <th className={styles.tableHeaderCell}>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className={styles.tableRow}>
+                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>url</td>
+                    <td className={styles.tableCell}>string</td>
+                    <td className={styles.tableCell}>The URL to shorten (required, must be HTTP or HTTPS)</td>
+                  </tr>
+                  <tr className={styles.tableRow}>
+                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>customSlug</td>
+                    <td className={styles.tableCell}>string</td>
+                    <td className={styles.tableCell}>Optional custom slug (letters, numbers, hyphens, underscores only)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
+            <div className={styles.codeBlockLight}>
+              <pre>{`# cURL
+curl -X POST "https://workerscando.com/api/shorten" \\
+  -H "Content-Type: application/json" \\
+  -d '{"url": "https://example.com", "customSlug": "my-link"}'
+
+# JavaScript
+fetch('https://workerscando.com/api/shorten', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ 
+    url: 'https://example.com',
+    customSlug: 'my-link'  // optional
+  })
+})
+.then(res => res.json())
+.then(data => console.log(data));`}</pre>
+            </div>
+
+            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Response</h4>
+            <div className={styles.codeBlockLight}>
+              <pre>{`{
+  "shortUrl": "https://workerscando.com/s/abc123",
+  "slug": "abc123",
+  "url": "https://example.com",
+  "originalUrl": "https://example.com",
+  "createdAt": "2024-01-15T10:30:00.000Z"
+}`}</pre>
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 32 }}>
+            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>2. Get Analytics & Stats</h4>
+            <div className={styles.codeBlock}>
+              GET https://workerscando.com/api/s/{'{slug}'}/stats
+            </div>
+            
+            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Path Parameters</h4>
+            <div className={styles.tableContainer}>
+              <table className={styles.table}>
+                <thead className={styles.tableHeader}>
+                  <tr>
+                    <th className={styles.tableHeaderCell}>Parameter</th>
+                    <th className={styles.tableHeaderCell}>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className={styles.tableRow}>
+                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>slug</td>
+                    <td className={styles.tableCell}>The slug of the short link (path parameter)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
+            <div className={styles.codeBlockLight}>
+              <pre>{`# cURL
+curl "https://workerscando.com/api/s/abc123/stats"
+
+# JavaScript
+fetch('https://workerscando.com/api/s/abc123/stats')
+  .then(res => res.json())
+  .then(data => console.log(data));`}</pre>
+            </div>
+
+            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Response</h4>
+            <div className={styles.codeBlockLight}>
+              <pre>{`{
+  "slug": "abc123",
+  "url": "https://example.com",
+  "total_clicks": 42,
+  "last_24h": 15,
+  "countries": {
+    "US": 20,
+    "UK": 12,
+    "CA": 10
+  },
+  "devices": {
+    "Mobile": 25,
+    "Desktop": 15,
+    "Tablet": 2
+  }
+}`}</pre>
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 32 }}>
+            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>3. Redirect & Track</h4>
+            <div className={styles.codeBlock}>
+              GET https://workerscando.com/s/{'{slug}'}
+            </div>
+            
+            <p className={styles.sectionText} style={{ marginTop: 12 }}>
+              Automatically redirects to the original URL and tracks the click. Returns a 302 redirect with analytics tracking.
+            </p>
+
+            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
+            <div className={styles.codeBlockLight}>
+              <pre>{`# Browser (automatic redirect)
+https://workerscando.com/s/abc123
+
+# cURL (follow redirect)
+curl -L "https://workerscando.com/s/abc123"
+
+# JavaScript (inspect redirect)
+fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
+  .then(res => {
+    if (res.status === 302) {
+      const location = res.headers.get('Location');
+      console.log('Redirects to:', location);
+    }
+  });`}</pre>
+            </div>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Features</h3>
+          <ul className={styles.list}>
+            <li><strong>⚡ Instant Shortening</strong> — Create short links instantly at the edge</li>
+            <li><strong>📊 Real-time Analytics</strong> — Track clicks, referrers, devices, and countries</li>
+            <li><strong>🎯 Custom Slugs</strong> — Create branded, memorable short links</li>
+            <li><strong>🌍 Global Performance</strong> — Redirects happen at the edge closest to users</li>
+            <li><strong>📈 Click Tracking</strong> — Automatic analytics on every redirect</li>
+            <li><strong>🔄 Persistent Storage</strong> — Supports Cloudflare KV for production persistence</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Use Cases</h3>
+          <ul className={styles.list}>
+            <li>Marketing campaigns with click tracking</li>
+            <li>Social media link shortening</li>
+            <li>Email campaigns and newsletters</li>
+            <li>QR code generation with analytics</li>
+            <li>Branded short links for businesses</li>
+            <li>Link sharing with privacy (hide long URLs)</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Storage</h3>
+          <p className={styles.sectionText}>
+            By default, the URL shortener uses in-memory storage (data resets on deployment). For production use, configure Cloudflare KV for persistent storage. See the project page for setup instructions.
+          </p>
+
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
+              💡 All endpoints support CORS and require no authentication. Perfect for browser-based applications!
+            </p>
+          </div>
+
+          <p className={styles.sectionText}>
+            <a href="/projects/url-shortener" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
           </p>
         </div>
       )

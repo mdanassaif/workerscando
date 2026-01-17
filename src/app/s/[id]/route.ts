@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getUrlData, incrementClick } from '@/lib/url-store';
 
 export const runtime = 'edge';
-
-// This should match the store from shorten/route.ts
-// In production with Cloudflare KV, this would be shared
-const urlStore = new Map<string, { originalUrl: string; createdAt: number; clicks: number; analytics: Array<{ timestamp: number; ip?: string; userAgent?: string; referer?: string }> }>();
 
 export async function GET(
   request: NextRequest,
@@ -20,7 +17,7 @@ export async function GET(
       );
     }
 
-    const urlData = urlStore.get(slug);
+    const urlData = await getUrlData(slug);
 
     if (!urlData) {
       return NextResponse.json(
@@ -34,18 +31,12 @@ export async function GET(
     const userAgent = request.headers.get('user-agent') || 'unknown';
     const referer = request.headers.get('referer') || 'direct';
 
-    urlData.clicks += 1;
-    urlData.analytics.push({
+    await incrementClick(slug, {
       timestamp: Date.now(),
       ip: ip.split(',')[0].trim(), // Get first IP if multiple
       userAgent,
       referer
     });
-
-    // Keep only last 1000 analytics entries to prevent memory issues
-    if (urlData.analytics.length > 1000) {
-      urlData.analytics = urlData.analytics.slice(-1000);
-    }
 
     // Redirect to original URL
     return NextResponse.redirect(urlData.originalUrl, {

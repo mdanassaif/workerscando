@@ -29,11 +29,15 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
   const [copiedResult, setCopiedResult] = useState(false);
   const [analytics, setAnalytics] = useState<StatsResponse | null>(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState(false);
-  const [exampleTab, setExampleTab] = useState<'curl' | 'js'>('curl');
-  const [exampleCopied, setExampleCopied] = useState(false);
+  const [shortenExampleTab, setShortenExampleTab] = useState<'curl' | 'js'>('curl');
+  const [shortenExampleCopied, setShortenExampleCopied] = useState(false);
+  const [statsExampleTab, setStatsExampleTab] = useState<'curl' | 'js'>('curl');
+  const [statsExampleCopied, setStatsExampleCopied] = useState(false);
+  const [trackExampleTab, setTrackExampleTab] = useState<'curl' | 'js'>('curl');
+  const [trackExampleCopied, setTrackExampleCopied] = useState(false);
   const [savedLinks, setSavedLinks] = useState<SavedShortLink[]>([]);
 
-  const exampleCode = {
+  const shortenExampleCode = {
     curl: `curl -X POST "https://workerscando.com/api/shorten" \\
   -H "Content-Type: application/json" \\
   -d '{"url": "https://example.com"}'`,
@@ -46,10 +50,44 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
 .then(data => console.log(data));`
   };
 
-  const copyExample = async () => {
-    await navigator.clipboard.writeText(exampleCode[exampleTab]);
-    setExampleCopied(true);
-    setTimeout(() => setExampleCopied(false), 2000);
+  const statsExampleCode = {
+    curl: `curl "https://workerscando.com/api/s/abc123/stats"`,
+    js: `fetch('https://workerscando.com/api/s/abc123/stats')
+  .then(res => res.json())
+  .then(data => console.log(data));`
+  };
+
+  const trackExampleCode = {
+    curl: `curl -L "https://workerscando.com/s/abc123"`,
+    js: `// Redirects automatically in browser
+window.location.href = 'https://workerscando.com/s/abc123';
+
+// Or fetch with redirect: 'manual' to inspect
+fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
+  .then(res => {
+    if (res.status === 302) {
+      const location = res.headers.get('Location');
+      console.log('Redirects to:', location);
+    }
+  });`
+  };
+
+  const copyShortenExample = async () => {
+    await navigator.clipboard.writeText(shortenExampleCode[shortenExampleTab]);
+    setShortenExampleCopied(true);
+    setTimeout(() => setShortenExampleCopied(false), 2000);
+  };
+
+  const copyStatsExample = async () => {
+    await navigator.clipboard.writeText(statsExampleCode[statsExampleTab]);
+    setStatsExampleCopied(true);
+    setTimeout(() => setStatsExampleCopied(false), 2000);
+  };
+
+  const copyTrackExample = async () => {
+    await navigator.clipboard.writeText(trackExampleCode[trackExampleTab]);
+    setTrackExampleCopied(true);
+    setTimeout(() => setTrackExampleCopied(false), 2000);
   };
 
   // Load saved links from localStorage on mount
@@ -88,11 +126,13 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
 
       const data = await shortenUrl({ url: urlToUse, slug: customSlug.trim() || undefined });
       const shortUrl = `https://workerscando.com/s/${data.slug}`;
-      setResult({ ...data, shortUrl });
+      // Handle both 'url' and 'originalUrl' from API response
+      const originalUrl = (data as any).originalUrl || data.url || urlToUse;
+      setResult({ ...data, url: originalUrl, shortUrl });
       // Save to localStorage
       const newLink: SavedShortLink = {
         slug: data.slug,
-        url: data.url,
+        url: originalUrl,
         shortUrl,
         createdAt: new Date().toISOString(),
       };
@@ -218,7 +258,8 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
                 </div>
                 <div className={styles.resultUrl}>{result.shortUrl}</div>
                 <div className={styles.originalUrl}>
-                  Original: <a href={result.url} target="_blank" rel="noopener noreferrer">{result.url}</a>
+                  <span className={styles.originalUrlLabel}>Original URL:</span>
+                  <a href={result.url} target="_blank" rel="noopener noreferrer" className={styles.originalUrlLink}>{result.url}</a>
                 </div>
               </div>
             )}
@@ -362,11 +403,13 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>API Reference</h2>
 
-          <div className={styles.apiCard}>
+          {/* Shorten API */}
+          <div className={styles.apiCard} style={{ marginBottom: 24 }}>
             <div className={styles.apiMethod}>
               <span className={styles.methodBadge}>POST</span>
               <code className={styles.apiEndpoint}>/api/shorten</code>
             </div>
+            <p className={styles.apiDescription}>Create a new short link</p>
 
             <div className={styles.parametersTable}>
               <div className={styles.tableHeader}>
@@ -397,24 +440,124 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
               <div className={styles.exampleHeader}>
                 <div className={styles.exampleTabs}>
                   <button
-                    className={`${styles.exampleTab} ${exampleTab === 'curl' ? styles.exampleTabActive : ''}`}
-                    onClick={() => setExampleTab('curl')}
+                    className={`${styles.exampleTab} ${shortenExampleTab === 'curl' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setShortenExampleTab('curl')}
                   >
                     cURL
                   </button>
                   <button
-                    className={`${styles.exampleTab} ${exampleTab === 'js' ? styles.exampleTabActive : ''}`}
-                    onClick={() => setExampleTab('js')}
+                    className={`${styles.exampleTab} ${shortenExampleTab === 'js' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setShortenExampleTab('js')}
                   >
                     JavaScript
                   </button>
                 </div>
-                <button className={styles.exampleCopy} onClick={copyExample}>
-                  {exampleCopied ? '✓' : 'Copy'}
+                <button className={styles.exampleCopy} onClick={copyShortenExample}>
+                  {shortenExampleCopied ? '✓' : 'Copy'}
                 </button>
               </div>
               <div className={styles.exampleCode}>
-                <code>{exampleCode[exampleTab]}</code>
+                <code>{shortenExampleCode[shortenExampleTab]}</code>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats API */}
+          <div className={styles.apiCard} style={{ marginBottom: 24 }}>
+            <div className={styles.apiMethod}>
+              <span className={styles.methodBadge}>GET</span>
+              <code className={styles.apiEndpoint}>/api/s/{'{slug}'}/stats</code>
+            </div>
+            <p className={styles.apiDescription}>Get analytics and statistics for a short link</p>
+
+            <div className={styles.parametersTable}>
+              <div className={styles.tableHeader}>
+                <div className={styles.tableCell}>Parameter</div>
+                <div className={styles.tableCell}>Description</div>
+              </div>
+              <div className={styles.tableRow}>
+                <div className={styles.tableCell}>
+                  <code className={styles.paramName}>slug</code>
+                  <span className={styles.required}>required</span>
+                </div>
+                <div className={styles.tableCell}>
+                  The slug of the short link (path parameter)
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.exampleBox}>
+              <div className={styles.exampleHeader}>
+                <div className={styles.exampleTabs}>
+                  <button
+                    className={`${styles.exampleTab} ${statsExampleTab === 'curl' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setStatsExampleTab('curl')}
+                  >
+                    cURL
+                  </button>
+                  <button
+                    className={`${styles.exampleTab} ${statsExampleTab === 'js' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setStatsExampleTab('js')}
+                  >
+                    JavaScript
+                  </button>
+                </div>
+                <button className={styles.exampleCopy} onClick={copyStatsExample}>
+                  {statsExampleCopied ? '✓' : 'Copy'}
+                </button>
+              </div>
+              <div className={styles.exampleCode}>
+                <code>{statsExampleCode[statsExampleTab]}</code>
+              </div>
+            </div>
+          </div>
+
+          {/* Redirect/Track API */}
+          <div className={styles.apiCard}>
+            <div className={styles.apiMethod}>
+              <span className={styles.methodBadge}>GET</span>
+              <code className={styles.apiEndpoint}>/s/{'{slug}'}</code>
+            </div>
+            <p className={styles.apiDescription}>Redirect to the original URL and track the click</p>
+
+            <div className={styles.parametersTable}>
+              <div className={styles.tableHeader}>
+                <div className={styles.tableCell}>Parameter</div>
+                <div className={styles.tableCell}>Description</div>
+              </div>
+              <div className={styles.tableRow}>
+                <div className={styles.tableCell}>
+                  <code className={styles.paramName}>slug</code>
+                  <span className={styles.required}>required</span>
+                </div>
+                <div className={styles.tableCell}>
+                  The slug of the short link (path parameter). Automatically tracks click analytics and redirects to the original URL.
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.exampleBox}>
+              <div className={styles.exampleHeader}>
+                <div className={styles.exampleTabs}>
+                  <button
+                    className={`${styles.exampleTab} ${trackExampleTab === 'curl' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setTrackExampleTab('curl')}
+                  >
+                    cURL
+                  </button>
+                  <button
+                    className={`${styles.exampleTab} ${trackExampleTab === 'js' ? styles.exampleTabActive : ''}`}
+                    onClick={() => setTrackExampleTab('js')}
+                  >
+                    JavaScript
+                  </button>
+                </div>
+                <button className={styles.exampleCopy} onClick={copyTrackExample}>
+                  {trackExampleCopied ? '✓' : 'Copy'}
+                </button>
+              </div>
+              <div className={styles.exampleCode}>
+                <code>{trackExampleCode[trackExampleTab]}</code>
               </div>
             </div>
           </div>

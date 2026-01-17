@@ -38,9 +38,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       
       <div className={styles.titleContainer}>
         <h3 className={styles.title}>{project.name}</h3>
-        {project.status === 'live' && (
-          <span className={`${styles.liveDot} live-dot`} />
-        )}
       </div>
       
       <p className={styles.description}>{project.description}</p>

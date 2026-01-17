@@ -370,14 +370,27 @@
   border-top: 1px solid #E5E5E5;
   font-size: 14px;
   color: #71717A;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.originalUrl a {
+.originalUrlLabel {
+  font-weight: 600;
+  color: #52525B;
+}
+
+.originalUrlLink {
   color: #F97316;
   text-decoration: none;
+  font-family: var(--font-mono);
+  word-break: break-all;
+  flex: 1;
+  min-width: 0;
 }
 
-.originalUrl a:hover {
+.originalUrlLink:hover {
   text-decoration: underline;
 }
 
@@ -506,6 +519,13 @@
   font-size: 16px;
   color: #18181B;
   font-weight: 600;
+}
+
+.apiDescription {
+  font-size: 14px;
+  color: #52525B;
+  margin-bottom: 20px;
+  margin-top: -8px;
 }
 
 .parametersTable {

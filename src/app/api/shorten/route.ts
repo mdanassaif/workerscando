@@ -1,20 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { saveUrlData, getUrlData, generateShortId } from '@/lib/url-store';
 
 export const runtime = 'edge';
-
-// In-memory storage (for demo - in production, use Cloudflare KV or D1)
-// This will reset on each deployment, but works for demo purposes
-const urlStore = new Map<string, { originalUrl: string; createdAt: number; clicks: number; analytics: Array<{ timestamp: number; ip?: string; userAgent?: string; referer?: string }> }>();
-
-// Generate a short ID
-function generateShortId(): string {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-  for (let i = 0; i < 6; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,7 +45,8 @@ export async function POST(request: NextRequest) {
       }
       
       // Check if slug already exists
-      if (urlStore.has(slug)) {
+      const existing = await getUrlData(slug);
+      if (existing) {
         return NextResponse.json(
           { error: 'This custom slug is already taken' },
           { status: 409 }
@@ -66,14 +54,17 @@ export async function POST(request: NextRequest) {
       }
     } else {
       // Generate unique slug
-      do {
+      let exists = true;
+      while (exists) {
         slug = generateShortId();
-      } while (urlStore.has(slug));
+        const existing = await getUrlData(slug);
+        exists = !!existing;
+      }
     }
 
     // Store the URL
     const baseUrl = request.nextUrl.origin;
-    urlStore.set(slug, {
+    await saveUrlData(slug, {
       originalUrl: parsedUrl.href,
       createdAt: Date.now(),
       clicks: 0,
@@ -85,6 +76,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       shortUrl,
       slug,
+      url: parsedUrl.href,
       originalUrl: parsedUrl.href,
       createdAt: new Date().toISOString()
     }, {

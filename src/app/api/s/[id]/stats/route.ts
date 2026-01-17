@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getUrlData } from '@/lib/url-store';
 
 export const runtime = 'edge';
-
-// This should match the store from shorten/route.ts
-const urlStore = new Map<string, { originalUrl: string; createdAt: number; clicks: number; analytics: Array<{ timestamp: number; ip?: string; userAgent?: string; referer?: string }> }>();
 
 export async function GET(
   request: NextRequest,
@@ -19,7 +17,7 @@ export async function GET(
       );
     }
 
-    const urlData = urlStore.get(slug);
+    const urlData = await getUrlData(slug);
 
     if (!urlData) {
       return NextResponse.json(
@@ -31,48 +29,48 @@ export async function GET(
     // Calculate stats
     const now = Date.now();
     const oneDayAgo = now - 24 * 60 * 60 * 1000;
-    const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
-    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000;
 
-    const clicksToday = urlData.analytics.filter(a => a.timestamp >= oneDayAgo).length;
-    const clicksThisWeek = urlData.analytics.filter(a => a.timestamp >= oneWeekAgo).length;
-    const clicksThisMonth = urlData.analytics.filter(a => a.timestamp >= oneMonthAgo).length;
+    const clicksLast24h = urlData.analytics.filter(a => a.timestamp >= oneDayAgo).length;
 
-    // Get unique referrers
-    const referrers = new Map<string, number>();
+    // Parse countries from IP (simplified - in production, use a proper IP geolocation service)
+    const countries: Record<string, number> = {};
+    // For now, we'll use a simple approach - in production, use Cloudflare's request.cf.country
+    // or a geolocation API
     urlData.analytics.forEach(a => {
-      const ref = a.referer || 'direct';
-      referrers.set(ref, (referrers.get(ref) || 0) + 1);
+      // Placeholder - in production, get country from IP geolocation
+      const country = 'Unknown';
+      countries[country] = (countries[country] || 0) + 1;
     });
 
-    // Get top referrers
-    const topReferrers = Array.from(referrers.entries())
-      .map(([referer, count]) => ({ referer, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 10);
-
-    // Get clicks by day (last 30 days)
-    const clicksByDay: Record<string, number> = {};
+    // Parse devices from user agent
+    const devices: Record<string, number> = {};
     urlData.analytics.forEach(a => {
-      const date = new Date(a.timestamp).toISOString().split('T')[0];
-      clicksByDay[date] = (clicksByDay[date] || 0) + 1;
+      if (!a.userAgent) {
+        devices['Unknown'] = (devices['Unknown'] || 0) + 1;
+        return;
+      }
+      
+      const ua = a.userAgent.toLowerCase();
+      let device = 'Desktop';
+      
+      if (/mobile|android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua)) {
+        device = 'Mobile';
+      } else if (/tablet|ipad|playbook|silk/i.test(ua)) {
+        device = 'Tablet';
+      } else if (/bot|crawler|spider|crawling/i.test(ua)) {
+        device = 'Bot';
+      }
+      
+      devices[device] = (devices[device] || 0) + 1;
     });
 
     return NextResponse.json({
       slug,
-      originalUrl: urlData.originalUrl,
-      createdAt: new Date(urlData.createdAt).toISOString(),
-      totalClicks: urlData.clicks,
-      clicksToday,
-      clicksThisWeek,
-      clicksThisMonth,
-      topReferrers,
-      clicksByDay,
-      recentClicks: urlData.analytics.slice(-50).reverse().map(a => ({
-        timestamp: new Date(a.timestamp).toISOString(),
-        referer: a.referer || 'direct',
-        userAgent: a.userAgent
-      }))
+      url: urlData.originalUrl,
+      total_clicks: urlData.clicks,
+      last_24h: clicksLast24h,
+      countries,
+      devices
     }, {
       headers: {
         'Access-Control-Allow-Origin': '*',
