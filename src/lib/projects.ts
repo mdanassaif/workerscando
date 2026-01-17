@@ -11,7 +11,7 @@ export const projects: Project[] = [
     status: "live",
     day: 1,
     url: "https://url-metadata-api.brogee9o9.workers.dev/",
-    github: "https://github.com"
+    github: "https://github.com/mdanassaif/workerscando"
   },
   {
     id: 2,
@@ -23,9 +23,21 @@ export const projects: Project[] = [
     status: "live",
     day: 2,
     url: "https://og-image-generator.brogee9o9.workers.dev/",
-    github: "https://github.com"
+    github: "https://github.com/mdanassaif/workerscando"
   },
-  // ...only live projects kept
+  {
+    id: 3,
+    name: "URL Shortener",
+    slug: "url-shortener",
+    description: "Create branded short links with real-time analytics",
+    longDescription: "Shorten any URL and get real-time analytics. Track clicks, locations, referrers, and more. Deploy globally in seconds with Cloudflare Workers at the edge.",
+    tag: "Tools",
+    status: "live",
+    day: 3,
+    url: "https://workerscando.com/projects/url-shortener",
+    github: "https://github.com/mdanassaif/workerscando"
+  },
+  // ...only live project: )
 ];
 
 export const getProjectBySlug = (slug: string): Project | undefined => {

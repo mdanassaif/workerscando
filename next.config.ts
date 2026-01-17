@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         source: '/api/og-image',
         destination: 'https://og-image-generator.brogee9o9.workers.dev/api/og',
       },
+      {
+        source: '/s/:slug',
+        destination: 'https://urlshortener.brogee9o9.workers.dev/:slug',
+      },
     ];
   },
 };
