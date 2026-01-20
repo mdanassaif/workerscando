@@ -327,16 +327,16 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                   ))}
                 </div>
               </div>
-              {analytics && (
+              {(analytics || loadingAnalytics) && (
                 <div className={styles.analyticsCardSmall}>
-                  <h3 className={styles.analyticsTitleSmall}>Analytics</h3>
+                  <h3 className={styles.analyticsTitleSmall}>Analytics {loadingAnalytics && <span style={{ fontSize: 12, color: '#666' }}>Loading...</span>}</h3>
                   <div className={styles.analyticsStatsRow}>
                     <div>
-                      <div className={styles.analyticsStatValue}>{analytics.total_clicks}</div>
+                      <div className={styles.analyticsStatValue}>{analytics?.total_clicks ?? '—'}</div>
                       <div className={styles.analyticsStatLabel}>Total</div>
                     </div>
                     <div>
-                      <div className={styles.analyticsStatValue}>{analytics.last_24h ?? 0}</div>
+                      <div className={styles.analyticsStatValue}>{analytics?.last_24h ?? '—'}</div>
                       <div className={styles.analyticsStatLabel}>24h</div>
                     </div>
                   </div>
@@ -344,7 +344,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                   <div className={styles.analyticsBarWrapper}>
                     {/* Simple bar for 24h activity (simulate for now) */}
                     <div className={styles.analyticsBarBg}>
-                      <div className={styles.analyticsBarFill} style={{ width: `${Math.min(analytics.last_24h || 0, 100)}%` }} />
+                      <div className={styles.analyticsBarFill} style={{ width: `${Math.min(analytics?.last_24h || 0, 100)}%` }} />
                     </div>
                     <div className={styles.analyticsBarLabels}>
                       <span>00:00</span>
@@ -361,7 +361,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                     Top Countries
                   </div>
                   <div className={styles.analyticsListRow}>
-                    {!analytics.countries || Object.keys(analytics.countries).length === 0 ? (
+                    {!analytics?.countries || Object.keys(analytics.countries).length === 0 ? (
                       <span className={styles.analyticsNoData}>No data yet</span>
                     ) : (
                       Object.entries(analytics.countries)
@@ -381,7 +381,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                     Devices
                   </div>
                   <div className={styles.analyticsListRow}>
-                    {!analytics.devices || Object.keys(analytics.devices).length === 0 ? (
+                    {!analytics?.devices || Object.keys(analytics.devices).length === 0 ? (
                       <span className={styles.analyticsNoData}>No data yet</span>
                     ) : (
                       Object.entries(analytics.devices)
