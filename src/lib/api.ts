@@ -16,9 +16,9 @@ export type StatsResponse = {
   slug: string;
   url: string;
   total_clicks: number;
-  last_24h: number;
-  countries: Record<string, number>;
-  devices: Record<string, number>;
+  last_24h?: number;
+  countries?: Record<string, number>;
+  devices?: Record<string, number>;
 };
 
 // Shorten URL via GET or POST

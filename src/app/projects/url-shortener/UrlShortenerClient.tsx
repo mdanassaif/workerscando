@@ -336,7 +336,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                       <div className={styles.analyticsStatLabel}>Total</div>
                     </div>
                     <div>
-                      <div className={styles.analyticsStatValue}>{analytics.last_24h}</div>
+                      <div className={styles.analyticsStatValue}>{analytics.last_24h ?? 0}</div>
                       <div className={styles.analyticsStatLabel}>24h</div>
                     </div>
                   </div>
@@ -344,7 +344,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                   <div className={styles.analyticsBarWrapper}>
                     {/* Simple bar for 24h activity (simulate for now) */}
                     <div className={styles.analyticsBarBg}>
-                      <div className={styles.analyticsBarFill} style={{ width: `${Math.min(analytics.last_24h, 100)}%` }} />
+                      <div className={styles.analyticsBarFill} style={{ width: `${Math.min(analytics.last_24h || 0, 100)}%` }} />
                     </div>
                     <div className={styles.analyticsBarLabels}>
                       <span>00:00</span>
@@ -356,12 +356,12 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                   </div>
                   <div className={styles.analyticsSectionLabel} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <span style={{ display: 'inline-flex', verticalAlign: 'middle' }}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 1024 1024"><path fill="#2563eb" d="M512 1024q-104 0-199-40.5t-163.5-109T40.5 711T0 512t40.5-199t109-163.5T313 40.5T512 0t199 40.5t163.5 109t109 163.5t40.5 199t-40.5 199t-109 163.5t-163.5 109t-199 40.5zM293 293l-48-42q-11 0-26 2.5t-27 2.5q-1-1-18-37Q64 346 64 512q0 3 .5 8t.5 7q6 6 29.5 22.5T128 576h64q3-2 5.5-3t5.5-2q-10-11-29.5-32.5T144 507q4-23 11-69.5t10-69.5q86-36 128-53v-22zm201-163q-14-6-26-11q-3-8-4-12q-6 19-19 57q4 1 11.5 2t11.5 2h26v-38zm-4 471q-5 5-7 8q-12 21-34 64t-33 64q14 21 42.5 64t42.5 64q130 8 197 12q2 25 16 34q91-46 154-127.5T951 601q-19-4-41.5-11t-32.5-9.5t-39.5-5T776 579q-12 1-15.5-15.5t-3.5-34t-4-18.5q-22-4-89 7.5t-89 7.5q-13 12-85 75zm59-501q-3 20-10.5 60T527 221q5-1 16.5-2.5T560 217q-3-2-7-4q15-5 22-8q-17-70-26-105zm116-9q-2 11-2 31t-10 53q1 2 4 4q20-2 67-7q0-21 21-42q-38-23-80-39zm125 70q-2 4-7 11q19 3 25 5q-12-11-18-16zm27 24q-3 6-9.5 18t-9.5 18q-29 1-78 3l-4-34q-2 1-7 2.5t-8 1.5v49q-21 2-64.5 6t-64.5 6q-7 10-15 22q27 58 41 87q-20 5-82 22v34q0 2 1.5 6t2.5 6q17 8 53 24t54 25l22-27q-1-10-5-31.5t-6-32.5q3-2 9.5-5.5t9.5-5.5q27-8 41-11q13 21 36.5 60t29.5 49q9-8 25-24.5t24-24.5q-54-38-71-49q1-8 4-23h37q56 48 115 98q1 0 2-1.5t2-1.5q-4-8-26-49q0-1 3-4l4-4h41q1-1 17-9q-34-116-124-200z"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 1024 1024"><path fill="#2563eb" d="M512 1024q-104 0-199-40.5t-163.5-109T40.5 711T0 512t40.5-199t109-163.5T313 40.5T512 0t199 40.5t163.5 109t109 163.5t40.5 199t-40.5 199t-109 163.5t-163.5 109t-199 40.5zM293 293l-48-42q-11 0-26 2.5t-27 2.5q-1-1-18-37Q64 346 64 512q0 3 .5 8t.5 7q6 6 29.5 22.5T128 576h64q3-2 5.5-3t5.5-2q-10-11-29.5-32.5T144 507q4-23 11-69.5t10-69.5q86-36 128-53v-22zm201-163q-14-6-26-11q-3-8-4-12q-6 19-19 57q4 1 11.5 2t11.5 2h26v-38zm-4 471q-5 5-7 8q-12 21-34 64t-33 64q14 21 42.5 64t42.5 64q130 8 197 12q2 25 16 34q91-46 154-127.5T951 601q-19-4-41.5-11t-32.5-9.5t-39.5-5T776 579q-12 1-15.5-15.5t-3.5-34t-4-18.5q-22-4-89 7.5t-89 7.5q-13 12-85 75zm59-501q-3 20-10.5 60T527 221q5-1 16.5-2.5T560 217q-3-2-7-4q15-5 22-8q-17-70-26-105zm116-9q-2 11-2 31t-10 53q1 2 4 4q20-2 67-7q0-21 21-42q-38-23-80-39zm125 70q-2 4-7 11q19 3 25 5q-12-11-18-16zm27 24q-3 6-9.5 18t-9.5 18q-29 1-78 3l-4-34q-2 1-7 2.5t-8 1.5v49q-21 2-64.5 6t-64.5 6q-7 10-15 22q27 58 41 87q-20 5-82 22v34q0 2 1.5 6t2.5 6q17 8 53 24t54 25l22-27q-1-10-5-31.5t-6-32.5q3-2 9.5-5.5t9.5-5.5q27-8 41-11q13 21 36.5 60t29.5 49q9-8 25-24.5t24-24.5q-54-38-71-49q1-8 4-23h37q56 48 115 98q1 0 2-1.5t2-1.5q-4-8-26-49q0-1 3-4l4-4h41q1-1 17-9q-34-116-124-200z" /></svg>
                     </span>
                     Top Countries
                   </div>
                   <div className={styles.analyticsListRow}>
-                    {Object.keys(analytics.countries).length === 0 ? (
+                    {!analytics.countries || Object.keys(analytics.countries).length === 0 ? (
                       <span className={styles.analyticsNoData}>No data yet</span>
                     ) : (
                       Object.entries(analytics.countries)
@@ -376,12 +376,12 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
                   </div>
                   <div className={styles.analyticsSectionLabel} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <span style={{ display: 'inline-flex', verticalAlign: 'middle' }}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="#2563eb" d="M21.989 16.049c.009-.315.011-.657.011-1.049V6c0-1.654-1.346-3-3-3H5C3.346 3 2 4.346 2 6v9c0 .385.002.73.012 1.049A2.504 2.504 0 0 0 0 18.5C0 19.878 1.122 21 2.5 21h19c1.378 0 2.5-1.122 2.5-2.5a2.504 2.504 0 0 0-2.011-2.451zM4 6c0-.551.449-1 1-1h14c.551 0 1 .449 1 1v9c0 .388-.005.726-.014 1H19V7c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1v9h-.98c-.012-.264-.02-.599-.02-1V6zm14 10H6V7h12v9zm3.5 3h-19c-.271 0-.5-.229-.5-.5s.229-.5.5-.5h19c.271 0 .5.229.5.5s-.229.5-.5.5z"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="#2563eb" d="M21.989 16.049c.009-.315.011-.657.011-1.049V6c0-1.654-1.346-3-3-3H5C3.346 3 2 4.346 2 6v9c0 .385.002.73.012 1.049A2.504 2.504 0 0 0 0 18.5C0 19.878 1.122 21 2.5 21h19c1.378 0 2.5-1.122 2.5-2.5a2.504 2.504 0 0 0-2.011-2.451zM4 6c0-.551.449-1 1-1h14c.551 0 1 .449 1 1v9c0 .388-.005.726-.014 1H19V7c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1v9h-.98c-.012-.264-.02-.599-.02-1V6zm14 10H6V7h12v9zm3.5 3h-19c-.271 0-.5-.229-.5-.5s.229-.5.5-.5h19c.271 0 .5.229.5.5s-.229.5-.5.5z" /></svg>
                     </span>
                     Devices
                   </div>
                   <div className={styles.analyticsListRow}>
-                    {Object.keys(analytics.devices).length === 0 ? (
+                    {!analytics.devices || Object.keys(analytics.devices).length === 0 ? (
                       <span className={styles.analyticsNoData}>No data yet</span>
                     ) : (
                       Object.entries(analytics.devices)
@@ -568,7 +568,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
         <div className={styles.container}>
           <h2 className={styles.sectionTitle} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ display: 'inline-flex', verticalAlign: 'middle' }}>
-              
+
             </span>
             Features
           </h2>
@@ -599,14 +599,14 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
             </div>
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#F97316" d="M11 22v-6h2v2h8v2h-8v2h-2Zm-8-2v-2h6v2H3Zm3.425-6H8.5l1.1-3.075h4.825L15.5 14h2.075l-4.5-12h-2.15l-4.5 12ZM10.2 9.2l1.75-4.975h.1L13.8 9.2h-3.6Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#F97316" d="M11 22v-6h2v2h8v2h-8v2h-2Zm-8-2v-2h6v2H3Zm3.425-6H8.5l1.1-3.075h4.825L15.5 14h2.075l-4.5-12h-2.15l-4.5 12ZM10.2 9.2l1.75-4.975h.1L13.8 9.2h-3.6Z" /></svg>
               </div>
               <h3 className={styles.featureTitle}>Custom Slugs</h3>
               <p className={styles.featureDescription}>
                 Create branded, memorable short links
               </p>
             </div>
-            </div>
+          </div>
         </div>
       </section>
 
