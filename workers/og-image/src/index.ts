@@ -17,7 +17,7 @@ const themes = {
 } as const;
 
 type ThemeName = keyof typeof themes;
-type LayoutName = 'standard' | 'centered' | 'minimal' | 'bold';
+type LayoutName = 'standard' | 'centered' | 'minimal' | 'bold' | 'split';
 
 interface OGParams {
   title: string;
@@ -119,6 +119,30 @@ function generateSVG(params: OGParams): string {
       `;
       break;
 
+    case 'split':
+      contentLayout = `
+        <rect x="0" y="0" width="8" height="${height}" fill="${theme.accent}"/>
+        <rect x="${width - 400}" y="0" width="400" height="${height}" fill="${theme.accent}" opacity="0.1"/>
+        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="${theme.accent}" stroke-width="0.5" opacity="0.1"/>
+        </pattern>
+        <rect width="100%" height="100%" fill="url(#grid)"/>
+        <g transform="translate(80, 100)">
+          ${emoji ? `<text x="0" y="60" font-size="64">${emoji}</text>` : ''}
+          <text x="0" y="${emoji ? '160' : '120'}" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="${theme.text}">
+            ${wrapText(title, 500, 52).map((line, i) => `<tspan x="0" dy="${i === 0 ? 0 : 62}">${line}</tspan>`).join('')}
+          </text>
+          ${subtitle ? `<text x="0" y="${emoji ? '280' : '250'}" font-family="system-ui, sans-serif" font-size="22" fill="${theme.muted}">${subtitle}</text>` : ''}
+        </g>
+        <g transform="translate(80, ${height - 80})">
+          <text font-family="system-ui, sans-serif" font-size="18" fill="${theme.accent}">${author}${author && domain ? ' · ' : ''}${domain}</text>
+        </g>
+        <g transform="translate(${width - 200}, ${height / 2})">
+          <text font-family="system-ui, sans-serif" font-size="120" font-weight="800" fill="${theme.accent}" opacity="0.15" text-anchor="middle" transform="rotate(-90)">${domain?.split('.')[0]?.toUpperCase() || ''}</text>
+        </g>
+      `;
+      break;
+
     default: // standard
       contentLayout = `
         <rect x="0" y="0" width="${width}" height="6" fill="${theme.accent}"/>
@@ -196,7 +220,7 @@ export default {
         author: 'optional - Author name',
         domain: 'optional - Domain to display',
         theme: 'optional - midnight, sunset, ocean, forest, minimal, rose',
-        layout: 'optional - standard, centered, minimal, bold',
+        layout: 'optional - standard, centered, minimal, bold, split',
         emoji: 'optional - Emoji to display',
       },
       example: '/api/og?title=Hello%20World&theme=ocean&layout=bold&domain=example.com',
