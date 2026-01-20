@@ -60,6 +60,7 @@ Star this repo to follow along as we build all 100 tools. We share what we learn
 
 ## Running Locally
 
+### Frontend (Next.js)
 ```bash
 # Install dependencies
 npm install
@@ -69,6 +70,37 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the site.
+
+### Backend Workers (Cloudflare)
+```bash
+# Install all worker dependencies
+cd workers && npm run install:all
+
+# Run a specific worker locally
+npm run dev:url-metadata      # http://localhost:8787
+npm run dev:og-image          # http://localhost:8787
+npm run dev:url-shortener     # http://localhost:8787
+```
+
+## Deployment
+
+### Frontend → Vercel
+```bash
+git push origin main    # Auto-deploys via Vercel
+```
+
+### Workers → Cloudflare
+```bash
+cd workers
+
+# Deploy a single worker
+npm run deploy:url-metadata
+npm run deploy:og-image
+npm run deploy:url-shortener
+
+# Deploy ALL workers at once
+npm run deploy:all
+```
 
 ## Architecture
 
@@ -83,25 +115,29 @@ This project uses a **decoupled architecture**:
 |------|---------|
 | URL Metadata API | `https://url-metadata-api.brogee9o9.workers.dev/api/metadata` |
 | OG Image Generator | `https://og-image-generator.brogee9o9.workers.dev/api/og` |
+| URL Shortener | `https://urlshortener.brogee9o9.workers.dev/api/shorten` |
 
 ## Project Structure
 
+**One repo, separate deployments:**
+
 ```
-src/
-  app/                  # Next.js App Router pages
-    about/              # About page
-    api/og/             # Local OG image route for site metadata
-    docs/               # Documentation pages
-    projects/           # Tool UI pages
-      dynamic-og-images/  # OG image generator UI
-      url-metadata-api/   # URL metadata API UI
-    globals.css         # Global styles
-    layout.tsx          # App layout
-  components/           # Reusable UI components
-  lib/                  # Utility functions and data
-  types/                # TypeScript type definitions
-  styles/               # CSS modules
-public/                 # Static assets
+workerscando/
+├── src/                        # Frontend (Next.js) → Deploy to Vercel
+│   ├── app/                    # App Router pages
+│   ├── components/             # UI components
+│   ├── lib/                    # Utilities & data
+│   └── styles/                 # CSS modules
+│
+├── workers/                    # Backend (Cloudflare Workers) → Deploy to Cloudflare
+│   ├── url-metadata/           # Tool 1: URL Metadata API
+│   ├── og-image/               # Tool 2: OG Image Generator
+│   ├── url-shortener/          # Tool 3: URL Shortener
+│   ├── shared/                 # Shared utilities
+│   └── package.json            # Scripts to manage all workers
+│
+├── public/                     # Static assets
+└── package.json                # Frontend dependencies
 ```
 
 ## Tech Stack

@@ -1,0 +1,25 @@
+{
+    "name": "workerscando-workers",
+    "version": "1.0.0",
+    "description": "100 micro-tools powered by Cloudflare Workers - Backend APIs",
+    "private": true,
+    "scripts": {
+        "dev:url-metadata": "cd url-metadata && npm run dev",
+        "dev:og-image": "cd og-image && npm run dev",
+        "dev:url-shortener": "cd url-shortener && npm run dev",
+        "deploy:url-metadata": "cd url-metadata && npm run deploy",
+        "deploy:og-image": "cd og-image && npm run deploy",
+        "deploy:url-shortener": "cd url-shortener && npm run deploy",
+        "deploy:all": "npm run deploy:url-metadata && npm run deploy:og-image && npm run deploy:url-shortener",
+        "install:all": "cd url-metadata && npm install && cd ../og-image && npm install && cd ../url-shortener && npm install"
+    },
+    "keywords": [
+        "cloudflare",
+        "workers",
+        "serverless",
+        "edge",
+        "api"
+    ],
+    "author": "mdanassaif",
+    "license": "MIT"
+}

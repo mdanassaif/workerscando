@@ -1,0 +1,7 @@
+name = "urlshortener"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "URLS"
+id = "495fcf47eddb4f138824739d40c66c5e"  # <- paste your KV ID from step 3

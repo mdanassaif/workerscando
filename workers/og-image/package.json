@@ -1,0 +1,26 @@
+{
+  "name": "og-image-generator",
+  "version": "1.0.0",
+  "description": "Dynamic OG Image Generator - Create beautiful social cards on-the-fly with Cloudflare Workers",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "og-image",
+    "open-graph",
+    "social-cards",
+    "svg"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241205.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.99.0"
+  }
+}

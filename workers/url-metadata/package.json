@@ -1,0 +1,27 @@
+{
+  "name": "url-metadata-api",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker API to extract metadata from URLs - Open Graph, Twitter Cards, favicons, and more",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "metadata",
+    "open-graph",
+    "twitter-cards",
+    "link-preview",
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240129.0",
+    "typescript": "^5.3.3",
+    "wrangler": "^3.25.0"
+  }
+}

@@ -1,0 +1,12 @@
+name = "url-metadata-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Optional: Enable if you want to cache results
+# [[kv_namespaces]]
+# binding = "URL_CACHE"
+# id = "your-kv-namespace-id"
+
+[observability]
+enabled = true

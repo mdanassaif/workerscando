@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Wrangler
+.wrangler/
+.dev.vars
+
+# Build outputs
+dist/
+
+# Misc
+.DS_Store
+
+# Logs
+*.log
+
+# IDE
+.idea/
+.vscode/
