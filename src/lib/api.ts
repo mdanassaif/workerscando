@@ -21,29 +21,53 @@ export type StatsResponse = {
   devices?: Record<string, number>;
 };
 
-// Shorten URL via GET or POST
-export async function shortenUrl({ url, slug }: { url: string; slug?: string }, method: 'GET' | 'POST' = 'POST'): Promise<ShortenResponse> {
-  if (method === 'GET') {
-    const params = new URLSearchParams({ url, ...(slug ? { slug } : {}) });
-    const res = await fetch(`${WORKER_API_BASE}/api/shorten?${params.toString()}`);
-    if (!res.ok) throw new Error('Failed to shorten URL');
-    return res.json();
-  } else {
+// Shorten URL via POST (faster than GET)
+export async function shortenUrl({ url, slug }: { url: string; slug?: string }): Promise<ShortenResponse> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+  try {
     const res = await fetch(`${WORKER_API_BASE}/api/shorten`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url, ...(slug ? { slug } : {}) }),
+      signal: controller.signal,
     });
-    if (!res.ok) throw new Error('Failed to shorten URL');
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || `Failed (${res.status})`);
+    }
     return res.json();
+  } catch (err) {
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error('Request timed out');
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
 // Get stats for a short link
 export async function getShortUrlStats(slug: string): Promise<StatsResponse> {
-  const res = await fetch(`${WORKER_API_BASE}/api/stats/${encodeURIComponent(slug)}`);
-  if (!res.ok) throw new Error('Failed to fetch stats');
-  return res.json();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout
+
+  try {
+    const res = await fetch(`${WORKER_API_BASE}/api/stats/${encodeURIComponent(slug)}`, {
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error('Stats unavailable');
+    return res.json();
+  } catch (err) {
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error('Request timed out');
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 // Get redirect URL for a slug (returns the original URL, or throws if not found)

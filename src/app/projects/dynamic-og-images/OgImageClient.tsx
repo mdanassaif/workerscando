@@ -26,9 +26,12 @@ export default function OgImageClient({ project }: OgImageClientProps) {
   const [exampleTab, setExampleTab] = useState<'html' | 'curl'>('html');
   const [exampleCopied, setExampleCopied] = useState(false);
 
+  // Direct Cloudflare Workers API URL
+  const WORKER_URL = 'https://og-image-generator.brogee9o9.workers.dev';
+
   const exampleCode = {
-    html: `<meta property="og:image" content="https://workerscando.com/api/og-image?title=My+Post&theme=midnight" />`,
-    curl: `curl "https://workerscando.com/api/og-image?title=My+Post&theme=midnight"`
+    html: `<meta property="og:image" content="${WORKER_URL}/api/og?title=My+Post&theme=midnight" />`,
+    curl: `curl "${WORKER_URL}/api/og?title=My+Post&theme=midnight"`
   };
 
   const copyExample = async () => {
@@ -203,7 +206,7 @@ export default function OgImageClient({ project }: OgImageClientProps) {
           <div className={styles.apiCard}>
             <div className={styles.apiMethod}>
               <span className={styles.methodBadge}>GET</span>
-              <code className={styles.apiEndpoint}>/api/og-image</code>
+              <code className={styles.apiEndpoint}>{WORKER_URL}/api/og</code>
             </div>
             <div className={styles.parametersTable}>
               <div className={styles.tableHeader}>

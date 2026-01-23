@@ -10,8 +10,16 @@ interface DocItem {
   content: React.ReactNode;
 }
 
+// Direct Cloudflare Workers URLs
+const WORKERS = {
+  SHORTENER: 'https://urlshortener.brogee9o9.workers.dev',
+  METADATA: 'https://url-metadata-api.brogee9o9.workers.dev',
+  OG_IMAGE: 'https://og-image-generator.brogee9o9.workers.dev',
+};
+
 export default function DocsClient() {
   const [activeSection, setActiveSection] = useState('getting-started');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const docSections: DocItem[] = [
     {
@@ -24,24 +32,19 @@ export default function DocsClient() {
             Welcome to WorkersCanDo! We&apos;re building 100 micro-tools in 100 days, all powered by Cloudflare Workers.
           </p>
 
-          <h3 className={styles.subsectionTitle}>How It Works</h3>
+          <h3 className={styles.subsectionTitle}>Direct API Access</h3>
           <p className={styles.sectionText}>
-            Each tool runs on Cloudflare&apos;s global edge network. When you make a request, it&apos;s handled by the server closest to you—making everything incredibly fast.
-          </p>
-
-          <h3 className={styles.subsectionTitle}>Using the APIs</h3>
-          <p className={styles.sectionText}>
-            All tools are accessible via simple REST APIs:
+            All tools run on Cloudflare Workers and can be accessed directly via their worker URLs for the fastest possible response times:
           </p>
           <div className={styles.codeBlockLight}>
             <pre>{`# URL Metadata API
-https://workerscando.com/api/metadata?url={your-url}
+${WORKERS.METADATA}/api/metadata?url={your-url}
 
 # OG Image Generator  
-https://workerscando.com/api/og-image?title={your-title}
+${WORKERS.OG_IMAGE}/api/og?title={your-title}
 
 # URL Shortener
-https://workerscando.com/api/shorten`}</pre>
+${WORKERS.SHORTENER}/api/shorten`}</pre>
           </div>
 
           <div className={styles.infoBox}>
@@ -49,6 +52,97 @@ https://workerscando.com/api/shorten`}</pre>
               💡 All APIs are free, require no authentication, and have CORS enabled for browser use.
             </p>
           </div>
+
+          <h3 className={styles.subsectionTitle}>Quick Start Examples</h3>
+          <div className={styles.codeBlockLight}>
+            <pre>{`// Shorten a URL
+fetch('${WORKERS.SHORTENER}/api/shorten', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ url: 'https://github.com' })
+}).then(r => r.json()).then(console.log);
+
+// Extract URL metadata
+fetch('${WORKERS.METADATA}/api/metadata?url=https://github.com')
+  .then(r => r.json()).then(console.log);
+
+// Generate OG image (returns SVG)
+// Just use as an image src:
+<img src="${WORKERS.OG_IMAGE}/api/og?title=Hello" />`}</pre>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'why-workerscando',
+      title: 'Why WorkersCanDo?',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>Why Build with WorkersCanDo?</h2>
+
+          <p className={styles.sectionText}>
+            WorkersCanDo provides production-ready micro-tools that you can use in your projects today. Here&apos;s why developers love it:
+          </p>
+
+          <h3 className={styles.subsectionTitle}>🚀 Instant Performance</h3>
+          <p className={styles.sectionText}>
+            All tools run on Cloudflare&apos;s global edge network with <strong>300+ locations worldwide</strong>. Your API calls are handled by the server closest to your users—typically <strong>under 50ms latency</strong>.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>💰 Completely Free</h3>
+          <p className={styles.sectionText}>
+            No API keys, no sign-ups, no rate limits for normal use. Just call the API and get results. Perfect for prototyping, side projects, and production apps.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>🔧 Developer-Friendly</h3>
+          <ul className={styles.list}>
+            <li><strong>CORS enabled</strong> — Works directly from browsers</li>
+            <li><strong>No authentication</strong> — Just make HTTP requests</li>
+            <li><strong>JSON responses</strong> — Easy to parse and use</li>
+            <li><strong>Well-documented</strong> — Examples for cURL, JavaScript, and more</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>🛠️ Real-World Use Cases</h3>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
+                <tr>
+                  <th className={styles.tableHeaderCell}>Tool</th>
+                  <th className={styles.tableHeaderCell}>Use Cases</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}><strong>URL Shortener</strong></td>
+                  <td className={styles.tableCell}>Marketing campaigns, social sharing, QR codes, email tracking</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}><strong>URL Metadata</strong></td>
+                  <td className={styles.tableCell}>Link previews (like Slack), bookmark managers, SEO tools</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}><strong>OG Image Generator</strong></td>
+                  <td className={styles.tableCell}>Blog post images, social cards, documentation headers</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>🌍 Global by Default</h3>
+          <p className={styles.sectionText}>
+            Unlike traditional servers that live in one region, Cloudflare Workers run in every major city. Your users in Tokyo, London, or São Paulo all get the same fast experience.
+          </p>
+
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
+              ⚡ <strong>Zero cold starts.</strong> Workers are always warm and ready to respond instantly—no waiting for containers to spin up.
+            </p>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>📖 Open Source</h3>
+          <p className={styles.sectionText}>
+            All tools are open source on <a href="https://github.com/mdanassaif/workerscando" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>GitHub</a>. You can learn from the code, deploy your own instance, or contribute improvements.
+          </p>
         </div>
       )
     },
@@ -145,9 +239,9 @@ export default {
             Extract metadata from any URL instantly. Get title, description, Open Graph tags, Twitter cards, favicons, and more.
           </p>
 
-          <h3 className={styles.subsectionTitle}>Endpoint</h3>
+          <h3 className={styles.subsectionTitle}>Direct Worker URL</h3>
           <div className={styles.codeBlock}>
-            GET https://workerscando.com/api/metadata?url={'{url}'}
+            GET {WORKERS.METADATA}/api/metadata?url={'{url}'}
           </div>
 
           <h3 className={styles.subsectionTitle}>Parameters</h3>
@@ -171,20 +265,22 @@ export default {
           <h3 className={styles.subsectionTitle}>Examples</h3>
           <div className={styles.codeBlockLight}>
             <pre>{`# cURL
-curl "https://workerscando.com/api/metadata?url=https://github.com"
+curl "${WORKERS.METADATA}/api/metadata?url=https://github.com"
 
 # JavaScript
-fetch('https://workerscando.com/api/metadata?url=' + encodeURIComponent('https://github.com'))
+fetch('${WORKERS.METADATA}/api/metadata?url=' + encodeURIComponent('https://github.com'))
   .then(res => res.json())
   .then(data => console.log(data));
 
-# HTML (for link previews)
-<meta property="og:url" content="https://workerscando.com/api/metadata?url=https://github.com" />`}</pre>
+# In your app
+const response = await fetch(\`${WORKERS.METADATA}/api/metadata?url=\${encodeURIComponent(url)}\`);
+const metadata = await response.json();`}</pre>
           </div>
 
           <h3 className={styles.subsectionTitle}>Response</h3>
           <div className={styles.codeBlockLight}>
             <pre>{`{
+  "success": true,
   "url": "https://github.com",
   "title": "GitHub",
   "description": "Where the world builds software",
@@ -204,10 +300,10 @@ fetch('https://workerscando.com/api/metadata?url=' + encodeURIComponent('https:/
 
           <h3 className={styles.subsectionTitle}>Use Cases</h3>
           <ul className={styles.list}>
-            <li>Building link preview cards (like Slack, Discord)</li>
+            <li>Building link preview cards (like Slack, Discord, Notion)</li>
             <li>Bookmark managers and reading lists</li>
             <li>Content aggregation and curation tools</li>
-            <li>SEO analysis tools</li>
+            <li>SEO analysis and website crawlers</li>
           </ul>
 
           <p className={styles.sectionText}>
@@ -228,9 +324,9 @@ fetch('https://workerscando.com/api/metadata?url=' + encodeURIComponent('https:/
             Generate beautiful Open Graph images dynamically. Perfect for blogs, social sharing, and automated content.
           </p>
 
-          <h3 className={styles.subsectionTitle}>Endpoint</h3>
+          <h3 className={styles.subsectionTitle}>Direct Worker URL</h3>
           <div className={styles.codeBlock}>
-            GET https://workerscando.com/api/og-image
+            GET {WORKERS.OG_IMAGE}/api/og
           </div>
 
           <h3 className={styles.subsectionTitle}>Parameters</h3>
@@ -245,11 +341,11 @@ fetch('https://workerscando.com/api/metadata?url=' + encodeURIComponent('https:/
               <tbody>
                 <tr className={styles.tableRow}>
                   <td className={`${styles.tableCell} ${styles.tableCellCode}`}>title</td>
-                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Main title text</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Main title text (required)</td>
                 </tr>
                 <tr className={styles.tableRow}>
                   <td className={`${styles.tableCell} ${styles.tableCellCode}`}>subtitle</td>
-                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Secondary text below title</td>
+                  <td className={`${styles.tableCell} ${styles.tableCellText}`}>Secondary text below the title</td>
                 </tr>
                 <tr className={styles.tableRow}>
                   <td className={`${styles.tableCell} ${styles.tableCellCode}`}>author</td>
@@ -278,13 +374,13 @@ fetch('https://workerscando.com/api/metadata?url=' + encodeURIComponent('https:/
           <h3 className={styles.subsectionTitle}>Examples</h3>
           <div className={styles.codeBlockLight}>
             <pre>{`# Generate an image
-https://workerscando.com/api/og-image?title=My+Blog+Post&theme=midnight
+${WORKERS.OG_IMAGE}/api/og?title=My+Blog+Post&theme=midnight
 
-# Use in HTML
-<meta property="og:image" content="https://workerscando.com/api/og-image?title=Hello+World&theme=ocean" />
+# Use in HTML meta tag
+<meta property="og:image" content="${WORKERS.OG_IMAGE}/api/og?title=Hello+World&theme=ocean" />
 
 # Full example with all params
-https://workerscando.com/api/og-image?title=Building+APIs&subtitle=A+Guide&author=John&theme=sunset&layout=bold`}</pre>
+${WORKERS.OG_IMAGE}/api/og?title=Building+APIs&subtitle=A+Guide&author=John&theme=sunset&layout=bold&emoji=🚀`}</pre>
           </div>
 
           <h3 className={styles.subsectionTitle}>Use Cases</h3>
@@ -310,17 +406,22 @@ https://workerscando.com/api/og-image?title=Building+APIs&subtitle=A+Guide&autho
           <span className={styles.statusBadge}>LIVE</span>
 
           <p className={styles.sectionText}>
-            Create branded short links with real-time analytics. Track clicks, referrers, devices, and countries—all at the edge with instant redirects.
+            Create branded short links with real-time analytics. Track clicks, devices, and countries—all at the edge with instant redirects.
           </p>
 
+          <h3 className={styles.subsectionTitle}>Direct Worker URL</h3>
+          <div className={styles.codeBlock}>
+            {WORKERS.SHORTENER}
+          </div>
+
           <h3 className={styles.subsectionTitle}>Endpoints</h3>
-          
+
           <div style={{ marginBottom: 32 }}>
             <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>1. Create Short Link</h4>
             <div className={styles.codeBlock}>
-              POST https://workerscando.com/api/shorten
+              POST {WORKERS.SHORTENER}/api/shorten
             </div>
-            
+
             <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Request Body</h4>
             <div className={styles.tableContainer}>
               <table className={styles.table}>
@@ -335,12 +436,12 @@ https://workerscando.com/api/og-image?title=Building+APIs&subtitle=A+Guide&autho
                   <tr className={styles.tableRow}>
                     <td className={`${styles.tableCell} ${styles.tableCellCode}`}>url</td>
                     <td className={styles.tableCell}>string</td>
-                    <td className={styles.tableCell}>The URL to shorten (required, must be HTTP or HTTPS)</td>
+                    <td className={styles.tableCell}>The URL to shorten (required)</td>
                   </tr>
                   <tr className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>customSlug</td>
+                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>slug</td>
                     <td className={styles.tableCell}>string</td>
-                    <td className={styles.tableCell}>Optional custom slug (letters, numbers, hyphens, underscores only)</td>
+                    <td className={styles.tableCell}>Optional custom slug</td>
                   </tr>
                 </tbody>
               </table>
@@ -349,68 +450,42 @@ https://workerscando.com/api/og-image?title=Building+APIs&subtitle=A+Guide&autho
             <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
             <div className={styles.codeBlockLight}>
               <pre>{`# cURL
-curl -X POST "https://workerscando.com/api/shorten" \\
+curl -X POST "${WORKERS.SHORTENER}/api/shorten" \\
   -H "Content-Type: application/json" \\
-  -d '{"url": "https://example.com", "customSlug": "my-link"}'
+  -d '{"url": "https://example.com", "slug": "my-link"}'
 
 # JavaScript
-fetch('https://workerscando.com/api/shorten', {
+fetch('${WORKERS.SHORTENER}/api/shorten', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ 
-    url: 'https://example.com',
-    customSlug: 'my-link'  // optional
-  })
-})
-.then(res => res.json())
-.then(data => console.log(data));`}</pre>
+  body: JSON.stringify({ url: 'https://example.com' })
+}).then(r => r.json()).then(console.log);`}</pre>
             </div>
 
             <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Response</h4>
             <div className={styles.codeBlockLight}>
               <pre>{`{
-  "shortUrl": "https://workerscando.com/s/abc123",
   "slug": "abc123",
   "url": "https://example.com",
-  "originalUrl": "https://example.com",
-  "createdAt": "2024-01-15T10:30:00.000Z"
+  "shortUrl": "https://workerscando.com/s/abc123"
 }`}</pre>
             </div>
           </div>
 
           <div style={{ marginBottom: 32 }}>
-            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>2. Get Analytics & Stats</h4>
+            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>2. Get Analytics</h4>
             <div className={styles.codeBlock}>
-              GET https://workerscando.com/api/s/{'{slug}'}/stats
-            </div>
-            
-            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Path Parameters</h4>
-            <div className={styles.tableContainer}>
-              <table className={styles.table}>
-                <thead className={styles.tableHeader}>
-                  <tr>
-                    <th className={styles.tableHeaderCell}>Parameter</th>
-                    <th className={styles.tableHeaderCell}>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>slug</td>
-                    <td className={styles.tableCell}>The slug of the short link (path parameter)</td>
-                  </tr>
-                </tbody>
-              </table>
+              GET {WORKERS.SHORTENER}/api/stats/{'{slug}'}
             </div>
 
             <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
             <div className={styles.codeBlockLight}>
               <pre>{`# cURL
-curl "https://workerscando.com/api/s/abc123/stats"
+curl "${WORKERS.SHORTENER}/api/stats/abc123"
 
 # JavaScript
-fetch('https://workerscando.com/api/s/abc123/stats')
-  .then(res => res.json())
-  .then(data => console.log(data));`}</pre>
+fetch('${WORKERS.SHORTENER}/api/stats/abc123')
+  .then(r => r.json()).then(console.log);`}</pre>
             </div>
 
             <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Response</h4>
@@ -420,77 +495,34 @@ fetch('https://workerscando.com/api/s/abc123/stats')
   "url": "https://example.com",
   "total_clicks": 42,
   "last_24h": 15,
-  "countries": {
-    "US": 20,
-    "UK": 12,
-    "CA": 10
-  },
-  "devices": {
-    "Mobile": 25,
-    "Desktop": 15,
-    "Tablet": 2
-  }
+  "countries": { "US": 20, "UK": 12, "CA": 10 },
+  "devices": { "Mobile": 25, "Desktop": 15, "Tablet": 2 }
 }`}</pre>
             </div>
           </div>
 
           <div style={{ marginBottom: 32 }}>
-            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>3. Redirect & Track</h4>
+            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>3. Redirect</h4>
             <div className={styles.codeBlock}>
-              GET https://workerscando.com/s/{'{slug}'}
+              GET {WORKERS.SHORTENER}/{'{slug}'}
             </div>
-            
+
             <p className={styles.sectionText} style={{ marginTop: 12 }}>
-              Automatically redirects to the original URL and tracks the click. Returns a 302 redirect with analytics tracking.
+              Automatically redirects to the original URL and tracks the click. Returns a 302 redirect.
             </p>
-
-            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
-            <div className={styles.codeBlockLight}>
-              <pre>{`# Browser (automatic redirect)
-https://workerscando.com/s/abc123
-
-# cURL (follow redirect)
-curl -L "https://workerscando.com/s/abc123"
-
-# JavaScript (inspect redirect)
-fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
-  .then(res => {
-    if (res.status === 302) {
-      const location = res.headers.get('Location');
-      console.log('Redirects to:', location);
-    }
-  });`}</pre>
-            </div>
           </div>
 
           <h3 className={styles.subsectionTitle}>Features</h3>
           <ul className={styles.list}>
-            <li><strong>⚡ Instant Shortening</strong> — Create short links instantly at the edge</li>
-            <li><strong>📊 Real-time Analytics</strong> — Track clicks, referrers, devices, and countries</li>
-            <li><strong>🎯 Custom Slugs</strong> — Create branded, memorable short links</li>
-            <li><strong>🌍 Global Performance</strong> — Redirects happen at the edge closest to users</li>
-            <li><strong>📈 Click Tracking</strong> — Automatic analytics on every redirect</li>
-            <li><strong>🔄 Persistent Storage</strong> — Supports Cloudflare KV for production persistence</li>
+            <li><strong>⚡ Instant Shortening</strong> — Create short links at the edge</li>
+            <li><strong>📊 Real-time Analytics</strong> — Track clicks, devices, countries</li>
+            <li><strong>🎯 Custom Slugs</strong> — Create branded short links</li>
+            <li><strong>🌍 Global Performance</strong> — Edge redirects under 50ms</li>
           </ul>
-
-          <h3 className={styles.subsectionTitle}>Use Cases</h3>
-          <ul className={styles.list}>
-            <li>Marketing campaigns with click tracking</li>
-            <li>Social media link shortening</li>
-            <li>Email campaigns and newsletters</li>
-            <li>QR code generation with analytics</li>
-            <li>Branded short links for businesses</li>
-            <li>Link sharing with privacy (hide long URLs)</li>
-          </ul>
-
-          <h3 className={styles.subsectionTitle}>Storage</h3>
-          <p className={styles.sectionText}>
-            By default, the URL shortener uses in-memory storage (data resets on deployment). For production use, configure Cloudflare KV for persistent storage. See the project page for setup instructions.
-          </p>
 
           <div className={styles.infoBox}>
             <p className={styles.infoText}>
-              💡 All endpoints support CORS and require no authentication. Perfect for browser-based applications!
+              💡 All endpoints support CORS. Perfect for browser apps!
             </p>
           </div>
 
@@ -539,12 +571,28 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
 
   const activeDoc = docSections.find(s => s.id === activeSection);
 
+  const handleSectionClick = (sectionId: string) => {
+    setActiveSection(sectionId);
+    setSidebarOpen(false); // Close sidebar on mobile after selection
+  };
+
   return (
     <main>
       <Navbar />
       <div className={styles.main}>
-        {/* Sidebar: always visible on all screens */}
-        <aside className={styles.sidebar}>
+        {/* Mobile menu toggle button */}
+        <button
+          className={`${styles.mobileMenuToggle} ${sidebarOpen ? styles.open : ''}`}
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          <span>{docSections.find(s => s.id === activeSection)?.title || 'Menu'}</span>
+        </button>
+
+        {/* Sidebar - hidden on mobile by default */}
+        <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
           <div className={styles.sidebarHeader}>
             <span className={styles.sidebarLabel}>
               Documentation
@@ -554,7 +602,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
             {docSections.map((section) => (
               <button
                 key={section.id}
-                onClick={() => setActiveSection(section.id)}
+                onClick={() => handleSectionClick(section.id)}
                 className={`${styles.sidebarButton} ${activeSection === section.id ? styles.sidebarButtonActive : ''}`}
               >
                 {section.title}

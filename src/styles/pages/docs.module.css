@@ -189,6 +189,11 @@
   padding-left: 24px;
 }
 
+/* Mobile menu toggle button - hidden on desktop */
+.mobileMenuToggle {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .content {
     max-width: 100vw;
@@ -196,21 +201,108 @@
 }
 
 @media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+
+  /* Mobile menu toggle button */
+  .mobileMenuToggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid #E5E5E5;
+    font-size: 14px;
+    font-weight: 600;
+    color: #18181B;
+    cursor: pointer;
+    position: sticky;
+    top: 80px;
+    z-index: 10;
+  }
+
+  .mobileMenuToggle svg {
+    width: 20px;
+    height: 20px;
+    color: #F97316;
+  }
+
+  .mobileMenuToggle span {
+    flex: 1;
+  }
+
+  .mobileMenuToggle::after {
+    content: '▼';
+    font-size: 10px;
+    color: #A1A1AA;
+    transition: transform 0.2s;
+  }
+
+  .mobileMenuToggle.open::after {
+    transform: rotate(180deg);
+  }
+
+  /* Sidebar hidden by default on mobile */
   .sidebar {
-    width: 100vw;
+    display: none;
+    width: 100%;
     border-right: none;
     border-bottom: 1px solid #E5E5E5;
-    padding: 12px 0;
-    min-height: auto;
+    padding: 8px 0 16px;
+    height: auto;
+    position: static;
+    background: #FAFAFA;
+  }
+
+  .sidebar.sidebarOpen {
+    display: block;
+  }
+
+  .sidebarHeader {
+    display: none;
+  }
+
+  .sidebarButton {
+    padding: 10px 16px;
+    border-left: none;
+    border-radius: 8px;
+    margin: 0 8px;
+    width: calc(100% - 16px);
+  }
+
+  .sidebarButtonActive {
+    background: #FFF7ED;
+    border-left: none;
   }
 
   .content {
-    padding: 18px 8px !important;
+    padding: 20px 16px !important;
+  }
+
+  .content>footer {
+    margin: 40px -16px 0;
+    width: calc(100% + 32px);
   }
 }
 
 @media (max-width: 480px) {
   .content {
-    padding: 10px 4px !important;
+    padding: 16px 12px !important;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+  }
+
+  .subsectionTitle {
+    font-size: 18px;
+  }
+
+  .codeBlock, .codeBlockLight {
+    font-size: 11px;
+    padding: 12px;
   }
 }

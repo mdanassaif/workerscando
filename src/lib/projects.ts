@@ -37,7 +37,7 @@ export const projects: Project[] = [
     url: "https://workerscando.com/projects/url-shortener",
     github: "https://github.com/mdanassaif/workerscando"
   },
-  // ...only live project: )
+
 ];
 
 export const getProjectBySlug = (slug: string): Project | undefined => {

@@ -50,10 +50,13 @@ export default function UrlMetadataClient({ project }: UrlMetadataClientProps) {
   const [exampleTab, setExampleTab] = useState<'html' | 'curl' | 'js'>('curl');
   const [exampleCopied, setExampleCopied] = useState(false);
 
+  // Direct Cloudflare Workers API URL
+  const WORKER_URL = 'https://url-metadata-api.brogee9o9.workers.dev';
+
   const exampleCode = {
-    html: `<meta property="og:url" content="https://workerscando.com/api/metadata?url=https://example.com" />`,
-    curl: `curl "https://workerscando.com/api/metadata?url=https://example.com"`,
-    js: `fetch('https://workerscando.com/api/metadata?url=' + encodeURIComponent('https://example.com'))
+    html: `<meta property="og:url" content="${WORKER_URL}/api/metadata?url=https://example.com" />`,
+    curl: `curl "${WORKER_URL}/api/metadata?url=https://example.com"`,
+    js: `fetch('${WORKER_URL}/api/metadata?url=' + encodeURIComponent('https://example.com'))
   .then(res => res.json())
   .then(data => console.log(data));`
   };
@@ -246,7 +249,7 @@ export default function UrlMetadataClient({ project }: UrlMetadataClientProps) {
           <div className={styles.apiCard}>
             <div className={styles.apiMethod}>
               <span className={styles.methodBadge}>GET</span>
-              <code className={styles.apiEndpoint}>/api/metadata?url={'{url}'}</code>
+              <code className={styles.apiEndpoint}>{WORKER_URL}/api/metadata?url={'{url}'}</code>
             </div>
 
             <div className={styles.parametersTable}>

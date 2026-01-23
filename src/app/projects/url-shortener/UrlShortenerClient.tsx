@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 import { Project } from '@/types';
 import styles from './url-shortener.module.css';
@@ -37,11 +37,14 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
   const [trackExampleCopied, setTrackExampleCopied] = useState(false);
   const [savedLinks, setSavedLinks] = useState<SavedShortLink[]>([]);
 
+  // Direct Cloudflare Workers API URL
+  const WORKER_URL = 'https://urlshortener.brogee9o9.workers.dev';
+
   const shortenExampleCode = {
-    curl: `curl -X POST "https://workerscando.com/api/shorten" \\
+    curl: `curl -X POST "${WORKER_URL}/api/shorten" \\
   -H "Content-Type: application/json" \\
   -d '{"url": "https://example.com"}'`,
-    js: `fetch('https://workerscando.com/api/shorten', {
+    js: `fetch('${WORKER_URL}/api/shorten', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ url: 'https://example.com' })
@@ -51,19 +54,19 @@ export default function UrlShortenerClient({ project }: UrlShortenerClientProps)
   };
 
   const statsExampleCode = {
-    curl: `curl "https://workerscando.com/api/s/abc123/stats"`,
-    js: `fetch('https://workerscando.com/api/s/abc123/stats')
+    curl: `curl "${WORKER_URL}/api/stats/abc123"`,
+    js: `fetch('${WORKER_URL}/api/stats/abc123')
   .then(res => res.json())
   .then(data => console.log(data));`
   };
 
   const trackExampleCode = {
-    curl: `curl -L "https://workerscando.com/s/abc123"`,
+    curl: `curl -L "${WORKER_URL}/abc123"`,
     js: `// Redirects automatically in browser
-window.location.href = 'https://workerscando.com/s/abc123';
+window.location.href = '${WORKER_URL}/abc123';
 
 // Or fetch with redirect: 'manual' to inspect
-fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
+fetch('${WORKER_URL}/abc123', { redirect: 'manual' })
   .then(res => {
     if (res.status === 302) {
       const location = res.headers.get('Location');
@@ -160,27 +163,32 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
     }
   };
 
-  const fetchAnalytics = async () => {
-    if (!result?.slug) return;
+  const fetchAnalytics = useCallback(async (slug: string) => {
     setLoadingAnalytics(true);
     try {
-      const data = await getShortUrlStats(result.slug);
+      const data = await getShortUrlStats(slug);
       setAnalytics(data);
     } catch (err) {
       console.error('Failed to fetch analytics:', err);
     } finally {
       setLoadingAnalytics(false);
     }
-  };
+  }, []);
 
+  // Fetch analytics on result change - reduced polling to 15s for performance
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
-    if (result) {
-      fetchAnalytics();
-      // Refresh analytics every 5 seconds
-      const interval = setInterval(fetchAnalytics, 5000);
-      return () => clearInterval(interval);
+    if (result?.slug) {
+      fetchAnalytics(result.slug);
+      // Clear previous interval
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      // Refresh analytics every 15 seconds (was 5s - reduced for performance)
+      intervalRef.current = setInterval(() => fetchAnalytics(result.slug), 15000);
+      return () => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      };
     }
-  }, [result]);
+  }, [result?.slug, fetchAnalytics]);
 
   return (
     <>
@@ -407,7 +415,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
           <div className={styles.apiCard} style={{ marginBottom: 24 }}>
             <div className={styles.apiMethod}>
               <span className={styles.methodBadge}>POST</span>
-              <code className={styles.apiEndpoint}>/api/shorten</code>
+              <code className={styles.apiEndpoint}>{WORKER_URL}/api/shorten</code>
             </div>
             <p className={styles.apiDescription}>Create a new short link</p>
 
@@ -466,7 +474,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
           <div className={styles.apiCard} style={{ marginBottom: 24 }}>
             <div className={styles.apiMethod}>
               <span className={styles.methodBadge}>GET</span>
-              <code className={styles.apiEndpoint}>/api/s/{'{slug}'}/stats</code>
+              <code className={styles.apiEndpoint}>{WORKER_URL}/api/stats/{'{slug}'}</code>
             </div>
             <p className={styles.apiDescription}>Get analytics and statistics for a short link</p>
 
@@ -516,7 +524,7 @@ fetch('https://workerscando.com/s/abc123', { redirect: 'manual' })
           <div className={styles.apiCard}>
             <div className={styles.apiMethod}>
               <span className={styles.methodBadge}>GET</span>
-              <code className={styles.apiEndpoint}>/s/{'{slug}'}</code>
+              <code className={styles.apiEndpoint}>{WORKER_URL}/{'{slug}'}</code>
             </div>
             <p className={styles.apiDescription}>Redirect to the original URL and track the click</p>
 

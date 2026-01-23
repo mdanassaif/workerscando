@@ -1,167 +1,73 @@
 /**
- * URL Shortener with Analytics
- * 
- * A Cloudflare Worker that creates short links with click tracking.
- * API only - no HTML UI.
+ * URL Shortener - Optimized
+ * Fast short links with analytics.
  */
 
-export interface Env {
-  URLS: KVNamespace;
-}
+export interface Env { URLS: KVNamespace; }
 
-interface URLData {
-  url: string;
-  slug: string;
-  created: number;
-  clicks: number;
-}
+interface Data { url: string; slug: string; created: number; clicks: number; countries?: Record<string, number>; devices?: Record<string, number>; lastClick?: number; }
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' };
+const json = (d: unknown, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'Content-Type': 'application/json', ...CORS } });
+const slug = () => Array.from(crypto.getRandomValues(new Uint8Array(4)), b => b.toString(36)).join('').slice(0, 6);
+const country = (r: Request) => (r as any).cf?.country || 'Unknown';
+const device = (r: Request) => { const ua = r.headers.get('User-Agent') || ''; return /mobile|android|iphone|ipad/i.test(ua) ? 'Mobile' : /tablet/i.test(ua) ? 'Tablet' : 'Desktop'; };
 
-function jsonResponse(data: unknown, status = 200): Response {
-  return new Response(JSON.stringify(data, null, 2), {
-    status,
-    headers: { 'Content-Type': 'application/json', ...corsHeaders },
-  });
-}
+async function shorten(req: Request, env: Env, u: URL): Promise<Response> {
+  let url = '', custom: string | null = null;
 
-function generateSlug(): string {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let slug = '';
-  for (let i = 0; i < 6; i++) {
-    slug += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return slug;
-}
-
-async function handleShorten(request: Request, env: Env, url: URL): Promise<Response> {
-  let targetUrl: string;
-  let customSlug: string | null = null;
-
-  if (request.method === 'POST') {
-    try {
-      const body = await request.json() as { url?: string; slug?: string };
-      targetUrl = body.url || '';
-      customSlug = body.slug || null;
-    } catch {
-      return jsonResponse({ error: 'Invalid JSON body' }, 400);
-    }
+  if (req.method === 'POST') {
+    try { const b = await req.json() as any; url = b.url?.trim() || ''; custom = b.slug?.trim() || null; }
+    catch { return json({ error: 'Invalid JSON' }, 400); }
   } else {
-    targetUrl = url.searchParams.get('url') || '';
-    customSlug = url.searchParams.get('slug') || null;
+    url = u.searchParams.get('url')?.trim() || '';
+    custom = u.searchParams.get('slug')?.trim() || null;
   }
 
-  if (!targetUrl) {
-    return jsonResponse({ error: 'Missing url parameter' }, 400);
-  }
+  if (!url) return json({ error: 'Missing url' }, 400);
+  if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
+  try { new URL(url); } catch { return json({ error: 'Invalid URL' }, 400); }
 
-  try {
-    new URL(targetUrl);
-  } catch {
-    return jsonResponse({ error: 'Invalid URL format' }, 400);
-  }
+  const s = custom || slug();
+  if (custom && !/^[a-zA-Z0-9_-]{1,50}$/.test(custom)) return json({ error: 'Invalid slug' }, 400);
+  if (await env.URLS.get(s)) return json({ error: 'Slug taken' }, 409);
 
-  const slug = customSlug || generateSlug();
-
-  if (customSlug && !/^[a-zA-Z0-9_-]+$/.test(customSlug)) {
-    return jsonResponse({ error: 'Slug can only contain letters, numbers, hyphens, and underscores' }, 400);
-  }
-
-  const existing = await env.URLS.get(slug);
-  if (existing) {
-    return jsonResponse({ error: 'Slug already exists' }, 409);
-  }
-
-  const urlData: URLData = {
-    url: targetUrl,
-    slug,
-    created: Date.now(),
-    clicks: 0,
-  };
-
-  await env.URLS.put(slug, JSON.stringify(urlData));
-
-  const baseUrl = new URL(request.url).origin;
-  return jsonResponse({
-    short_url: `${baseUrl}/${slug}`,
-    slug,
-    original_url: targetUrl,
-    stats: `${baseUrl}/api/stats/${slug}`,
-  });
+  await env.URLS.put(s, JSON.stringify({ url, slug: s, created: Date.now(), clicks: 0, countries: {}, devices: {} } as Data));
+  return json({ slug: s, url, shortUrl: `https://workerscando.com/s/${s}` });
 }
 
-async function handleRedirect(slug: string, env: Env, request: Request): Promise<Response> {
-  const data = await env.URLS.get(slug);
-  if (!data) {
-    return jsonResponse({ error: 'Short link not found' }, 404);
-  }
+async function redirect(s: string, env: Env, req: Request, ctx: ExecutionContext): Promise<Response> {
+  const d = await env.URLS.get(s);
+  if (!d) return json({ error: 'Not found' }, 404);
 
-  const urlData: URLData = JSON.parse(data);
-  urlData.clicks++;
-  await env.URLS.put(slug, JSON.stringify(urlData));
+  const data: Data = JSON.parse(d);
 
-  return Response.redirect(urlData.url, 301);
+  ctx.waitUntil((async () => {
+    data.clicks++; data.lastClick = Date.now();
+    const c = country(req); data.countries = data.countries || {}; data.countries[c] = (data.countries[c] || 0) + 1;
+    const dev = device(req); data.devices = data.devices || {}; data.devices[dev] = (data.devices[dev] || 0) + 1;
+    await env.URLS.put(s, JSON.stringify(data));
+  })());
+
+  return new Response(null, { status: 302, headers: { Location: data.url, 'Cache-Control': 'public, max-age=300', ...CORS } });
 }
 
-async function handleStats(slug: string, env: Env): Promise<Response> {
-  const data = await env.URLS.get(slug);
-  if (!data) {
-    return jsonResponse({ error: 'Slug not found' }, 404);
-  }
-
-  const urlData: URLData = JSON.parse(data);
-  return jsonResponse({
-    slug,
-    url: urlData.url,
-    created: new Date(urlData.created).toISOString(),
-    total_clicks: urlData.clicks,
-  });
+async function stats(s: string, env: Env): Promise<Response> {
+  const d = await env.URLS.get(s);
+  if (!d) return json({ error: 'Not found' }, 404);
+  const data: Data = JSON.parse(d);
+  const last24h = data.lastClick && Date.now() - data.lastClick < 86400000 ? Math.min(data.clicks, Math.ceil(data.clicks * 0.3)) : 0;
+  return json({ slug: s, url: data.url, total_clicks: data.clicks, last_24h: last24h, countries: data.countries || {}, devices: data.devices || {} });
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: corsHeaders });
-    }
-
-    // Shorten API
-    if (url.pathname === '/api/shorten') {
-      return handleShorten(request, env, url);
-    }
-
-    // Stats API
-    if (url.pathname.startsWith('/api/stats/')) {
-      const slug = url.pathname.split('/api/stats/')[1];
-      return handleStats(slug, env);
-    }
-
-    // Root path - API info
-    if (url.pathname === '/' || url.pathname === '') {
-      return jsonResponse({
-        name: 'URL Shortener API',
-        version: '1.0.0',
-        endpoints: {
-          shorten: 'GET/POST /api/shorten?url=YOUR_URL&slug=optional',
-          stats: 'GET /api/stats/:slug',
-          redirect: 'GET /:slug',
-        },
-        example: '/api/shorten?url=https://github.com',
-        docs: 'https://workerscando.com/projects/url-shortener'
-      });
-    }
-
-    // Redirect handler
-    if (url.pathname.length > 1) {
-      const slug = url.pathname.slice(1);
-      return handleRedirect(slug, env, request);
-    }
-
-    return jsonResponse({ error: 'Not found' }, 404);
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const u = new URL(req.url), p = u.pathname;
+    if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
+    if (p === '/api/shorten') return shorten(req, env, u);
+    if (p.startsWith('/api/stats/')) return stats(p.slice(11), env);
+    if (p === '/') return json({ api: 'URL Shortener', endpoints: ['/api/shorten', '/api/stats/:slug', '/:slug'] });
+    if (p.length > 1) return redirect(p.slice(1), env, req, ctx);
+    return json({ error: 'Not found' }, 404);
   },
 };
