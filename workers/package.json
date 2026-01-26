@@ -7,11 +7,13 @@
         "dev:url-metadata": "cd url-metadata && npm run dev",
         "dev:og-image": "cd og-image && npm run dev",
         "dev:url-shortener": "cd url-shortener && npm run dev",
+        "dev:apithrottle": "cd apithrottle && npm run dev",
         "deploy:url-metadata": "cd url-metadata && npm run deploy",
         "deploy:og-image": "cd og-image && npm run deploy",
         "deploy:url-shortener": "cd url-shortener && npm run deploy",
-        "deploy:all": "npm run deploy:url-metadata && npm run deploy:og-image && npm run deploy:url-shortener",
-        "install:all": "cd url-metadata && npm install && cd ../og-image && npm install && cd ../url-shortener && npm install"
+        "deploy:apithrottle": "cd apithrottle && npm run deploy",
+        "deploy:all": "npm run deploy:url-metadata && npm run deploy:og-image && npm run deploy:url-shortener && npm run deploy:apithrottle",
+        "install:all": "cd url-metadata && npm install && cd ../og-image && npm install && cd ../url-shortener && npm install && cd ../apithrottle && npm install"
     },
     "keywords": [
         "cloudflare",

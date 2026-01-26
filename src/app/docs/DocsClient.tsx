@@ -566,7 +566,74 @@ fetch('${WORKERS.SHORTENER}/api/stats/abc123')
           </p>
         </div>
       )
-    }
+    },
+    {
+      id: 'hire-wire',
+      title: 'HireWire API',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>HireWire API</h2>
+          <span className={styles.statusBadge}>LIVE</span>
+          <p className={styles.sectionText}>
+            <strong>HireWire</strong> lets you add a "Hire Me" contact form to any static site or portfolio. Messages are sent directly to your Discord via webhook—no backend required. Perfect for freelancers, developers, and creators who want instant contact alerts.
+          </p>
+          <h3 className={styles.subsectionTitle}>How does it work?</h3>
+          <ol className={styles.list} style={{ marginBottom: 24 }}>
+            <li>Register your Discord webhook using the API or UI.</li>
+            <li>Get a ready-to-use contact form component or HTML snippet.</li>
+            <li>Embed it in your site—messages go straight to your Discord!</li>
+          </ol>
+          <h3 className={styles.subsectionTitle}>How to get your Discord webhook?</h3>
+          <ol className={styles.list} style={{ marginBottom: 24 }}>
+            <li>Go to your Discord server and open <strong>Server Settings &gt; Integrations &gt; Webhooks</strong>.</li>
+            <li>Create a new webhook and copy the <strong>Webhook URL</strong>.</li>
+            <li>Paste this URL when registering with HireWire.</li>
+          </ol>
+
+          <h3 className={styles.subsectionTitle}>Endpoints</h3>
+          <div className={styles.apiCard}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>POST</span> <code className={styles.apiEndpoint}>/register</code></div>
+            <div className={styles.parametersTable}>
+              <div className={styles.tableHeader}><div className={styles.tableCell}>Parameter</div><div className={styles.tableCell}>Description</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>name</code></div><div className={styles.tableCell}>Project name (string)</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>webhookUrl</code></div><div className={styles.tableCell}>Discord webhook URL (string)</div></div>
+            </div>
+            <div className={styles.responseContainer} style={{marginTop:16}}>
+                <span className={styles.responseLabel}>Response</span>
+                <pre className={styles.codeBlock}>{`{
+    "success": true,
+    "userId": "abc123",
+    "message": "Account created!",
+    "scriptUrl": "https://hire-wire.brogee9o9.workers.dev/widget.js?id=abc123"
+  }`}</pre>
+            </div>
+          </div>
+
+          <div className={styles.apiCard} style={{marginTop:32}}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>POST</span> <code className={styles.apiEndpoint}>/send?id=USER_ID</code></div>
+            <div className={styles.parametersTable}>
+              <div className={styles.tableHeader}><div className={styles.tableCell}>Parameter</div><div className={styles.tableCell}>Description</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>email</code></div><div className={styles.tableCell}>Sender's email address</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>message</code></div><div className={styles.tableCell}>Message content</div></div>
+            </div>
+            <div className={styles.responseContainer} style={{marginTop:16}}>
+                <span className={styles.responseLabel}>Response</span>
+                <pre className={styles.codeBlock}>{`{
+    "sent": true
+  }`}</pre>
+            </div>
+          </div>
+
+          <div className={styles.apiCard} style={{marginTop:32}}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>GET</span> <code className={styles.apiEndpoint}>/widget.js?id=USER_ID</code></div>
+            <div className={styles.parametersTable}>
+              <div className={styles.tableHeader}><div className={styles.tableCell}>Usage</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}>Embed the script in your HTML. It exposes <code>window.HireWire.send(email, message)</code> for sending messages.</div></div>
+            </div>
+          </div>
+        </div>
+      )
+    },
   ];
 
   const activeDoc = docSections.find(s => s.id === activeSection);

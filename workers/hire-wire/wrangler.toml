@@ -1,0 +1,12 @@
+name = "hire-wire"
+type = "javascript"
+main = "src/index.ts"
+compatibility_date = "2024-01-26"
+
+[triggers]
+routes = ["/api/hire-wire/*"]
+
+[[kv_namespaces]]
+binding = "HIREWIRE_DB"
+id = "1b8a2ce24c814ce4a31e77806ca8d76d"
+
