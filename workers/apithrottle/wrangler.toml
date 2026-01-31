@@ -1,0 +1,16 @@
+name = "apithrottle"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# KV Namespace for storing throttle state
+# Create with: wrangler kv:namespace create "THROTTLE_KV"
+# Then update the id below with the returned ID
+[[kv_namespaces]]
+binding = "THROTTLE_KV"
+id = "YOUR_KV_NAMESPACE_ID_HERE"  # Replace after running: wrangler kv:namespace create "THROTTLE_KV"
+
+# For local development
+# [[kv_namespaces]]
+# binding = "THROTTLE_KV"
+# id = "YOUR_PREVIEW_KV_ID"
+# preview_id = "YOUR_PREVIEW_KV_ID"

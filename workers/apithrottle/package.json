@@ -1,0 +1,27 @@
+{
+    "name": "@workerscando/apithrottle",
+    "version": "1.0.0",
+    "description": "Smart, Learning Rate Limiter for APIs - Edge-based rate limiting that adapts to behavior",
+    "type": "module",
+    "scripts": {
+        "dev": "wrangler dev",
+        "deploy": "wrangler deploy",
+        "tail": "wrangler tail"
+    },
+    "keywords": [
+        "cloudflare",
+        "workers",
+        "rate-limiting",
+        "api-protection",
+        "bot-detection",
+        "throttling",
+        "edge"
+    ],
+    "author": "mdanassaif",
+    "license": "MIT",
+    "devDependencies": {
+        "@cloudflare/workers-types": "^4.20241205.0",
+        "typescript": "^5.7.2",
+        "wrangler": "^3.99.0"
+    }
+}

@@ -1,0 +1,21 @@
+name = "dead-man-switch"
+main = "src/index.ts"
+compatibility_date = "2024-05-02"
+compatibility_flags = ["nodejs_compat"]
+
+[[workflows]]
+name = "dead-man-switch-workflow"
+binding = "DEAD_MAN_SWITCH_WORKFLOW"
+class_name = "DeadManSwitchWorkflow"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "bf909cc3828344cd8eafdc343ef01bd2"
+preview_id = "bf909cc3828344cd8eafdc343ef01bd2"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[vars]
+RESEND_API_KEY = "re_GKFUTUsq_7WZ2TXtT5WvEYePj4enLLvNy"

@@ -1,0 +1,50 @@
+.linksSection {
+  padding: 60px 40px;
+  background: white;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.linksContent {
+  text-align: center;
+}
+
+.linkLine {
+  font-size: 17px;
+  color: #52525B;
+  line-height: 1.8;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+.linkLine:last-child {
+  margin-bottom: 0;
+}
+
+.inlineLink {
+  color: #F97316;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  border-bottom: 1.5px solid transparent;
+  padding-bottom: 1px;
+}
+
+.inlineLink:hover {
+  color: #EA580C;
+  border-bottom-color: #EA580C;
+}
+
+@media (max-width: 768px) {
+  .linksSection {
+    padding: 40px 24px;
+  }
+
+  .linkLine {
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+}

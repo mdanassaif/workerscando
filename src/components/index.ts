@@ -5,3 +5,4 @@ export { default as FeaturedProjects } from './FeaturedProjects';
 export { default as WhyWorkers } from './WhyWorkers';
 export { default as CTA } from './CTA';
 export { default as Footer } from './Footer';
+export { default as LinksSection } from './LinksSection';

@@ -38,25 +38,35 @@ export const projects: Project[] = [
     github: "https://github.com/mdanassaif/workerscando"
   },
 
- 
-{
-  id: 4,  
-  name: 'HireWire',
-  slug: 'hire-wire',
-  description: 'Add a "Hire Me" form to any static site. No backend required.',
-  longDescription: 'A backend-as-a-service that lets you collect contact form submissions directly to Discord using a single script tag.',
-  status: 'live',
-  tag: 'SaaS',
-  day: 4,
-},
+
+  {
+    id: 4,
+    name: 'HireWire',
+    slug: 'hire-wire',
+    description: 'Add a "Hire Me" form to any static site. No backend required.',
+    longDescription: 'A backend-as-a-service that lets you collect contact form submissions directly to Discord using a single script tag.',
+    status: 'live',
+    tag: 'SaaS',
+    day: 4,
+  },
   {
     id: 5,
+    name: "Dead Man Switch",
+    slug: "dead-man-switch",
+    description: "A dead man's switch that releases your secrets if you don't check in",
+    longDescription: "A dead man's switch that releases your secrets if you don't check in",
+    status: 'live',
+    tag: 'SaaS',
+    day: 5,
+  },
+  {
+    id: 6,
     name: "APIThrottle",
     slug: "apithrottle",
     description: "Smart, learning rate limiter that adapts to behavior",
     longDescription: "Edge-based rate limiting that protects your APIs with intelligent bot detection. Uses IP + TLS fingerprint + behavioral patterns to classify requests as human or bot, applying adaptive rate limits with zero latency.",
     tag: "Security",
-    status: "coming",
+    status: "live",
     day: 5,
     url: "https://workerscando.com/projects/apithrottle",
     github: "https://github.com/mdanassaif/workerscando"
