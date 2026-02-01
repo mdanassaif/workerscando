@@ -18,4 +18,8 @@ enabled = true
 head_sampling_rate = 1
 
 [vars]
-RESEND_API_KEY = "re_GKFUTUsq_7WZ2TXtT5WvEYePj4enLLvNy"
+
+# Remove RESEND_API_KEY from here before pushing to GitHub.
+# Set RESEND_API_KEY securely in your Cloudflare dashboard (Environment Variables).
+ 
+ENCRYPTION_SECRET = "wRdxSgJZwgijlJYxafDF3YJqWFv9gLCCqZjRtvNdjaM="
