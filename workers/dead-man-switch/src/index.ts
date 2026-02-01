@@ -63,8 +63,8 @@ app.post('/arm', async (c) => {
 
         const checkInUrl = `${new URL(c.req.url).origin}/check-in/${workflowId}`;
 
-        // Dynamic grace period for testing
-        const gracePeriod = checkInDelay === "1 minute" ? "2 minutes" : "24 hours";
+         
+        const gracePeriod = checkInDelay.toLowerCase() === "1 minute" ? "2 minutes" : "24 hours";
 
         // Start the workflow
         const instance = await c.env.DEAD_MAN_SWITCH_WORKFLOW.create({
