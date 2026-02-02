@@ -3,23 +3,30 @@ main = "src/index.ts"
 compatibility_date = "2024-05-02"
 compatibility_flags = ["nodejs_compat"]
 
+# Workflow Configuration
 [[workflows]]
 name = "dead-man-switch-workflow"
 binding = "DEAD_MAN_SWITCH_WORKFLOW"
 class_name = "DeadManSwitchWorkflow"
 
+# KV Namespace for storing encrypted secrets
 [[kv_namespaces]]
-binding = "KV"
-id = "bf909cc3828344cd8eafdc343ef01bd2"
-preview_id = "bf909cc3828344cd8eafdc343ef01bd2"
+binding = "KV_BINDING"
+id = "214daa56163645a8a952fb1ab48724bb"
+preview_id = "214daa56163645a8a952fb1ab48724bb"
 
+# Observability
 [observability]
 enabled = true
 head_sampling_rate = 1
 
+# Environment Variables (non-sensitive)
 [vars]
-
-# Remove RESEND_API_KEY from here before pushing to GitHub.
-# Set RESEND_API_KEY securely in your Cloudflare dashboard (Environment Variables).
- 
+# IMPORTANT: This is your encryption key - keep it secret!
+# In production, consider using Cloudflare Secrets instead
 ENCRYPTION_SECRET = "wRdxSgJZwgijlJYxafDF3YJqWFv9gLCCqZjRtvNdjaM="
+
+# IMPORTANT: Set RESEND_API_KEY as a secret in Cloudflare Dashboard
+# DO NOT commit this to git!
+# Run: wrangler secret put RESEND_API_KEY
+# Or set in Cloudflare Dashboard under Workers > dead-man-switch > Settings > Environment Variables
