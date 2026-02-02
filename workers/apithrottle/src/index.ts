@@ -1,21 +1,3 @@
-import { Hono } from 'hono';
-const app = new Hono();
-// Simple in-memory throttle (for demo; use KV or Durable Object for production)
-const requests: Record<string, number[]> = {};
-const WINDOW_SIZE = 60 * 1000; // 1 minute
-const MAX_REQUESTS = 5;
-app.use('*', async (c, next) => {
-    const ip = c.req.header('CF-Connecting-IP') || 'unknown';
-    const now = Date.now();
-    requests[ip] = (requests[ip] || []).filter(ts => now - ts < WINDOW_SIZE);
-    if (requests[ip].length >= MAX_REQUESTS) {
-    return c.text('Rate limit exceeded. Try again later.', 429);
-    }
-    requests[ip].push(now);
-    await next();
-});
-app.get('/', (c) => c.text('API Throttle Worker is running!'));
-export default app;
 /**
  * APIThrottle - Smart, Learning Rate Limiter for APIs
  * Edge-based rate limiting that adapts to behavior — IP + fingerprint + patterns.
