@@ -37,7 +37,7 @@ export default {
                 return await handleManualTrigger(request, env, corsHeaders);
             }
 
-            // NEW: Get encrypted data for decryption (used by frontend)
+            // Get encrypted data for decryption (used by frontend)
             if (path.startsWith('/api/decrypt/') && request.method === 'GET') {
                 const switchId = path.split('/')[3];
                 return await handleGetDecryptData(request, env, corsHeaders, switchId);
@@ -65,7 +65,7 @@ export default {
     },
 };
 
-// 🆕 Handle external cron trigger (from cron-job.org)
+// Handle external cron trigger (from cron-job.org)
 async function handleExternalCron(request, env, corsHeaders) {
     // Security: Verify the secret token
     const authHeader = request.headers.get('Authorization');
@@ -83,15 +83,9 @@ async function handleExternalCron(request, env, corsHeaders) {
 
     const expectedToken = `Bearer ${env.CRON_SECRET}`;
 
-    // Debug logging (remove in production)
-    console.log('Received auth header:', authHeader);
-    console.log('Expected format: Bearer YOUR_SECRET');
-
     if (authHeader !== expectedToken) {
         return new Response(JSON.stringify({
-            error: 'Unauthorized - Invalid token',
-            receivedHeader: authHeader ? 'Header received (check format)' : 'No Authorization header',
-            expectedFormat: 'Bearer YOUR_SECRET_TOKEN'
+            error: 'Unauthorized - Invalid token'
         }), {
             status: 401,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -373,9 +367,8 @@ async function triggerSwitch(env, switchData) {
     await sendSecretEmail(env, switchData);
 }
 
-// Send verification email
+// Send verification email - clean professional design
 async function sendVerificationEmail(env, switchData, token) {
-    // Links point to frontend, not worker
     const frontendUrl = env.FRONTEND_URL || 'https://workerscando.com/projects/dead-man-switch';
     const verifyUrl = `${frontendUrl}/verify?id=${switchData.id}&token=${token}`;
 
@@ -383,40 +376,64 @@ async function sendVerificationEmail(env, switchData, token) {
     <!DOCTYPE html>
     <html>
     <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .container { background: #f9f9f9; border-radius: 8px; padding: 30px; }
-        .header { background: linear-gradient(135deg, #F97316 0%, #EA580C 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
-        .button { display: inline-block; background: #F97316; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #18181B; max-width: 600px; margin: 0 auto; padding: 0; background: #F4F4F5; }
+        .container { background: #FFFFFF; margin: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .header { background: #F97316; color: white; padding: 32px 24px; text-align: center; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .content { padding: 32px 24px; }
+        .content h2 { margin: 0 0 16px; font-size: 20px; color: #18181B; }
+        .content p { margin: 0 0 16px; color: #52525B; }
+        .button { display: inline-block; background: #F97316; color: white; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px; }
+        .button:hover { background: #EA580C; }
+        .button-container { text-align: center; margin: 32px 0; }
+        .info-box { background: #FFF7ED; border: 1px solid #FED7AA; border-radius: 6px; padding: 16px; margin: 24px 0; }
+        .info-box p { margin: 0; color: #9A3412; font-size: 14px; }
+        .details { background: #FAFAFA; border-radius: 6px; padding: 16px; margin: 24px 0; }
+        .details-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #E5E5E5; }
+        .details-row:last-child { border-bottom: none; }
+        .details-label { color: #71717A; font-size: 14px; }
+        .details-value { color: #18181B; font-size: 14px; font-weight: 500; }
+        .footer { padding: 24px; text-align: center; border-top: 1px solid #E5E5E5; }
+        .footer p { margin: 0; color: #A1A1AA; font-size: 12px; }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>🔐 Dead Man's Switch</h1>
-          <p>Proof of Life Check</p>
+          <h1>Dead Man's Switch</h1>
         </div>
-        <div style="padding: 30px;">
-          <h2>Are you still there?</h2>
-          <p>This is your scheduled check-in for your Dead Man's Switch.</p>
-          <p>Click the button below to confirm you're alive and well:</p>
-          <div style="text-align: center;">
-            <a href="${verifyUrl}" class="button">I'm Alive! ✓</a>
+        <div class="content">
+          <h2>Check-In Required</h2>
+          <p>This is your scheduled check-in. Click the button below to confirm you're still active and keep your secret safe.</p>
+          
+          <div class="button-container">
+            <a href="${verifyUrl}" class="button">Confirm I'm Active</a>
           </div>
-          <div class="warning">
-            <strong>⚠️ Important:</strong> If you don't click this link within the next check interval, your secret will be automatically sent to your designated recipient.
+          
+          <div class="info-box">
+            <p><strong>Important:</strong> If you don't respond within the next check interval, your secret will be sent to your designated recipient.</p>
           </div>
-          <p><strong>Your Switch Details:</strong></p>
-          <ul>
-            <li>Check Interval: Every ${switchData.checkInterval} minute(s)</li>
-            <li>Recipient: ${switchData.recipientEmail}</li>
-            <li>Missed Checks: ${switchData.missedChecks}/2</li>
-          </ul>
+          
+          <div class="details">
+            <div class="details-row">
+              <span class="details-label">Check Interval</span>
+              <span class="details-value">Every ${switchData.checkInterval} minute(s)</span>
+            </div>
+            <div class="details-row">
+              <span class="details-label">Recipient</span>
+              <span class="details-value">${switchData.recipientEmail}</span>
+            </div>
+            <div class="details-row">
+              <span class="details-label">Missed Checks</span>
+              <span class="details-value">${switchData.missedChecks} of 2</span>
+            </div>
+          </div>
         </div>
         <div class="footer">
-          <p>Dead Man's Switch - Your secrets, safely guarded</p>
+          <p>Dead Man's Switch by WorkersCanDo</p>
         </div>
       </div>
     </body>
@@ -434,14 +451,14 @@ async function sendVerificationEmail(env, switchData, token) {
             body: JSON.stringify({
                 from: 'Dead Man\'s Switch <noreply@deadman.workerscando.com>',
                 to: switchData.ownerEmail,
-                subject: '🔐 Proof of Life Check - Dead Man\'s Switch',
+                subject: 'Check-In Required - Dead Man\'s Switch',
                 html: emailHtml,
             }),
         });
     }
 }
 
-// Send secret to recipient
+// Send secret to recipient - clean professional design
 async function sendSecretEmail(env, switchData) {
     const frontendUrl = env.FRONTEND_URL || 'https://workerscando.com/projects/dead-man-switch';
     const decryptUrl = `${frontendUrl}/decrypt?id=${switchData.id}`;
@@ -450,34 +467,47 @@ async function sendSecretEmail(env, switchData) {
     <!DOCTYPE html>
     <html>
     <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .container { background: #f9f9f9; border-radius: 8px; padding: 30px; }
-        .header { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
-        .button { display: inline-block; background: #dc2626; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-weight: bold; }
-        .alert { background: #fee2e2; border-left: 4px solid #dc2626; padding: 12px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #18181B; max-width: 600px; margin: 0 auto; padding: 0; background: #F4F4F5; }
+        .container { background: #FFFFFF; margin: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .header { background: #DC2626; color: white; padding: 32px 24px; text-align: center; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .content { padding: 32px 24px; }
+        .content h2 { margin: 0 0 16px; font-size: 20px; color: #18181B; }
+        .content p { margin: 0 0 16px; color: #52525B; }
+        .button { display: inline-block; background: #DC2626; color: white; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px; }
+        .button:hover { background: #B91C1C; }
+        .button-container { text-align: center; margin: 32px 0; }
+        .alert-box { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 6px; padding: 16px; margin: 24px 0; }
+        .alert-box p { margin: 0; color: #991B1B; font-size: 14px; }
+        .footer { padding: 24px; text-align: center; border-top: 1px solid #E5E5E5; }
+        .footer p { margin: 0; color: #A1A1AA; font-size: 12px; }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>⚠️ Dead Man's Switch Triggered</h1>
-          <p>A secret has been released to you</p>
+          <h1>Secret Released</h1>
         </div>
-        <div style="padding: 30px;">
-          <div class="alert">
-            <strong>Important Notice:</strong> Someone has designated you to receive their secret in the event they are unable to respond.
+        <div class="content">
+          <h2>A Secret Has Been Entrusted to You</h2>
+          
+          <div class="alert-box">
+            <p><strong>Notice:</strong> This secret was released because the owner failed to respond to multiple check-ins.</p>
           </div>
-          <p>A Dead Man's Switch has been triggered because the owner failed to respond to multiple check-ins.</p>
-          <p>Click below to view the secret that has been entrusted to you:</p>
-          <div style="text-align: center;">
-            <a href="${decryptUrl}" class="button">View Secret 🔓</a>
+          
+          <p>Someone designated you to receive their encrypted secret in the event they are unable to respond. Click the button below to view and decrypt the message.</p>
+          
+          <div class="button-container">
+            <a href="${decryptUrl}" class="button">View Secret</a>
           </div>
-          <p><small>This link will allow you to decrypt and view the secret that was left for you.</small></p>
+          
+          <p style="font-size: 14px; color: #71717A;">The secret is encrypted and will be decrypted in your browser for security.</p>
         </div>
         <div class="footer">
-          <p>Dead Man's Switch - Secure secret transmission</p>
+          <p>Dead Man's Switch by WorkersCanDo</p>
         </div>
       </div>
     </body>
@@ -494,7 +524,7 @@ async function sendSecretEmail(env, switchData) {
             body: JSON.stringify({
                 from: 'Dead Man\'s Switch <noreply@deadman.workerscando.com>',
                 to: switchData.recipientEmail,
-                subject: '⚠️ Dead Man\'s Switch Triggered - Secret Released',
+                subject: 'Secret Released - Dead Man\'s Switch',
                 html: emailHtml,
             }),
         });

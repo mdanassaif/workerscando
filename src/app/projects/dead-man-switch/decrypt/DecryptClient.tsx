@@ -2,8 +2,38 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import styles from '../dead-man-switch.module.css';
 
 const API_URL = 'https://dead-man-switch.brogee9o9.workers.dev';
+
+// SVG Icons
+const UnlockIcon = () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+    </svg>
+);
+
+const AlertIcon = () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+);
+
+const CopyIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    </svg>
+);
+
+const CheckIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <polyline points="20 6 9 17 4 12" />
+    </svg>
+);
 
 export default function DecryptClient() {
     const searchParams = useSearchParams();
@@ -102,182 +132,130 @@ export default function DecryptClient() {
     }
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'linear-gradient(180deg, #FEF2F2 0%, #FFFFFF 100%)',
-            padding: '20px'
-        }}>
-            <div style={{
-                background: 'white',
-                borderRadius: '16px',
-                padding: '48px',
-                maxWidth: '600px',
-                width: '100%',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-                border: '1px solid #E5E5E5'
-            }}>
-                {status === 'loading' && (
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{
-                            width: '48px',
-                            height: '48px',
-                            border: '3px solid #E5E5E5',
-                            borderTop: '3px solid #DC2626',
-                            borderRadius: '50%',
-                            animation: 'spin 1s linear infinite',
-                            margin: '0 auto 24px'
-                        }} />
-                        <p style={{ color: '#71717A', fontSize: '16px' }}>Decrypting secret...</p>
-                        <style jsx>{`
-                            @keyframes spin {
-                                0% { transform: rotate(0deg); }
-                                100% { transform: rotate(360deg); }
-                            }
-                        `}</style>
-                    </div>
-                )}
-
-                {status === 'success' && (
-                    <>
-                        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-                            <h1 style={{
-                                fontSize: '28px',
-                                fontWeight: '700',
-                                color: '#DC2626',
-                                marginBottom: '12px'
-                            }}>
-                                🔓 Dead Man&apos;s Switch Triggered
-                            </h1>
-                        </div>
-
-                        <div style={{
-                            background: '#FEF2F2',
-                            border: '1px solid #FECACA',
-                            borderRadius: '8px',
-                            padding: '16px',
-                            marginBottom: '24px'
-                        }}>
-                            <p style={{ color: '#991B1B', fontSize: '14px' }}>
-                                <strong>⚠️ IMPORTANT:</strong> This secret was released because the owner failed to respond to multiple check-ins.
-                            </p>
-                        </div>
-
-                        <div style={{
-                            background: '#F8FAFC',
-                            border: '1px solid #E2E8F0',
-                            borderRadius: '12px',
-                            padding: '24px',
-                            marginBottom: '24px'
-                        }}>
-                            <p style={{
-                                fontSize: '12px',
-                                fontWeight: '600',
-                                color: '#64748B',
-                                textTransform: 'uppercase',
-                                marginBottom: '12px'
-                            }}>
-                                The Secret:
-                            </p>
+        <section className={styles.formSection} style={{ minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
+            <div className={styles.container}>
+                <div className={styles.formCard} style={{ maxWidth: '560px', margin: '0 auto' }}>
+                    {status === 'loading' && (
+                        <div style={{ textAlign: 'center' }}>
                             <div style={{
-                                background: '#18181B',
-                                color: '#10B981',
-                                padding: '20px',
-                                borderRadius: '8px',
-                                fontFamily: 'monospace',
-                                fontSize: '14px',
-                                lineHeight: '1.8',
-                                wordBreak: 'break-word',
-                                whiteSpace: 'pre-wrap'
-                            }}>
-                                {secret}
+                                width: '48px',
+                                height: '48px',
+                                border: '3px solid #E5E5E5',
+                                borderTop: '3px solid #DC2626',
+                                borderRadius: '50%',
+                                animation: 'spin 1s linear infinite',
+                                margin: '0 auto 24px'
+                            }} />
+                            <p style={{ color: '#71717A', fontSize: '16px' }}>Decrypting secret...</p>
+                            <style jsx>{`
+                                @keyframes spin {
+                                    0% { transform: rotate(0deg); }
+                                    100% { transform: rotate(360deg); }
+                                }
+                            `}</style>
+                        </div>
+                    )}
+
+                    {status === 'success' && (
+                        <>
+                            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                                <div style={{
+                                    width: '64px',
+                                    height: '64px',
+                                    background: '#FEF2F2',
+                                    borderRadius: '50%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    margin: '0 auto 20px',
+                                    color: '#DC2626'
+                                }}>
+                                    <UnlockIcon />
+                                </div>
+                                <h2 className={styles.formTitle} style={{ color: '#DC2626' }}>
+                                    Secret Released
+                                </h2>
                             </div>
-                        </div>
 
-                        <button
-                            onClick={copySecret}
-                            style={{
-                                width: '100%',
-                                padding: '14px',
-                                background: copied ? '#10B981' : '#DC2626',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s'
-                            }}
-                        >
-                            {copied ? '✅ Copied!' : '📋 Copy to Clipboard'}
-                        </button>
+                            <div className={`${styles.alert} ${styles.alertError}`}>
+                                <strong>Important:</strong> This secret was released because the owner failed to respond to multiple check-ins.
+                            </div>
 
-                        <p style={{
-                            textAlign: 'center',
-                            marginTop: '24px',
-                            fontSize: '13px',
-                            color: '#71717A'
-                        }}>
-                            💡 This secret has been entrusted to you. Please handle it responsibly.
-                        </p>
-                    </>
-                )}
+                            <div style={{ marginTop: '24px' }}>
+                                <label className={styles.label}>The Secret:</label>
+                                <div style={{
+                                    background: '#18181B',
+                                    color: '#10B981',
+                                    padding: '20px',
+                                    borderRadius: '8px',
+                                    fontFamily: 'monospace',
+                                    fontSize: '14px',
+                                    lineHeight: '1.8',
+                                    wordBreak: 'break-word',
+                                    whiteSpace: 'pre-wrap',
+                                    marginTop: '8px'
+                                }}>
+                                    {secret}
+                                </div>
+                            </div>
 
-                {status === 'error' && (
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{
-                            width: '80px',
-                            height: '80px',
-                            background: '#FEF2F2',
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '0 auto 24px',
-                            fontSize: '40px'
-                        }}>
-                            ❌
-                        </div>
-                        <h1 style={{
-                            fontSize: '28px',
-                            fontWeight: '700',
-                            color: '#18181B',
-                            marginBottom: '12px'
-                        }}>
-                            Error
-                        </h1>
-                        <div style={{
-                            background: '#FEF2F2',
-                            border: '1px solid #FECACA',
-                            borderRadius: '12px',
-                            padding: '20px',
-                            color: '#991B1B',
-                            fontSize: '14px'
-                        }}>
-                            {errorMessage}
-                        </div>
+                            <button
+                                onClick={copySecret}
+                                className={styles.submitButton}
+                                style={{
+                                    marginTop: '24px',
+                                    background: copied ? '#10B981' : '#DC2626',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px'
+                                }}
+                            >
+                                {copied ? <><CheckIcon /> Copied!</> : <><CopyIcon /> Copy to Clipboard</>}
+                            </button>
 
-                        <a
-                            href="/projects/dead-man-switch"
-                            style={{
-                                display: 'inline-block',
+                            <p style={{
+                                textAlign: 'center',
                                 marginTop: '24px',
-                                padding: '12px 24px',
-                                background: '#F1F5F9',
-                                color: '#64748B',
-                                borderRadius: '8px',
-                                textDecoration: 'none',
-                                fontWeight: '600',
-                                fontSize: '14px'
-                            }}
-                        >
-                            Go Back
-                        </a>
-                    </div>
-                )}
+                                fontSize: '13px',
+                                color: '#71717A'
+                            }}>
+                                This secret has been entrusted to you. Please handle it responsibly.
+                            </p>
+                        </>
+                    )}
+
+                    {status === 'error' && (
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{
+                                width: '64px',
+                                height: '64px',
+                                background: '#FEF2F2',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                margin: '0 auto 24px',
+                                color: '#DC2626'
+                            }}>
+                                <AlertIcon />
+                            </div>
+                            <h2 className={styles.formTitle}>Error</h2>
+                            <div className={`${styles.alert} ${styles.alertError}`}>
+                                {errorMessage}
+                            </div>
+
+                            <a
+                                href="/projects/dead-man-switch"
+                                className={styles.closeButton}
+                                style={{ display: 'inline-block', marginTop: '16px', textDecoration: 'none', padding: '12px 24px' }}
+                            >
+                                Go Back
+                            </a>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </section>
     );
 }

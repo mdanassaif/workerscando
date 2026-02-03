@@ -635,6 +635,93 @@ fetch('${WORKERS.SHORTENER}/api/stats/abc123')
         </div>
       )
     },
+    {
+      id: 'dead-man-switch',
+      title: 'Dead Man\'s Switch',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>Dead Man&apos;s Switch</h2>
+          <span className={styles.statusBadge}>LIVE</span>
+
+          <p className={styles.sectionText}>
+            A secure, serverless dead man&apos;s switch that automatically delivers encrypted secrets to designated recipients if you fail to respond to regular check-ins. Perfect for emergency access, digital inheritance, and time-sensitive information sharing.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>How It Works</h3>
+          <ol className={styles.list} style={{ marginBottom: 24 }}>
+            <li><strong>Create a switch:</strong> Enter your secret, recipient&apos;s email, and choose a check-in interval.</li>
+            <li><strong>Regular check-ins:</strong> You&apos;ll receive periodic emails to verify you&apos;re still active.</li>
+            <li><strong>Auto-trigger:</strong> After 2 missed check-ins, your secret is automatically sent to your recipient.</li>
+          </ol>
+
+          <h3 className={styles.subsectionTitle}>Security Features</h3>
+          <ul className={styles.list}>
+            <li><strong>End-to-end encryption:</strong> Secrets are encrypted in your browser using AES-256-GCM before being sent</li>
+            <li><strong>Zero knowledge:</strong> The server never sees your unencrypted secret</li>
+            <li><strong>Client-side decryption:</strong> Only the recipient can decrypt the secret in their browser</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Direct Worker URL</h3>
+          <div className={styles.codeBlock}>
+            https://dead-man-switch.brogee9o9.workers.dev
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Endpoints</h3>
+
+          <div className={styles.apiCard}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>POST</span> <code className={styles.apiEndpoint}>/api/create</code></div>
+            <div className={styles.parametersTable}>
+              <div className={styles.tableHeader}><div className={styles.tableCell}>Parameter</div><div className={styles.tableCell}>Description</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>encryptedSecret</code></div><div className={styles.tableCell}>Base64 encrypted secret package</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>ownerEmail</code></div><div className={styles.tableCell}>Your email for check-ins</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>recipientEmail</code></div><div className={styles.tableCell}>Recipient&apos;s email</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>checkInterval</code></div><div className={styles.tableCell}>Minutes between check-ins</div></div>
+            </div>
+          </div>
+
+          <div className={styles.apiCard} style={{ marginTop: 24 }}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>POST</span> <code className={styles.apiEndpoint}>/api/verify/:token</code></div>
+            <p className={styles.sectionText} style={{ marginTop: 12 }}>
+              Verify a check-in. Called when user clicks the verification link in their email.
+            </p>
+          </div>
+
+          <div className={styles.apiCard} style={{ marginTop: 24 }}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>GET</span> <code className={styles.apiEndpoint}>/api/check/:id</code></div>
+            <p className={styles.sectionText} style={{ marginTop: 12 }}>
+              Get the status of a switch (missed checks, next check-in, etc.)
+            </p>
+          </div>
+
+          <div className={styles.apiCard} style={{ marginTop: 24 }}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>GET</span> <code className={styles.apiEndpoint}>/api/decrypt/:id</code></div>
+            <p className={styles.sectionText} style={{ marginTop: 12 }}>
+              Get encrypted data for client-side decryption (only works for triggered switches).
+            </p>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Why External Cron?</h3>
+          <p className={styles.sectionText}>
+            We use <a href="https://cron-job.org" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>cron-job.org</a> instead of Cloudflare&apos;s built-in scheduled workers because:
+          </p>
+          <ul className={styles.list}>
+            <li><strong>Cloudflare Cron Triggers</strong> are limited to 3 per worker on the free tier</li>
+            <li><strong>Complex scheduling</strong> (like checking multiple switches at different intervals) requires Durable Objects, which cost money</li>
+            <li><strong>cron-job.org</strong> is 100% free and unlimited, making this project completely free to run</li>
+          </ul>
+
+          <div className={styles.infoBox}>
+            <p className={styles.infoText}>
+              The external cron endpoint is protected by a secret token (CRON_SECRET) to prevent unauthorized access.
+            </p>
+          </div>
+
+          <p className={styles.sectionText}>
+            <a href="/projects/dead-man-switch" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
+          </p>
+        </div>
+      )
+    },
   ];
 
   const activeDoc = docSections.find(s => s.id === activeSection);
