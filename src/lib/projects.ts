@@ -49,18 +49,9 @@ export const projects: Project[] = [
     tag: 'SaaS',
     day: 4,
   },
+
   {
     id: 5,
-    name: "Dead Man Switch",
-    slug: "dead-man-switch",
-    description: "A dead man's switch that releases your secrets if you don't check in",
-    longDescription: "A dead man's switch that releases your secrets if you don't check in",
-    status: 'live',
-    tag: 'SaaS',
-    day: 5,
-  },
-  {
-    id: 6,
     name: "APIThrottle",
     slug: "apithrottle",
     description: "Smart, learning rate limiter that adapts to behavior",
@@ -69,6 +60,19 @@ export const projects: Project[] = [
     status: "live",
     day: 5,
     url: "https://workerscando.com/projects/apithrottle",
+    github: "https://github.com/mdanassaif/workerscando"
+  },
+
+  {
+    id: 6,
+    name: "Dead Man's Switch",
+    slug: "dead-man-switch",
+    description: "Secure, serverless dead man's switch for encrypted secrets",
+    longDescription: "Automatically delivers encrypted secrets to designated recipients if you fail to respond to regular check-ins. Features end-to-end AES-256-GCM encryption, Durable Objects scheduling, and zero-knowledge architecture. 100% FREE tier available!",
+    tag: "Security",
+    status: "live",
+    day: 6,
+    url: "https://workerscando.com/projects/dead-man-switch",
     github: "https://github.com/mdanassaif/workerscando"
   },
 

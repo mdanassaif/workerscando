@@ -1,32 +1,18 @@
 name = "dead-man-switch"
-main = "src/index.ts"
-compatibility_date = "2024-05-02"
-compatibility_flags = ["nodejs_compat"]
+main = "worker.js"
+compatibility_date = "2024-01-01"
 
-# Workflow Configuration
-[[workflows]]
-name = "dead-man-switch-workflow"
-binding = "DEAD_MAN_SWITCH_WORKFLOW"
-class_name = "DeadManSwitchWorkflow"
+# KV Namespace for storing switch data (FREE TIER!)
+kv_namespaces = [
+  { binding = "DEAD_MAN_SWITCH", id = "a9103a2b757a4584976f0ac790c93452", preview_id = "95cf2cb7bd65404882f01aac6db0cedb" }
+]
 
-# KV Namespace for storing encrypted secrets
-[[kv_namespaces]]
-binding = "KV_BINDING"
-id = "214daa56163645a8a952fb1ab48724bb"
-preview_id = "214daa56163645a8a952fb1ab48724bb"
-
-# Observability
-[observability]
-enabled = true
-head_sampling_rate = 1
-
-# Environment Variables (non-sensitive)
+# Environment variables
 [vars]
-# IMPORTANT: This is your encryption key - keep it secret!
-# In production, consider using Cloudflare Secrets instead
-ENCRYPTION_SECRET = "wRdxSgJZwgijlJYxafDF3YJqWFv9gLCCqZjRtvNdjaM="
+APP_URL = "https://dead-man-switch.brogee9o9.workers.dev"
+FRONTEND_URL = "https://workerscando.com/projects/dead-man-switch"
 
-# IMPORTANT: Set RESEND_API_KEY as a secret in Cloudflare Dashboard
-# DO NOT commit this to git!
-# Run: wrangler secret put RESEND_API_KEY
-# Or set in Cloudflare Dashboard under Workers > dead-man-switch > Settings > Environment Variables
+# 🆕 IMPORTANT: Set this secret for security!
+# Run: wrangler secret put CRON_SECRET
+# Generate a random string like: openssl rand -base64 32
+# Also set: wrangler secret put RESEND_API_KEY

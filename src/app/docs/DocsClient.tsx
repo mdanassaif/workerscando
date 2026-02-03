@@ -15,7 +15,6 @@ const WORKERS = {
   SHORTENER: 'https://urlshortener.brogee9o9.workers.dev',
   METADATA: 'https://url-metadata-api.brogee9o9.workers.dev',
   OG_IMAGE: 'https://og-image-generator.brogee9o9.workers.dev',
-  DEAD_MAN_SWITCH: 'https://dead-man-switch.brogee9o9.workers.dev',
 };
 
 export default function DocsClient() {
@@ -45,10 +44,7 @@ ${WORKERS.METADATA}/api/metadata?url={your-url}
 ${WORKERS.OG_IMAGE}/api/og?title={your-title}
 
 # URL Shortener
-${WORKERS.SHORTENER}/api/shorten
-
-# Dead Man Switch
-${WORKERS.DEAD_MAN_SWITCH}/arm`}</pre>
+${WORKERS.SHORTENER}/api/shorten`}</pre>
           </div>
 
           <div className={styles.infoBox}>
@@ -128,10 +124,7 @@ fetch('${WORKERS.METADATA}/api/metadata?url=https://github.com')
                   <td className={styles.tableCell}><strong>OG Image Generator</strong></td>
                   <td className={styles.tableCell}>Blog post images, social cards, documentation headers</td>
                 </tr>
-                <tr className={styles.tableRow}>
-                  <td className={styles.tableCell}><strong>Dead Man Switch</strong></td>
-                  <td className={styles.tableCell}>Password inheritance, emergency contacts, crypto key backup</td>
-                </tr>
+
               </tbody>
             </table>
           </div>
@@ -639,150 +632,6 @@ fetch('${WORKERS.SHORTENER}/api/stats/abc123')
               <div className={styles.tableRow}><div className={styles.tableCell}>Embed the script in your HTML. It exposes <code>window.HireWire.send(email, message)</code> for sending messages.</div></div>
             </div>
           </div>
-        </div>
-      )
-    },
-    {
-      id: 'dead-man-switch',
-      title: 'Dead Man Switch',
-      content: (
-        <div>
-          <h2 className={styles.sectionTitle}>Dead Man&apos;s Switch API</h2>
-          <span className={styles.statusBadge}>LIVE</span>
-
-          <p className={styles.sectionText}>
-            A serverless dead man&apos;s switch powered by Cloudflare Workflows. Encrypt your secrets and have them automatically emailed to a trusted recipient if you don&apos;t check in within a specified time period. Uses Cloudflare&apos;s durable execution for reliable, long-running workflows.
-          </p>
-
-          <h3 className={styles.subsectionTitle}>How It Works</h3>
-          <ol className={styles.list} style={{ marginBottom: 24 }}>
-            <li><strong>Arm the switch</strong> — Submit your secret, your email, and your recipient&apos;s email.</li>
-            <li><strong>Get a check-in URL</strong> — You receive a unique URL to prove you&apos;re alive.</li>
-            <li><strong>Check in periodically</strong> — Visit the URL before the timer expires.</li>
-            <li><strong>If you don&apos;t check in</strong> — Your encrypted secret is sent to your recipient.</li>
-          </ol>
-
-          <h3 className={styles.subsectionTitle}>Direct Worker URL</h3>
-          <div className={styles.codeBlock}>
-            {WORKERS.DEAD_MAN_SWITCH}
-          </div>
-
-          <h3 className={styles.subsectionTitle}>Endpoints</h3>
-
-          <div style={{ marginBottom: 32 }}>
-            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>1. Arm the Switch</h4>
-            <div className={styles.codeBlock}>
-              POST {WORKERS.DEAD_MAN_SWITCH}/arm
-            </div>
-
-            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Request Body</h4>
-            <div className={styles.tableContainer}>
-              <table className={styles.table}>
-                <thead className={styles.tableHeader}>
-                  <tr>
-                    <th className={styles.tableHeaderCell}>Parameter</th>
-                    <th className={styles.tableHeaderCell}>Type</th>
-                    <th className={styles.tableHeaderCell}>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>secret</td>
-                    <td className={styles.tableCell}>string</td>
-                    <td className={styles.tableCell}>The secret message to encrypt (required)</td>
-                  </tr>
-                  <tr className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>userEmail</td>
-                    <td className={styles.tableCell}>string</td>
-                    <td className={styles.tableCell}>Your email address (required)</td>
-                  </tr>
-                  <tr className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>nextOfKinEmail</td>
-                    <td className={styles.tableCell}>string</td>
-                    <td className={styles.tableCell}>Recipient&apos;s email (required)</td>
-                  </tr>
-                  <tr className={styles.tableRow}>
-                    <td className={`${styles.tableCell} ${styles.tableCellCode}`}>checkInDelay</td>
-                    <td className={styles.tableCell}>string</td>
-                    <td className={styles.tableCell}>Time to wait (e.g., &quot;1 hour&quot;, &quot;7 days&quot;)</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
-            <div className={styles.codeBlockLight}>
-              <pre>{`# cURL
-curl -X POST "${WORKERS.DEAD_MAN_SWITCH}/arm" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "secret": "My bitcoin private key is...",
-    "userEmail": "you@example.com",
-    "nextOfKinEmail": "friend@example.com",
-    "checkInDelay": "7 days"
-  }'
-
-# JavaScript
-fetch('${WORKERS.DEAD_MAN_SWITCH}/arm', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    secret: 'My secret message',
-    userEmail: 'you@example.com',
-    nextOfKinEmail: 'friend@example.com',
-    checkInDelay: '7 days'
-  })
-}).then(r => r.json()).then(console.log);`}</pre>
-            </div>
-
-            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Response</h4>
-            <div className={styles.codeBlockLight}>
-              <pre>{`{
-  "message": "Switch armed successfully",
-  "workflowId": "abc123-def456",
-  "checkInUrl": "https://dead-man-switch.brogee9o9.workers.dev/check-in/abc123-def456"
-}`}</pre>
-            </div>
-          </div>
-
-          <div style={{ marginBottom: 32 }}>
-            <h4 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#18181B' }}>2. Check In</h4>
-            <div className={styles.codeBlock}>
-              GET {WORKERS.DEAD_MAN_SWITCH}/check-in/{'{workflowId}'}
-            </div>
-
-            <p className={styles.sectionText} style={{ marginTop: 12 }}>
-              Visit this URL to reset the countdown timer and prove you&apos;re alive. The workflow will restart the timer and wait for the next check-in.
-            </p>
-
-            <h4 style={{ fontSize: 16, fontWeight: 600, marginTop: 20, marginBottom: 12, color: '#52525B' }}>Example</h4>
-            <div className={styles.codeBlockLight}>
-              <pre>{`# cURL
-curl "${WORKERS.DEAD_MAN_SWITCH}/check-in/abc123-def456"
-
-# Or just visit in browser
-https://dead-man-switch.brogee9o9.workers.dev/check-in/abc123-def456`}</pre>
-            </div>
-          </div>
-
-          <h3 className={styles.subsectionTitle}>Features</h3>
-          <ul className={styles.list}>
-            <li><strong>🔐 Encrypted Storage</strong> — Secrets are encrypted before storage</li>
-            <li><strong>😴 Stateful Sleep</strong> — Worker sleeps for days with zero compute cost</li>
-            <li><strong>⏱️ Flexible Delays</strong> — Check in every hour, day, week, or month</li>
-            <li><strong>📧 Email Delivery</strong> — Automatic email to your recipient if triggered</li>
-            <li><strong>🌍 Global Edge</strong> — Runs on Cloudflare&apos;s global network</li>
-          </ul>
-
-          <div className={styles.infoBox}>
-            <p className={styles.infoText}>
-              💡 Powered by Cloudflare Workflows — durable execution that survives restarts and can sleep for weeks without using compute resources.
-            </p>
-          </div>
-
-          <p className={styles.sectionText}>
-            <a href="/projects/dead-man-switch" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
-          </p>
         </div>
       )
     },

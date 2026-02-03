@@ -1,31 +1,28 @@
 {
-    "name": "dead-man-switch",
-    "version": "1.0.0",
-    "description": "A serverless dead man's switch powered by Cloudflare Workflows",
-    "main": "src/index.ts",
+    "name": "@workerscando/dead-man-switch",
+    "version": "2.0.0",
+    "description": "Secure Dead Man's Switch - Automatically deliver encrypted secrets to recipients if you fail check-ins",
+    "type": "module",
+    "main": "worker.js",
     "scripts": {
         "dev": "wrangler dev",
         "deploy": "wrangler deploy",
-        "tail": "wrangler tail",
-        "test": "wrangler dev --test-scheduled"
+        "tail": "wrangler tail"
     },
     "keywords": [
         "cloudflare",
         "workers",
-        "workflows",
         "dead-man-switch",
-        "encryption"
+        "encryption",
+        "security",
+        "edge",
+        "secrets",
+        "emergency-access",
+        "free-tier"
     ],
-    "author": "",
+    "author": "mdanassaif",
     "license": "MIT",
-    "dependencies": {
-        "buffer": "^6.0.3",
-        "hono": "^4.6.14"
-    },
     "devDependencies": {
-        "@cloudflare/workers-types": "^4.20240502.0",
-        "@types/node": "^25.0.10",
-        "typescript": "^5.7.2",
-        "wrangler": "^3.103.0"
+        "wrangler": "^3.99.0"
     }
 }
