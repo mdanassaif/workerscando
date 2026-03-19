@@ -1,0 +1,8 @@
+name = "dependency-freshness"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "NPM_CACHE"
+# Replace with your KV namespace id after creating it
+id = "1db97b5adaae4efe94e0704a9dd7d4d1"

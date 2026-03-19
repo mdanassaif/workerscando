@@ -1,0 +1,19 @@
+{
+  "name": "dependency-freshness",
+  "version": "1.0.0",
+  "description": "Dependency Freshness Check - safe npm upgrade suggestions at the edge",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "semver": "^7.6.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241205.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.99.0"
+  }
+}

@@ -133,6 +133,11 @@ export default function RootLayout({
           data-key="vNzZucODIrqYLu0gpfjRLw"
           async
         />
+        <Script
+          defer
+          src="https://puffinanalytics.com/script"
+          data-api-key="pk_live_cfb3c5081d1ce324fd61c04e154c57bc56e2dd8c98cfec55c8b3a5dc29a95074"
+        />
       </head>
       <body className={`${dmSans.variable} ${jetbrainsMono.variable}`}>
         {children}
