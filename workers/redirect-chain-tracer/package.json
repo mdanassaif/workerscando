@@ -1,0 +1,25 @@
+{
+  "name": "redirect-chain-tracer",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker that manually traces HTTP redirects reporting latency, headers, and query params.",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev --port 8798",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "redirect",
+    "trace",
+    "seo"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240129.0",
+    "typescript": "^5.3.3",
+    "wrangler": "^3.25.0"
+  }
+}

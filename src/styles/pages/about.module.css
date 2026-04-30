@@ -1,35 +1,283 @@
-.heroSection {
-  padding: 80px 48px;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%);
-  text-align: center;
+/* About Page */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
 }
 
-.container {
-  max-width: 700px;
+.content {
+  flex: 1;
+}
+
+/* Hero */
+.hero {
+  padding: 56px 32px 48px;
+  text-align: center;
+  position: relative;
+}
+
+.heroInner {
+  max-width: 640px;
   margin: 0 auto;
 }
 
-.label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #F97316;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-family: var(--font-mono);
-}
-
-.title {
-  font-size: 44px;
+.badge {
+  font-size: 11px;
   font-weight: 700;
-  color: #18181B;
-  margin-top: 16px;
+  color: #EA580C;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #FFF7ED;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid #FFEDD5;
+  display: inline-block;
   margin-bottom: 20px;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
 }
 
-.description {
-  font-size: 18px;
-  color: #71717A;
+.heroTitle {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.heroSub {
+  font-size: 17px;
+  color: #6B7280;
   line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Story section */
+.story {
+  padding: 48px 32px;
+  border-top: 1px solid #F3F4F6;
+}
+
+.storyInner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.storyText {
+  font-size: 15px;
+  color: #4B5563;
+  line-height: 1.8;
+}
+
+.storyText p {
+  margin-bottom: 14px;
+}
+
+.storyText p:last-child {
+  margin-bottom: 0;
+}
+
+/* Process */
+.process {
+  padding: 48px 32px;
+  background: #FAFAFA;
+  border-top: 1px solid #F3F4F6;
+}
+
+.processInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.processTitleWrap {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.processCard {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px 22px;
+  border: 1px solid #F3F4F6;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.processCard:hover {
+  border-color: #FFEDD5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.06);
+}
+
+.processStep {
+  font-size: 28px;
+  font-weight: 800;
+  color: #F97316;
+  margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.processTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.processDesc {
+  font-size: 13px;
+  color: #6B7280;
+  line-height: 1.5;
+}
+
+/* Tech Stack */
+.techStack {
+  padding: 48px 32px;
+  border-top: 1px solid #F3F4F6;
+}
+
+.techInner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.techGrid {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.techChip {
+  background: #FAFAFA;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid #F3F4F6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.techChip:hover {
+  border-color: #E5E7EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.techDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.techName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* CTA */
+.cta {
+  padding: 40px 32px;
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  text-align: center;
+  border-top: 1px solid #FFEDD5;
+}
+
+.ctaInner {
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.ctaBadge {
+  display: inline-block;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #EA580C;
+  margin-bottom: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(249, 115, 22, 0.1);
+}
+
+.ctaText {
+  font-size: 15px;
+  color: #78716C;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    padding: 36px 20px 32px;
+  }
+  .heroTitle {
+    font-size: 30px;
+  }
+  .heroSub {
+    font-size: 15px;
+  }
+  .story {
+    padding: 36px 20px;
+  }
+  .process {
+    padding: 36px 20px;
+  }
+  .processGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .processCard {
+    padding: 22px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+  }
+  .processStep {
+    font-size: 24px;
+    margin-bottom: 0;
+    min-width: 40px;
+  }
+  .processTitle {
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+  .techStack {
+    padding: 36px 20px;
+  }
+  .techChip {
+    padding: 8px 14px;
+  }
+  .techName {
+    font-size: 12px;
+  }
+  .cta {
+    padding: 32px 20px;
+  }
+  .sectionTitle {
+    font-size: 20px;
+  }
 }

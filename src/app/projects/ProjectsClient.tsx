@@ -22,18 +22,9 @@ export default function ProjectsClient() {
   const comingCount = projects.filter(p => p.status === 'coming').length;
 
   return (
-    <main>
+    <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
-      {/* Header */}
-      <section className={styles.headerSection}>
-        <div className={styles.headerContainer}>
-          <span className={styles.label}>All Projects</span>
-          <h1 className={styles.title}>Tools Collection</h1>
-          <p className={styles.subtitle}>
-            Every tool built with Cloudflare Workers. Filter by status or browse them all.
-          </p>
-        </div>
-      </section>
+
 
       {/* Projects Grid */}
       <section className={styles.projectsSection}>

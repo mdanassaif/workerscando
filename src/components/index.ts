@@ -6,3 +6,5 @@ export { default as WhyWorkers } from './WhyWorkers';
 export { default as CTA } from './CTA';
 export { default as Footer } from './Footer';
 export { default as LinksSection } from './LinksSection';
+export { default as Marquee } from './Marquee';
+export { default as Reveal } from './Reveal';

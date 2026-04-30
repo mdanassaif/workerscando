@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { projects } from '@/lib/projects';
 import { Navbar, Footer } from '@/components';
 import styles from '@/styles/pages/project-detail.module.css';
@@ -79,21 +80,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       <section className={styles.heroSection}>
         <div className={styles.container}>
-          <div className={styles.badgesContainer}>
-            <span className={`${styles.statusBadge} ${project.status === 'live' ? styles.statusBadgeLive : styles.statusBadgeComing}`}>
-              {project.status === 'live' ? '🟢 LIVE' : '🟡 Coming Soon'}
-            </span>
-            <span className={styles.tagBadge}>
-              {project.tag}
-            </span>
-            <span className={styles.dayBadge}>
-              Day {project.day}
-            </span>
+          {/* Breadcrumb */}
+          <div className={styles.breadcrumb}>
+            <Link href="/" className={styles.breadcrumbLink}>Home</Link>
+            <span className={styles.breadcrumbSep}>/</span>
+            <Link href="/projects" className={styles.breadcrumbLink}>Tools</Link>
+            <span className={styles.breadcrumbSep}>/</span>
+            <span className={styles.breadcrumbCurrent}>{project.name}</span>
           </div>
 
-          <h1 className={styles.title}>
-            {project.name}
-          </h1>
+          <div className={styles.badgesContainer}>
+            <span className={`${styles.statusBadge} ${project.status === 'live' ? styles.statusBadgeLive : styles.statusBadgeComing}`}>
+              {project.status === 'live' ? '● LIVE' : '◐ Coming Soon'}
+            </span>
+            <span className={styles.tagBadge}>{project.tag}</span>
+            <span className={styles.dayBadge}>DAY {project.day}</span>
+          </div>
+
+          <h1 className={styles.title}>{project.name}</h1>
 
           <p className={styles.description}>
             {project.longDescription || project.description}
@@ -127,22 +131,66 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </a>
             )}
           </div>
+
+          {/* Info strip */}
+          <div className={styles.infoStrip}>
+            <div className={styles.infoItem}>
+              <div className={styles.infoLabel}>Status</div>
+              {project.status === 'live' ? (
+                <div className={`${styles.infoValue} ${styles.infoValueLive}`}>
+                  <span className={styles.infoLiveDot} />
+                  Live & Ready
+                </div>
+              ) : (
+                <div className={styles.infoValue}>Coming Soon</div>
+              )}
+            </div>
+            <div className={styles.infoItem}>
+              <div className={styles.infoLabel}>Category</div>
+              <div className={styles.infoValue}>{project.tag}</div>
+            </div>
+            <div className={styles.infoItem}>
+              <div className={styles.infoLabel}>Day</div>
+              <div className={styles.infoValue}>#{project.day} of 100</div>
+            </div>
+            <div className={styles.infoItem}>
+              <div className={styles.infoLabel}>Platform</div>
+              <div className={styles.infoValue}>Cloudflare Workers</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className={styles.docsSection}>
         <div className={styles.docsCard}>
-          <h2 className={styles.docsTitle}>
-            Documentation Coming Soon
-          </h2>
+          <div className={styles.docsCardIcon}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <h2 className={styles.docsTitle}>Documentation Coming Soon</h2>
           <p className={styles.docsText}>
-            Detailed documentation, API references, and examples will be available soon.
-            Check the <a href="/docs" className={styles.docsLink}>docs page</a> for more information.
+            Detailed docs, API references, and examples are on the way.
+            Check the <Link href="/docs" className={styles.docsLink}>docs page</Link> for general information about this project.
           </p>
         </div>
       </section>
 
-      <Footer />
+      <section className={styles.exploreSection}>
+        <p className={styles.exploreTitle}>Continue Exploring</p>
+        <Link href="/projects" className={styles.exploreLink}>
+          View all 100 tools
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </Link>
+      </section>
+
     </main>
   );
 }
+

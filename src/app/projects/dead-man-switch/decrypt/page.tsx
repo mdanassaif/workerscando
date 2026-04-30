@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function DecryptPage() {
     return (
         <main>
-            <Navbar />
+            
             <Suspense fallback={
                 <div style={{
                     minHeight: '60vh',
@@ -24,7 +24,7 @@ export default function DecryptPage() {
             }>
                 <DecryptClient />
             </Suspense>
-            <Footer />
+            
         </main>
     );
 }

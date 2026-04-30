@@ -1,0 +1,38 @@
+.strip {
+  border-top: 1px solid #E5E7EB;
+  border-bottom: 1px solid #E5E7EB;
+  overflow: hidden;
+  padding: 16px 0;
+  background: #ffffff;
+  width: 100%;
+}
+
+.stripTrack {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.stripTrack span {
+  font-size: 14px;
+  color: #6B7280;
+  padding: 0 40px;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  font-family: var(--font-sans);
+}
+
+.stripTrack span b {
+  color: #111827;
+  font-weight: 600;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

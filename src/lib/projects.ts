@@ -76,6 +76,20 @@ export const projects: Project[] = [
     github: "https://github.com/mdanassaif/workerscando"
   },
 
+
+  {
+    id: 7,
+    name: "Redirect Chain Tracer",
+    slug: "redirect-chain-tracer",
+    description: "Follow every HTTP hop, uncover tracking params, and detect downgrades",
+    longDescription: "Manually trace URLs up to 20 redirects deep directly from the Cloudflare edge. Reveal hidden tracking parameters, measure hop latency, and easily spot HTTP protocol downgrades.",
+    tag: "Debug",
+    status: "live",
+    day: 7,
+    url: "https://workerscando.com/projects/redirect-chain-tracer",
+    github: "https://github.com/mdanassaif/workerscando"
+  },
+
 ];
 
 export const getProjectBySlug = (slug: string): Project | undefined => {

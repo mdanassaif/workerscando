@@ -60,11 +60,6 @@ export default function UrlShortenerPage() {
     return null;
   }
 
-  return (
-    <main>
-      <Navbar />
-      <UrlShortenerClient project={project} />
-      <Footer />
-    </main>
-  );
+  return <UrlShortenerClient project={project} />;
 }
+

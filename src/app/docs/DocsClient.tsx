@@ -534,41 +534,6 @@ fetch('${WORKERS.SHORTENER}/api/stats/abc123')
       )
     },
     {
-      id: 'contributing',
-      title: 'Contributing',
-      content: (
-        <div>
-          <h2 className={styles.sectionTitle}>Contributing</h2>
-          <p className={styles.sectionText}>
-            Want to suggest a tool or contribute? Here&apos;s how.
-          </p>
-
-          <h3 className={styles.subsectionTitle}>Suggest a Tool</h3>
-          <p className={styles.sectionText}>
-            Open an issue on <a href="https://github.com/mdanassaif/workerscando" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>GitHub</a> with:
-          </p>
-          <ul className={styles.list}>
-            <li>What problem does it solve?</li>
-            <li>Brief description of how it works</li>
-            <li>Example use cases</li>
-          </ul>
-
-          <h3 className={styles.subsectionTitle}>Good Tool Ideas</h3>
-          <ul className={styles.list}>
-            <li>Small and focused on one task</li>
-            <li>Deployable on Cloudflare Workers</li>
-            <li>Useful for developers or everyday users</li>
-            <li>Free with no auth required</li>
-          </ul>
-
-          <h3 className={styles.subsectionTitle}>Follow Along</h3>
-          <p className={styles.sectionText}>
-            Star the repo and follow <a href="https://x.com/mdanassaif" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>@mdanassaif</a> for daily updates on the 100 tools journey.
-          </p>
-        </div>
-      )
-    },
-    {
       id: 'hire-wire',
       title: 'HireWire API',
       content: (
@@ -718,6 +683,236 @@ fetch('${WORKERS.SHORTENER}/api/stats/abc123')
 
           <p className={styles.sectionText}>
             <a href="/projects/dead-man-switch" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
+          </p>
+        </div>
+      )
+    },
+    {
+      id: 'apithrottle',
+      title: 'APIThrottle',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>APIThrottle</h2>
+          <span className={styles.statusBadge}>LIVE</span>
+
+          <p className={styles.sectionText}>
+            Smart, edge-based rate limiting that protects your APIs with intelligent bot detection. Uses behavioral scoring (IP + request timing + patterns) to classify traffic as human, normal, or bot—applying adaptive rate limits with zero latency.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>How It Works</h3>
+          <p className={styles.sectionText}>
+            APIThrottle acts as a reverse proxy in front of your API. It analyzes each incoming request in real-time, assigns a reputation score (0-100), and makes an instant decision:
+          </p>
+          <ul className={styles.list}>
+            <li><strong>Allow</strong> — Request passes through normally</li>
+            <li><strong>Soft Limit</strong> — Warning state, nearing rate limit</li>
+            <li><strong>Block</strong> — Request is rejected with 429 Too Many Requests</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Direct Worker URL</h3>
+          <div className={styles.codeBlock}>
+            https://apithrottle.workerscando.workers.dev
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Behavioral Scoring</h3>
+          <p className={styles.sectionText}>
+            Unlike traditional rate limiters that only count requests, APIThrottle analyzes behavior:
+          </p>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
+                <tr>
+                  <th className={styles.tableHeaderCell}>Signal</th>
+                  <th className={styles.tableHeaderCell}>Effect on Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}>Requests &lt; 300ms apart</td>
+                  <td className={styles.tableCell}>Score drops sharply (bot-like)</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}>Requests 1-3s apart</td>
+                  <td className={styles.tableCell}>Score increases (human-like)</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}>Consistent timing patterns</td>
+                  <td className={styles.tableCell}>Flag as automated</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Adaptive Rate Limits</h3>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
+                <tr>
+                  <th className={styles.tableHeaderCell}>Classification</th>
+                  <th className={styles.tableHeaderCell}>Score Range</th>
+                  <th className={styles.tableHeaderCell}>Default Limit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}><strong>Trusted</strong></td>
+                  <td className={styles.tableCell}>65-100</td>
+                  <td className={styles.tableCell}>90 req/window</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}><strong>Normal</strong></td>
+                  <td className={styles.tableCell}>35-64</td>
+                  <td className={styles.tableCell}>60 req/window</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableCell}><strong>Bot</strong></td>
+                  <td className={styles.tableCell}>0-34</td>
+                  <td className={styles.tableCell}>10 req/window</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Response Headers</h3>
+          <div className={styles.codeBlockLight}>
+            <pre>{`x-throttle-status: allow | soft | block
+x-throttle-score: 72
+x-throttle-classification: trusted
+x-throttle-remaining: 18`}</pre>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Features</h3>
+          <ul className={styles.list}>
+            <li><strong>⚡ Zero Latency</strong> — Runs at the edge, no added delay</li>
+            <li><strong>🧠 Smart Detection</strong> — Behavioral analysis, not just counting</li>
+            <li><strong>📊 Real-time Telemetry</strong> — Live scoring and classification</li>
+            <li><strong>⚙️ Configurable</strong> — Adjust limits, thresholds, and windows</li>
+          </ul>
+
+          <p className={styles.sectionText}>
+            <a href="/projects/apithrottle" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
+          </p>
+        </div>
+      )
+    },
+    {
+      id: 'redirect-chain-tracer',
+      title: 'Redirect Chain Tracer',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>Redirect Chain Tracer</h2>
+          <span className={styles.statusBadge}>LIVE</span>
+
+          <p className={styles.sectionText}>
+            Follow every HTTP redirect hop, uncover hidden tracking parameters, measure hop latency, and detect protocol downgrades (HTTPS → HTTP). Trace up to 20 redirects deep from the Cloudflare edge.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>Direct Worker URL</h3>
+          <div className={styles.codeBlock}>
+            https://redirect-chain.brogee9o9.workers.dev
+          </div>
+
+          <h3 className={styles.subsectionTitle}>API Endpoint</h3>
+          <div className={styles.apiCard}>
+            <div className={styles.apiMethod}><span className={styles.methodBadge}>GET</span> <code className={styles.apiEndpoint}>/api/trace?url={'{url}'}</code></div>
+            <div className={styles.parametersTable}>
+              <div className={styles.tableHeader}><div className={styles.tableCell}>Parameter</div><div className={styles.tableCell}>Description</div></div>
+              <div className={styles.tableRow}><div className={styles.tableCell}><code className={styles.paramName}>url</code></div><div className={styles.tableCell}>The URL to trace redirects for (required)</div></div>
+            </div>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Example</h3>
+          <div className={styles.codeBlockLight}>
+            <pre>{`# cURL
+curl "https://redirect-chain.brogee9o9.workers.dev/api/trace?url=https://bit.ly/example"
+
+# JavaScript
+fetch('https://redirect-chain.brogee9o9.workers.dev/api/trace?url=' + encodeURIComponent('https://bit.ly/example'))
+  .then(r => r.json())
+  .then(data => console.log(data));`}</pre>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>Response</h3>
+          <div className={styles.codeBlockLight}>
+            <pre>{`{
+  "originalUrl": "https://bit.ly/example",
+  "finalUrl": "https://example.com/page",
+  "totalHops": 3,
+  "totalTime": "245ms",
+  "chain": [
+    {
+      "hop": 1,
+      "url": "https://bit.ly/example",
+      "status": 301,
+      "latency": "42ms",
+      "location": "https://t.co/redirect"
+    },
+    {
+      "hop": 2,
+      "url": "https://t.co/redirect",
+      "status": 302,
+      "latency": "89ms",
+      "location": "https://example.com/page"
+    }
+  ],
+  "warnings": ["Protocol downgrade detected at hop 2"]
+}`}</pre>
+          </div>
+
+          <h3 className={styles.subsectionTitle}>What It Detects</h3>
+          <ul className={styles.list}>
+            <li><strong>🔗 Full Redirect Chain</strong> — Every hop from start to final destination</li>
+            <li><strong>⏱️ Per-Hop Latency</strong> — How long each redirect takes</li>
+            <li><strong>🔍 Tracking Parameters</strong> — UTM tags, fbclid, gclid, etc.</li>
+            <li><strong>⚠️ Protocol Downgrades</strong> — HTTPS to HTTP security warnings</li>
+            <li><strong>📊 Status Codes</strong> — 301, 302, 307, 308 and their implications</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Use Cases</h3>
+          <ul className={styles.list}>
+            <li>Debug affiliate and marketing redirect chains</li>
+            <li>Audit URL shorteners for hidden tracking</li>
+            <li>SEO analysis of redirect patterns</li>
+            <li>Security audits for protocol downgrade attacks</li>
+          </ul>
+
+          <p className={styles.sectionText}>
+            <a href="/projects/redirect-chain-tracer" className={styles.infoText} style={{ textDecoration: 'underline' }}>Try it live →</a>
+          </p>
+        </div>
+      )
+    },
+    {
+      id: 'contributing',
+      title: 'Contributing',
+      content: (
+        <div>
+          <h2 className={styles.sectionTitle}>Contributing</h2>
+          <p className={styles.sectionText}>
+            Want to suggest a tool or contribute? Here&apos;s how.
+          </p>
+
+          <h3 className={styles.subsectionTitle}>Suggest a Tool</h3>
+          <p className={styles.sectionText}>
+            Open an issue on <a href="https://github.com/mdanassaif/workerscando" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>GitHub</a> with:
+          </p>
+          <ul className={styles.list}>
+            <li>What problem does it solve?</li>
+            <li>Brief description of how it works</li>
+            <li>Example use cases</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Good Tool Ideas</h3>
+          <ul className={styles.list}>
+            <li>Small and focused on one task</li>
+            <li>Deployable on Cloudflare Workers</li>
+            <li>Useful for developers or everyday users</li>
+            <li>Free with no auth required</li>
+          </ul>
+
+          <h3 className={styles.subsectionTitle}>Follow Along</h3>
+          <p className={styles.sectionText}>
+            Star the repo and follow <a href="https://x.com/mdanassaif" target="_blank" rel="noopener noreferrer" className={styles.infoText} style={{ textDecoration: 'underline' }}>@mdanassaif</a> for daily updates on the 100 tools journey.
           </p>
         </div>
       )

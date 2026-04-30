@@ -1,79 +1,210 @@
 .section {
-  padding: 80px 48px;
-  background: linear-gradient(180deg, #FAFAFA 0%, #FFF7ED 100%);
+  background: #ffffff;
+  padding: 80px 32px 140px;
+  position: relative;
 }
 
-.container {
-  max-width: 1000px;
+.inner {
+  max-width: 1280px;
   margin: 0 auto;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 48px;
+.introBlock {
+  max-width: 720px;
+  margin-bottom: 80px;
 }
 
 .label {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #F97316;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 0.1em;
-  margin-bottom: 12px;
-  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: #4F46E5;
+  margin-bottom: 24px;
 }
 
 .title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #18181B;
-  margin-bottom: 16px;
-  letter-spacing: -0.02em;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #111827;
+  margin-bottom: 24px;
 }
 
-.description {
-  font-size: 17px;
-  color: #71717A;
-  line-height: 1.7;
-  max-width: 600px;
-  margin: 0 auto;
+.desc {
+  font-size: 20px;
+  color: #4B5563;
+  line-height: 1.6;
 }
 
+/* Features Grid */
 .featuresGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 120px;
 }
 
-.featureCard {
-  background: white;
+.feature {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
   border-radius: 16px;
-  padding: 28px;
-  border: 1px solid #E5E5E5;
-  text-align: center;
+  padding: 40px 32px;
+  transition: all 0.2s ease;
 }
 
-.iconContainer {
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
-  border-radius: 14px;
+.feature:hover {
+  background: #ffffff;
+  border-color: #D1D5DB;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.feature h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.feature p {
+  font-size: 16px;
+  color: #6B7280;
+  line-height: 1.6;
+}
+
+/* Challenge Block */
+.challengeBlock {
+  background: #111827;
+  color: #ffffff;
+  border-radius: 24px;
+  padding: 80px 64px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 64px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(17, 24, 39, 0.2);
+}
+
+/* Add a subtle glow inside the challenge block */
+.challengeBlock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(circle at 80% 0%, rgba(79, 70, 229, 0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cbText {
+  position: relative;
+  z-index: 1;
+}
+
+.cbText h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  color: #F9FAFB;
+}
+
+.cbText p {
+  font-size: 18px;
+  color: #9CA3AF;
+  line-height: 1.6;
+  max-width: 540px;
+}
+
+.cbActions {
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.btnPrimary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 16px;
-}
-
-.featureTitle {
-  font-size: 17px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 15px;
   font-weight: 600;
-  color: #18181B;
-  margin-bottom: 6px;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.featureDescription {
-  font-size: 14px;
-  color: #71717A;
-  line-height: 1.5;
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.2s ease;
+}
+
+.btnSecondary:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+}
+
+@media (max-width: 1024px) {
+  .featuresGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 960px) {
+  .challengeBlock {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 56px 40px;
+    gap: 40px;
+  }
+  .cbText p {
+    margin: 0 auto;
+  }
+  .cbActions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 60px 24px 80px;
+  }
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+  .cbActions {
+    flex-direction: column;
+  }
+  .challengeBlock {
+    padding: 48px 24px;
+  }
 }

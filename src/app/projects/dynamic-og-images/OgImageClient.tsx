@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Project } from '@/types';
 import { API } from '@/lib/api';
-import styles from './og-image.module.css';
+import layout from '@/styles/components/split-layout.module.css';
 
 interface OgImageClientProps {
   project: Project;
@@ -18,15 +19,15 @@ export default function OgImageClient({ project }: OgImageClientProps) {
   const [author, setAuthor] = useState('Mohd Anas');
   const [domain, setDomain] = useState('Cloud.com');
   const [theme, setTheme] = useState<ThemeName>('ocean');
-  const [layout, setLayout] = useState<LayoutName>('split');
+  const [pageLayout, setPageLayout] = useState<LayoutName>('split');
   const [emoji, setEmoji] = useState('☁️');
   const [date, setDate] = useState('');
+  
   const [imageUrl, setImageUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [exampleTab, setExampleTab] = useState<'html' | 'curl'>('html');
   const [exampleCopied, setExampleCopied] = useState(false);
 
-  // Direct Cloudflare Workers API URL
   const WORKER_URL = 'https://og-image-generator.brogee9o9.workers.dev';
 
   const exampleCode = {
@@ -47,14 +48,13 @@ export default function OgImageClient({ project }: OgImageClientProps) {
     if (author) params.set('author', author);
     if (domain) params.set('domain', domain);
     if (theme) params.set('theme', theme);
-    if (layout) params.set('layout', layout);
+    if (pageLayout) params.set('layout', pageLayout);
     if (emoji) params.set('emoji', emoji);
     if (date) params.set('date', date);
     setImageUrl(`${API.OG_IMAGE}?${params.toString()}`);
-  }, [title, subtitle, author, domain, theme, layout, emoji, date]);
+  }, [title, subtitle, author, domain, theme, pageLayout, emoji, date]);
 
   const handleCopyUrl = async () => {
-    // Always use the workerscando.com domain for the copied URL
     const fullUrl = `https://workerscando.com${imageUrl.replace(/^https?:\/\/[^/]+/, '')}`;
     try {
       await navigator.clipboard.writeText(fullUrl);
@@ -66,249 +66,204 @@ export default function OgImageClient({ project }: OgImageClientProps) {
   };
 
   return (
-    <>
-      <section className={styles.heroSection}>
-        <div className={styles.container}>
-          <div className={styles.badgesContainer}>
-            <span className={styles.dayBadge}>
-              Day {project.day}
+    <div className={layout.wrapper}>
+      {/* ── LEFT PANEL ── */}
+      <aside className={layout.leftPanel}>
+        <div className={layout.leftHeader}>
+          <Link href="/projects" className={layout.backLink}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Tools
+          </Link>
+
+          <div className={layout.metaTags}>
+            <span className={layout.dayTag}>Day {project.day}</span>
+            <span className={layout.liveTag}>
+              <span className={layout.liveDot} />
+              Live
             </span>
           </div>
-
-          <h1 className={styles.title}>
-            {project.name}
-          </h1>
-
-          <p className={styles.description}>
-            Generate beautiful Open Graph images on the fly. Perfect for blogs, social sharing, and marketing.
+          
+          <h1 className={layout.title}>{project.name}</h1>
+          <p className={layout.description}>
+            Generate beautiful Open Graph images on the fly. Perfect for blogs, social sharing, and marketing previews.
           </p>
         </div>
-      </section>
 
-      <section className={styles.demoSection}>
-        <div className={styles.container}>
-          <div className={styles.demoCard}>
-            <h2 className={styles.demoTitle}>Try it out</h2>
-            <div className={styles.previewContainer}>
-              <div className={styles.imagePreview}>
-                {imageUrl && (
-                  <img
-                    src={imageUrl}
-                    alt="OG Image Preview"
-                    className={styles.previewImage}
-                  />
-                )}
-              </div>
+        <div className={layout.leftBody} style={{ gap: '16px' }}>
+          
+          <div className={layout.field}>
+            <label className={layout.label}>Title</label>
+            <input
+              className={layout.input}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Hello World"
+            />
+          </div>
+
+          <div className={layout.field}>
+            <label className={layout.label}>Subtitle</label>
+            <input
+              className={layout.input}
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+              placeholder="Optional subtitle"
+            />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className={layout.field}>
+              <label className={layout.label}>Author</label>
+              <input
+                className={layout.input}
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="John Doe"
+              />
             </div>
-            <div className={styles.controlsGrid}>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Title</label>
+            
+            <div className={layout.field}>
+              <label className={layout.label}>Domain</label>
+              <input
+                className={layout.input}
+                value={domain}
+                onChange={(e) => setDomain(e.target.value)}
+                placeholder="example.com"
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className={layout.field}>
+              <label className={layout.label}>Theme</label>
+              <select
+                className={layout.input}
+                value={theme}
+                onChange={(e) => setTheme(e.target.value as ThemeName)}
+              >
+                <option value="midnight">Midnight</option>
+                <option value="sunset">Sunset</option>
+                <option value="ocean">Ocean</option>
+                <option value="forest">Forest</option>
+                <option value="minimal">Minimal</option>
+                <option value="rose">Rose</option>
+              </select>
+            </div>
+
+            <div className={layout.field}>
+              <label className={layout.label}>Layout Template</label>
+              <select
+                className={layout.input}
+                value={pageLayout}
+                onChange={(e) => setPageLayout(e.target.value as LayoutName)}
+              >
+                <option value="standard">Standard</option>
+                <option value="centered">Centered</option>
+                <option value="split">Split</option>
+                <option value="minimal">Minimal</option>
+                <option value="bold">Bold</option>
+              </select>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+             <div className={layout.field}>
+                <label className={layout.label}>Emoji</label>
                 <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Hello World"
-                  className={styles.input}
-                />
-              </div>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Subtitle</label>
-                <input
-                  type="text"
-                  value={subtitle}
-                  onChange={(e) => setSubtitle(e.target.value)}
-                  placeholder="Optional subtitle"
-                  className={styles.input}
-                />
-              </div>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Author</label>
-                <input
-                  type="text"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  placeholder="John Doe"
-                  className={styles.input}
-                />
-              </div>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Domain</label>
-                <input
-                  type="text"
-                  value={domain}
-                  onChange={(e) => setDomain(e.target.value)}
-                  placeholder="example.com"
-                  className={styles.input}
-                />
-              </div>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Theme</label>
-                <select
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value as ThemeName)}
-                  className={styles.select}
-                >
-                  <option value="midnight">Midnight</option>
-                  <option value="sunset">Sunset</option>
-                  <option value="ocean">Ocean</option>
-                  <option value="forest">Forest</option>
-                  <option value="minimal">Minimal</option>
-                  <option value="rose">Rose</option>
-                </select>
-              </div>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Layout</label>
-                <select
-                  value={layout}
-                  onChange={(e) => setLayout(e.target.value as LayoutName)}
-                  className={styles.select}
-                >
-                  <option value="standard">Standard</option>
-                  <option value="centered">Centered</option>
-                  <option value="split">Split</option>
-                  <option value="minimal">Minimal</option>
-                  <option value="bold">Bold</option>
-                </select>
-              </div>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Emoji</label>
-                <input
-                  type="text"
+                  className={layout.input}
                   value={emoji}
                   onChange={(e) => setEmoji(e.target.value)}
                   placeholder="🚀"
-                  className={styles.input}
                 />
-              </div>
-              <div className={styles.controlGroup}>
-                <label className={styles.label}>Date</label>
+             </div>
+             <div className={layout.field}>
+                <label className={layout.label}>Date</label>
                 <input
-                  type="text"
+                  className={layout.input}
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  placeholder="Jan 2025"
-                  className={styles.input}
+                  placeholder="March 2026"
                 />
-              </div>
-            </div>
-            <div className={styles.actions}>
-              <button onClick={handleCopyUrl} className={styles.copyButton}>
-                {copied ? 'Copied!' : 'Copy URL'}
-              </button>
-            </div>
+             </div>
           </div>
-        </div>
-      </section>
 
-      <section className={styles.apiSection}>
-        <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>API Reference</h2>
-          <div className={styles.apiCard}>
-            <div className={styles.apiMethod}>
-              <span className={styles.methodBadge}>GET</span>
-              <code className={styles.apiEndpoint}>{WORKER_URL}/api/og</code>
+          <button 
+            className={layout.primaryBtn} 
+            onClick={handleCopyUrl}
+            style={{ marginTop: '8px' }}
+          >
+            {copied ? '✓ URL Copied to Clipboard' : 'Copy Static URL'}
+          </button>
+        </div>
+      </aside>
+
+      {/* ── RIGHT PANEL ── */}
+      <main className={layout.rightPanel}>
+        <header className={layout.rightHeader}>
+          <span>Live Preview</span>
+          <span>1200x630px</span>
+        </header>
+
+        <div className={layout.rightBody}>
+          
+          <div className={layout.resultCard} style={{ padding: '8px', background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="OG Image Preview"
+                style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '4px' }}
+              />
+            ) : (
+               <div style={{ width: '100%', aspectRatio: '1200/630', background: '#F3F4F6', borderRadius: '4px' }} />
+            )}
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginTop: '16px' }}>
+            <div style={{ border: '1px solid #E5E7EB', borderRadius: '8px', background: '#FFFFFF', overflow: 'hidden' }}>
+              <div style={{ padding: '16px', borderBottom: '1px solid #E5E7EB', fontWeight: 600, fontSize: '13px', color: '#111827' }}>
+                API Reference GET Request
+              </div>
+              <div style={{ padding: '16px', overflowX: 'auto', fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#4B5563', lineHeight: 1.6 }}>
+                <code>{WORKER_URL}/api/og</code><br/><br/>
+                <strong>Parameters:</strong><br/>
+                ?title=encoded_string  (required)<br/>
+                &subtitle=encoded_string<br/>
+                &theme=midnight|sunset|ocean|forest|minimal|rose<br/>
+                &layout=standard|centered|split|minimal|bold
+              </div>
             </div>
-            <div className={styles.parametersTable}>
-              <div className={styles.tableHeader}>
-                <div className={styles.tableCell}>Parameter</div>
-                <div className={styles.tableCell}>Description</div>
+
+            <div style={{ border: '1px solid #E5E7EB', borderRadius: '8px', background: '#FFFFFF', overflow: 'hidden' }}>
+              <div style={{ display: 'flex', borderBottom: '1px solid #E5E7EB' }}>
+                <button 
+                  onClick={() => setExampleTab('html')}
+                  style={{ flex: 1, padding: '12px', fontSize: '12px', background: exampleTab === 'html' ? '#F9FAFB' : '#FFFFFF', border: 'none', borderBottom: exampleTab === 'html' ? '2px solid #111827' : '2px solid transparent', cursor: 'pointer', fontWeight: 500 }}
+                >HTML Head Tag</button>
+                <button 
+                  onClick={() => setExampleTab('curl')}
+                  style={{ flex: 1, padding: '12px', fontSize: '12px', background: exampleTab === 'curl' ? '#F9FAFB' : '#FFFFFF', border: 'none', borderBottom: exampleTab === 'curl' ? '2px solid #111827' : '2px solid transparent', cursor: 'pointer', fontWeight: 500 }}
+                >cURL</button>
               </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>
-                  <code className={styles.paramName}>title</code>
-                </div>
-                <div className={styles.tableCell}>
-                  Main title text (required)
-                </div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>
-                  <code className={styles.paramName}>subtitle</code>
-                </div>
-                <div className={styles.tableCell}>
-                  Secondary text below the title
-                </div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>
-                  <code className={styles.paramName}>theme</code>
-                </div>
-                <div className={styles.tableCell}>
-                  Color theme: midnight, sunset, ocean, forest, minimal, rose
-                </div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>
-                  <code className={styles.paramName}>layout</code>
-                </div>
-                <div className={styles.tableCell}>
-                  Layout style: standard, centered, split, minimal, bold
-                </div>
-              </div>
-            </div>
-            {/* Example Usage - simplified */}
-            <div className={styles.exampleBox}>
-              <div className={styles.exampleHeader}>
-                <div className={styles.exampleTabs}>
-                  <button
-                    className={`${styles.exampleTab} ${exampleTab === 'html' ? styles.exampleTabActive : ''}`}
-                    onClick={() => setExampleTab('html')}
-                  >
-                    HTML
-                  </button>
-                  <button
-                    className={`${styles.exampleTab} ${exampleTab === 'curl' ? styles.exampleTabActive : ''}`}
-                    onClick={() => setExampleTab('curl')}
-                  >
-                    cURL
-                  </button>
-                </div>
-                <button className={styles.exampleCopy} onClick={copyExample}>
-                  {exampleCopied ? '✓' : 'Copy'}
+              
+              <div style={{ padding: '16px', position: 'relative' }}>
+                <button 
+                  onClick={copyExample}
+                  style={{ position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '11px', color: '#6B7280', fontWeight: 600, textTransform: 'uppercase' }}
+                >
+                  {exampleCopied ? '✓ Copied' : 'Copy'}
                 </button>
-              </div>
-              <div className={styles.exampleCode}>
-                <code>{exampleCode[exampleTab]}</code>
+                <div className={layout.codeBlock} style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', color: '#374151', padding: '16px', borderRadius: '6px' }}>
+                  {exampleCode[exampleTab]}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section className={styles.linksSection}>
-        <div className={styles.container}>
-          <div className={styles.linksContent}>
-            <p className={styles.linkLine}>
-              Wanna contribute or learn? <a
-                href="https://github.com/mdanassaif/workerscando"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.inlineLink}
-              >
-                Here&apos;s the code
-              </a>
-            </p>
-            <p className={styles.linkLine}>
-              Support me on <a
-                href="https://x.com/mdanassaif"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.inlineLink}
-              >
-                Twitter
-              </a> for daily updates
-            </p>
-            <p className={styles.linkLine}>
-              Wanna learn why it&apos;s the best solution? <a
-                href="/docs"
-                className={styles.inlineLink}
-              >
-                Read the docs
-              </a>
-            </p>
           </div>
+
         </div>
-      </section>
-    </>
+      </main>
+    </div>
   );
 }

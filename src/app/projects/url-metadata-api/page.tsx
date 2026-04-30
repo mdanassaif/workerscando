@@ -59,11 +59,6 @@ export default function UrlMetadataApiPage() {
     return null;
   }
 
-  return (
-    <main>
-      <Navbar />
-      <UrlMetadataClient project={project} />
-      <Footer />
-    </main>
-  );
+  return <UrlMetadataClient project={project} />;
 }
+

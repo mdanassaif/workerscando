@@ -1,6 +1,6 @@
 .section {
-  padding: 80px 48px;
-  max-width: 1200px;
+  padding: 80px 32px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -8,41 +8,95 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
 .label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #F97316;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #059669;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.livePulse {
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
 }
 
 .title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #18181B;
-  margin-top: 8px;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  color: #111827;
   letter-spacing: -0.02em;
 }
 
 .viewAllLink {
-  background: transparent;
-  border: none;
-  color: #F97316;
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  color: #374151;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.viewAllLink:hover {
+  border-color: #D1D5DB;
+  color: #111827;
+  background: #F9FAFB;
+  transform: translateY(-1px);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 24px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .viewAllLink {
+    width: 100%;
+    justify-content: center;
+  }
 }

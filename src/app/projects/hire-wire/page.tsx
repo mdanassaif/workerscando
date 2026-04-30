@@ -23,11 +23,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function HireWirePage() {
   if (!project) return <div>Project not found</div>;
 
-  return (
-    <main>
-      <Navbar />
-      <HireWireClient project={project} />
-      <Footer />
-    </main>
-  );
+  return <HireWireClient project={project} />;
 }

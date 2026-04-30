@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { projects } from '@/lib/projects';
-import { Navbar, Footer, LinksSection } from '@/components';
 import APIThrottleClient from './APIThrottleClient';
 
 const project = projects.find((p) => p.slug === 'apithrottle');
@@ -60,12 +59,6 @@ export default function APIThrottlePage() {
         return null;
     }
 
-    return (
-        <main>
-            <Navbar />
-            <APIThrottleClient project={project} />
-            <LinksSection />
-            <Footer />
-        </main>
-    );
+    return <APIThrottleClient project={project} />;
 }
+

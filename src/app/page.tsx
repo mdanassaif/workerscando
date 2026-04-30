@@ -1,13 +1,10 @@
-import { Navbar, Hero, FeaturedProjects, WhyWorkers, CTA, Footer } from '@/components';
+import { Navbar, Hero, Footer } from '@/components';
 
 export default function Home() {
   return (
-    <main>
+    <main style={{ backgroundColor: '#ffffff', minHeight: '100vh', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
       <Hero />
-      <FeaturedProjects />
-      <WhyWorkers />
-      <CTA />
       <Footer />
     </main>
   );

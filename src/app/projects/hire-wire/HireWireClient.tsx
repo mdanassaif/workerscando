@@ -1,22 +1,23 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Project } from '@/types';
-import styles from './hire-wire.module.css';
+import layout from '@/styles/components/split-layout.module.css';
 
 interface HireWireClientProps {
   project: Project;
+}
+
+interface Result {
+  userId: string;
+  scriptUrl: string;
 }
 
 export default function HireWireClient({ project }: HireWireClientProps) {
   const [name, setName] = useState('');
   const [webhook, setWebhook] = useState('');
   const [loading, setLoading] = useState(false);
-  interface Result {
-    userId: string;
-    scriptUrl: string;
-    // Add other properties returned by your API if needed
-  }
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<'tsx' | 'jsx' | 'html'>('tsx');
@@ -25,6 +26,10 @@ export default function HireWireClient({ project }: HireWireClientProps) {
   const WORKER_URL = 'https://hire-wire.brogee9o9.workers.dev';
 
   const handleGenerate = async () => {
+    if (!name.trim()) {
+      setError('Please enter a project name');
+      return;
+    }
     if (!webhook.includes('discord.com')) {
       setError('Please enter a valid Discord Webhook URL');
       return;
@@ -48,7 +53,6 @@ export default function HireWireClient({ project }: HireWireClientProps) {
     }
   };
 
-  // --- CODE SNIPPETS ---
   const tsxSnippet = result ? `// 📋 components/ContactForm.tsx
 'use client';
 import { useState } from 'react';
@@ -111,7 +115,7 @@ export default function ContactForm() {
         {status === 'sending' ? 'Sending...' : sent ? 'Sent!' : 'Send Message'}
       </button>
       {sent && (
-        <div style={{ color: '#16a34a', marginTop: 8, fontWeight: 500 }}>Message sent! You can send another in a moment.</div>
+        <div style={{ color: '#10B981', marginTop: 8, fontSize: 13, fontWeight: 500 }}>Message sent! You can send another in a moment.</div>
       )}
     </form>
   );
@@ -149,13 +153,13 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ padding: '20px', border: '1px solid #ddd' }}>
-      <h2>Hire Me</h2>
+    <form onSubmit={handleSubmit} style={{ padding: '20px', border: '1px solid #E5E7EB', borderRadius: '8px' }}>
+      <h2 style={{ fontFamily: 'sans-serif', marginTop: 0 }}>Hire Me</h2>
       <input 
         type="email" 
         placeholder="Email"
         required
-        style={{ display: 'block', width: '100%', padding: '10px', marginBottom: '10px' }}
+        style={{ display: 'block', width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #D1D5DB', borderRadius: '4px' }}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={status === 'sending' || sent}
@@ -163,16 +167,16 @@ export default function ContactForm() {
       <textarea 
         placeholder="Message"
         required
-        style={{ display: 'block', width: '100%', padding: '10px', marginBottom: '10px' }}
+        style={{ display: 'block', width: '100%', padding: '10px', marginBottom: '10px', border: '1px solid #D1D5DB', borderRadius: '4px' }}
         value={msg}
         onChange={(e) => setMsg(e.target.value)}
         disabled={status === 'sending' || sent}
       />
-      <button type="submit" style={{ padding: '10px 20px', background: 'black', color: 'white' }} disabled={status === 'sending' || sent}>
+      <button type="submit" style={{ padding: '10px 20px', background: '#111827', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', width: '100%', fontWeight: 600 }} disabled={status === 'sending' || sent}>
         {status === 'sending' ? 'Sending...' : sent ? 'Sent!' : 'Send Message'}
       </button>
       {sent && (
-        <div style={{ color: '#16a34a', marginTop: 8, fontWeight: 500 }}>Message sent! You can send another in a moment.</div>
+        <div style={{ color: '#10B981', marginTop: 8, fontSize: 13, fontWeight: 500 }}>Message sent! You can send another in a moment.</div>
       )}
     </form>
   );
@@ -180,12 +184,12 @@ export default function ContactForm() {
 
   const htmlSnippet = result ? `<script src="${result.scriptUrl}"></script>
 
-<div class="contact-card">
-  <h2>Hire Me</h2>
-  <input type="email" id="email" placeholder="Email">
-  <textarea id="msg" placeholder="Message"></textarea>
-  <button id="sendBtn" onclick="sendHire()">Send</button>
-  <div id="sentMsg" style="display:none;color:#16a34a;margin-top:8px;font-weight:500;">Message sent! You can send another in a moment.</div>
+<div class="contact-card" style="padding: 20px; border: 1px solid #E5E7EB; border-radius: 8px; font-family: sans-serif; max-width: 400px;">
+  <h2 style="margin-top: 0">Hire Me</h2>
+  <input type="email" id="email" placeholder="Email" style="display: block; width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #D1D5DB; box-sizing: border-box; border-radius: 4px;">
+  <textarea id="msg" placeholder="Message" style="display: block; width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #D1D5DB; box-sizing: border-box; border-radius: 4px; min-height: 100px;"></textarea>
+  <button id="sendBtn" onclick="sendHire()" style="width: 100%; padding: 12px; background: #111827; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">Send Message</button>
+  <div id="sentMsg" style="display:none; color:#10B981; margin-top:12px; font-weight:500; font-size: 13px;">Message sent! You can send another in a moment.</div>
 </div>
 
 <script>
@@ -196,22 +200,34 @@ export default function ContactForm() {
     const email = document.getElementById('email').value;
     const msg = document.getElementById('msg').value;
     const btn = document.getElementById('sendBtn');
+    
+    if(!email || !msg) {
+        alert("Please fill out both fields.");
+        sending = false;
+        return;
+    }
+    
     btn.disabled = true;
     btn.textContent = 'Sending...';
+    btn.style.opacity = '0.7';
+
     // The Magic Line ⚡
     const res = await HireWire.send(email, msg);
+    
     if(res.sent) {
       btn.textContent = 'Sent!';
       document.getElementById('sentMsg').style.display = 'block';
       setTimeout(() => {
-        btn.textContent = 'Send';
+        btn.textContent = 'Send Message';
         btn.disabled = false;
+        btn.style.opacity = '1';
         document.getElementById('sentMsg').style.display = 'none';
         sending = false;
       }, 2000);
     } else {
-      btn.textContent = 'Send';
+      btn.textContent = 'Send Message';
       btn.disabled = false;
+      btn.style.opacity = '1';
       sending = false;
     }
   }
@@ -230,269 +246,175 @@ export default function ContactForm() {
   };
 
   return (
-    <>
-      <section className={styles.heroSection}>
-        <div className={styles.container}>
-          <div className={styles.badgesContainer}>
-            <span className={styles.dayBadge}>Day {project.day}</span>
-           
+    <div className={layout.wrapper}>
+      {/* ── LEFT PANEL ── */}
+      <aside className={layout.leftPanel}>
+        <div className={layout.leftHeader}>
+          <Link href="/projects" className={layout.backLink}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Tools
+          </Link>
+
+          <div className={layout.metaTags}>
+            <span className={layout.dayTag}>Day {project.day}</span>
+            <span className={layout.liveTag}>
+              <span className={layout.liveDot} />
+              Live
+            </span>
           </div>
-
-          <h1 className={styles.title}>{project.name}</h1>
-
-          <p className={styles.description}>
+          
+          <h1 className={layout.title}>{project.name}</h1>
+          <p className={layout.description}>
             A backend-as-a-service for your portfolio. Create a fully functional contact form that sends messages directly to Discord. Zero server setup required.
           </p>
         </div>
-      </section>
 
-      <section className={styles.demoSection}>
-        <div className={styles.container}>
-          <div className={styles.demoCard}>
-            <h2 className={styles.demoTitle}>Create your Widget</h2>
+        <div className={layout.leftBody}>
+          {!result ? (
+            <>
+              <div className={layout.field}>
+                <label className={layout.label}>Project Name</label>
+                <input
+                  className={layout.input}
+                  placeholder="e.g. My Next.js Portfolio"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                />
+              </div>
 
-            {!result ? (
-              // --- INPUT FORM ---
-              <>
-                <div className={styles.inputGroup} style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Project Name (e.g. My Portfolio)"
-                    className={styles.urlInput}
-                    style={{ marginBottom: '12px' }}
-                  />
-                  <input
-                    type="password"
-                    value={webhook}
-                    onChange={(e) => setWebhook(e.target.value)}
-                    placeholder="Discord Webhook URL"
-                    className={styles.urlInput}
-                  />
+              <div className={layout.field} style={{ marginTop: '16px' }}>
+                <label className={layout.label}>Discord Webhook URL</label>
+                <input
+                  className={layout.input}
+                  type="password"
+                  placeholder="https://discord.com/api/webhooks/..."
+                  value={webhook}
+                  onChange={e => setWebhook(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleGenerate()}
+                />
+                <span className={layout.hint}>
+                  Messages submitted on your site will securely forward directly to this Discord channel.
+                </span>
+              </div>
+
+              <button 
+                className={layout.primaryBtn} 
+                onClick={handleGenerate} 
+                disabled={!name.trim() || !webhook.trim() || loading}
+                style={{ marginTop: '24px' }}
+              >
+                {loading ? 'Generating Code...' : 'Get Integration Code 🚀'}
+              </button>
+            </>
+          ) : (
+            <>
+              <div style={{ background: '#ECFDF5', border: '1px solid #D1FAE5', borderRadius: '6px', padding: '16px', marginBottom: '24px' }}>
+                <div style={{ color: '#065F46', fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>Widget Configured Successfully</div>
+                <div style={{ color: '#047857', fontSize: '13px' }}>Your endpoint is active and ready to accept form submissions.</div>
+              </div>
+
+              <button 
+                className={layout.secondaryBtn} 
+                onClick={() => setResult(null)} 
+              >
+                Configure New Widget
+              </button>
+
+              <div style={{ marginTop: '48px', paddingTop: '32px', borderTop: '1px solid #E5E7EB' }}>
+                <h3 style={{ fontSize: '12px', fontWeight: 600, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '16px' }}>API Endpoint Configuration</h3>
+                <div style={{ padding: '12px', background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: '6px', fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#374151', wordBreak: 'break-all' }}>
+                  <strong style={{ color: '#059669' }}>POST</strong> {WORKER_URL}/send?id={result.userId}
+                  <br/><br/>
+                  Body: <code>{`{ "email": "...", "message": "..." }`}</code>
                 </div>
+              </div>
+            </>
+          )}
 
-                <button
-                  onClick={handleGenerate}
-                  disabled={loading}
-                  className={styles.extractButton}
-                  style={{ width: '100%', marginTop: '12px' }}
-                >
-                  {loading ? 'Generating...' : 'Get Integration Code 🚀'}
-                </button>
-              </>
-            ) : (
-              // --- RESULT AREA (Matches your "Response" styling) ---
-              <div>
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', borderBottom: '1px solid #E5E5E5' }}>
-                  <button onClick={() => setTab('tsx')} className={`${styles.tabButton} ${tab === 'tsx' ? styles.tabButtonActive : ''}`}>React (TSX)</button>
-                  <button onClick={() => setTab('jsx')} className={`${styles.tabButton} ${tab === 'jsx' ? styles.tabButtonActive : ''}`}>React (JSX)</button>
-                  <button onClick={() => setTab('html')} className={`${styles.tabButton} ${tab === 'html' ? styles.tabButtonActive : ''}`}>HTML</button>
-                </div>
+        </div>
+      </aside>
 
-                <div className={styles.responseContainer}>
-                  <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', borderBottom: '1px solid #E5E5E5' }}>
-                    <button onClick={() => setTab('tsx')} className={`${styles.tabButton} ${tab === 'tsx' ? styles.tabButtonActive : ''}`}>React (TSX)</button>
-                    <button onClick={() => setTab('jsx')} className={`${styles.tabButton} ${tab === 'jsx' ? styles.tabButtonActive : ''}`}>React (JSX)</button>
-                    <button onClick={() => setTab('html')} className={`${styles.tabButton} ${tab === 'html' ? styles.tabButtonActive : ''}`}>HTML</button>
-                  </div>
-                  {tab === 'tsx' && (
-                    <div>
-                      <div className={styles.responseHeader}>
-                        <span className={styles.responseLabel}>TSX Component</span>
-                        <button onClick={() => {navigator.clipboard.writeText(tsxSnippet); setCopied(true); setTimeout(() => setCopied(false), 2000);}} className={styles.copyButton}>
-                          {copied ? 'Copied!' : 'Copy'}
-                        </button>
-                      </div>
-                      <pre className={styles.responseContent} style={{ maxHeight: 180, overflow: 'auto', fontSize: 13, background: 'transparent', borderRadius: 0, padding: '16px 0 16px 16px', border: 'none' }}>
-                        {tsxSnippet}
-                      </pre>
-                      <div style={{ margin: '8px 0', fontSize: 12, color: '#888', paddingLeft: 12, paddingTop: 8, borderLeft: '3px solid #F97316', background: 'transparent', lineHeight: 1.7 }}>
-                        <span style={{ fontWeight: 500 }}>Usage:</span> Place <code>ContactForm</code> in any page or component.<br />
-                        <span style={{ color: '#F97316', fontWeight: 500 }}>Example:</span> <code style={{ background: 'none', color: '#18181B' }}>{'<ContactForm />'}</code> in your portfolio/contact page.
-                      </div>
-                    </div>
-                  )}
-                  {tab === 'jsx' && (
-                    <div>
-                      <div className={styles.responseHeader}>
-                        <span className={styles.responseLabel}>JSX Component</span>
-                        <button onClick={() => {navigator.clipboard.writeText(jsxSnippet); setCopied(true); setTimeout(() => setCopied(false), 2000);}} className={styles.copyButton}>
-                          {copied ? 'Copied!' : 'Copy'}
-                        </button>
-                      </div>
-                      <pre className={styles.responseContent} style={{ maxHeight: 180, overflow: 'auto', fontSize: 13, background: 'transparent', borderRadius: 0, padding: '16px 0 16px 16px', border: 'none' }}>
-                        {jsxSnippet}
-                      </pre>
-                      <div style={{ margin: '8px 0', fontSize: 12, color: '#888', paddingLeft: 2, borderLeft: '3px solid #F97316', background: 'transparent', lineHeight: 1.7 }}>
-                        <span style={{ fontWeight: 500 }}>Usage:</span> Place <code>ContactForm</code> in any React/JSX page.<br />
-                        <span style={{ color: '#F97316', fontWeight: 500 }}>Example:</span> <code style={{ background: 'none', color: '#18181B' }}>{'<ContactForm />'}</code> in your portfolio/contact page.
-                      </div>
-                    </div>
-                  )}
-                  {tab === 'html' && (
-                    <div>
-                      <div className={styles.responseHeader}>
-                        <span className={styles.responseLabel}>HTML Integration</span>
-                        <button onClick={() => {navigator.clipboard.writeText(htmlSnippet); setCopied(true); setTimeout(() => setCopied(false), 2000);}} className={styles.copyButton}>
-                          {copied ? 'Copied!' : 'Copy'}
-                        </button>
-                      </div>
-                      <pre className={styles.responseContent} style={{ maxHeight: 180, overflow: 'auto', fontSize: 13, background: 'transparent', borderRadius: 0, padding: '16px 0 16px 16px', border: 'none' }}>
-                        {htmlSnippet}
-                      </pre>
-                      <div style={{ margin: '8px 0', fontSize: 12, color: '#888', paddingLeft: 2, borderLeft: '3px solid #F97316', background: 'transparent', lineHeight: 1.7 }}>
-                        <span style={{ fontWeight: 500 }}>Usage:</span> Add the script and markup to any HTML page.
-                      </div>
-                    </div>
-                  )}
-                </div>
+      {/* ── RIGHT PANEL ── */}
+      <main className={layout.rightPanel}>
+        <header className={layout.rightHeader}>
+          <span>Integration Code</span>
+        </header>
 
+        <div className={layout.rightBody}>
+          {error && <div className={layout.errorBanner}>{error}</div>}
+
+          {!result && !loading && !error && (
+            <div className={layout.emptyState}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#E5E7EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16h16V8l-6-6Z"/>
+                <path d="M14 2v6h6"/>
+                <path d="m10 13-2 2 2 2"/>
+                <path d="m14 17 2-2-2-2"/>
+              </svg>
+              <div className={layout.emptyTitle}>Enter your Webhook</div>
+              <div className={layout.emptyText}>Provide a Discord webhook URL to generate drop-in contact form components for your site.</div>
+            </div>
+          )}
+
+          {result && (
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              
+              <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
                 <button 
-                  onClick={() => setResult(null)}
-                  className={styles.inlineLink}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', marginTop: '20px', fontSize: '14px' }}
-                >
-                  ← Create another widget
-                </button>
+                  onClick={() => setTab('tsx')} 
+                  style={{ padding: '8px 16px', fontSize: '13px', background: tab === 'tsx' ? '#111827' : '#FFFFFF', color: tab === 'tsx' ? '#FFFFFF' : '#4B5563', border: tab === 'tsx' ? '1px solid #111827' : '1px solid #E5E7EB', borderRadius: '6px', cursor: 'pointer', fontWeight: 500 }}
+                >React / Next.js (TSX)</button>
+                <button 
+                  onClick={() => setTab('jsx')} 
+                  style={{ padding: '8px 16px', fontSize: '13px', background: tab === 'jsx' ? '#111827' : '#FFFFFF', color: tab === 'jsx' ? '#FFFFFF' : '#4B5563', border: tab === 'jsx' ? '1px solid #111827' : '1px solid #E5E7EB', borderRadius: '6px', cursor: 'pointer', fontWeight: 500 }}
+                >React (JSX)</button>
+                <button 
+                  onClick={() => setTab('html')} 
+                  style={{ padding: '8px 16px', fontSize: '13px', background: tab === 'html' ? '#111827' : '#FFFFFF', color: tab === 'html' ? '#FFFFFF' : '#4B5563', border: tab === 'html' ? '1px solid #111827' : '1px solid #E5E7EB', borderRadius: '6px', cursor: 'pointer', fontWeight: 500 }}
+                >Plain HTML</button>
               </div>
-            )}
 
-            {error && (
-              <div className={styles.errorMessage} style={{ marginTop: '24px' }}>
-                {error}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: '8px', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid #E5E7EB', background: '#F9FAFB' }}>
+                  <span style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {tab === 'tsx' && 'ContactForm.tsx Drop-in'}
+                    {tab === 'jsx' && 'ContactForm.jsx Drop-in'}
+                    {tab === 'html' && 'HTML Script Tag Drop-in'}
+                  </span>
+                  <button 
+                    onClick={handleCopy}
+                    style={{ background: 'transparent', border: 'none', color: '#111827', fontSize: '12px', cursor: 'pointer', fontWeight: 600, textTransform: 'uppercase' }}
+                  >
+                    {copied ? '✓ COPIED' : 'COPY CODE'}
+                  </button>
+                </div>
+                
+                <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+                  <pre style={{ margin: 0, padding: '24px', height: '100%', overflow: 'auto', background: '#111827', color: '#F3F4F6', fontSize: '13px', fontFamily: 'var(--font-mono)', lineHeight: 1.5 }}>
+                    {getCode()}
+                  </pre>
+                </div>
               </div>
-            )}
-          </div>
+
+              <div style={{ marginTop: '24px', padding: '16px', background: '#E0F2FE', border: '1px solid #BAE6FD', borderRadius: '6px' }}>
+                <div style={{ color: '#0369A1', fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>
+                  Usage Instructions
+                </div>
+                <div style={{ color: '#0284C7', fontSize: '13px', lineHeight: 1.5 }}>
+                  {tab === 'tsx' || tab === 'jsx' ? (
+                    <>Place the <code>ContactForm</code> component anywhere in your portfolio page to activate the serverless workflow.</>
+                  ) : (
+                    <>Embed the HTML directly into your page body. The logic is strictly vanilla and will execute natively.</>
+                  )}
+                </div>
+              </div>
+
+            </div>
+          )}
         </div>
-      </section>
-
-      <section className={styles.apiSection}>
-        <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>API Reference</h2>
-
-          <div className={styles.apiCard}>
-            <div className={styles.apiMethod}>
-              <span className={styles.methodBadge}>POST</span>
-              <code className={styles.apiEndpoint}>{WORKER_URL}/send</code>
-            </div>
-
-            <div className={styles.parametersTable}>
-              <div className={styles.tableHeader}>
-                <div className={styles.tableCell}>Parameter</div>
-                <div className={styles.tableCell}>Description</div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>
-                  <code className={styles.paramName}>id</code>
-                  <span className={styles.required}>required</span>
-                </div>
-                <div className={styles.tableCell}>
-                  Your unique User ID (generated above).
-                </div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>
-                  <code className={styles.paramName}>email</code>
-                  <span className={styles.required}>required</span>
-                </div>
-                <div className={styles.tableCell}>
-                  The email address of the person contacting you.
-                </div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>
-                  <code className={styles.paramName}>message</code>
-                  <span className={styles.required}>required</span>
-                </div>
-                <div className={styles.tableCell}>
-                  The content of the message.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.featuresSection}>
-        <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Features</h2>
-          <div className={styles.featuresGrid}>
-            <div className={styles.featureCard}>
-              <div className={styles.featureIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-              </div>
-              <h3 className={styles.featureTitle}>Copy & Paste</h3>
-              <p className={styles.featureDescription}>
-                Get a fully working component. No need to install npm packages or configure servers.
-              </p>
-            </div>
-            <div className={styles.featureCard}>
-              <div className={styles.featureIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg>
-              </div>
-              <h3 className={styles.featureTitle}>Instant Discord Alerts</h3>
-              <p className={styles.featureDescription}>
-                Receive messages directly in your private Discord server via Webhook.
-              </p>
-            </div>
-            <div className={styles.featureCard}>
-              <div className={styles.featureIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                </svg>
-              </div>
-              <h3 className={styles.featureTitle}>Framework Ready</h3>
-              <p className={styles.featureDescription}>
-                Native support for React, Next.js, and standard HTML/JS websites.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-       <section className={styles.linksSection}>
-        <div className={styles.container}>
-          <div className={styles.linksContent}>
-            <p className={styles.linkLine}>
-              Wanna contribute or learn? <a
-                href="https://github.com/mdanassaif/workerscando"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.inlineLink}
-              >
-                Here&apos;s the code
-              </a>
-            </p>
-            <p className={styles.linkLine}>
-              Support me on <a
-                href="https://x.com/mdanassaif"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.inlineLink}
-              >
-                Twitter
-              </a> for daily updates
-            </p>
-            <p className={styles.linkLine}>
-              Wanna learn why it&apos;s the best solution? <a
-                href="/docs"
-                className={styles.inlineLink}
-              >
-                Read the docs
-              </a>
-            </p>
-          </div>
-        </div>
-      </section>
-    </>
+      </main>
+    </div>
   );
 }

@@ -1,55 +1,107 @@
 .footer {
-  padding: 40px 48px;
-  background: white;
-  border-top: 1px solid #E5E5E5;
+  padding: 28px 48px 22px;
+  background: #ffffff;
+  border-top: 1px solid #E5E7EB;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+.productsBlock {
+  display: grid;
+  gap: 10px;
+}
+
+.productsTitle {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.productsList {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
+  gap: 8px;
+}
+
+.productLink {
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1;
+  color: #374151;
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  border-radius: 999px;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+}
+
+.productLink:hover {
+  color: #111827;
+  background: #ffffff;
+  border-color: #D1D5DB;
+}
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid #F3F4F6;
+  padding-top: 14px;
+}
+
+.copyright {
+  margin: 0;
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.metaLinks {
+  display: flex;
+  align-items: center;
   gap: 16px;
 }
 
-.logoLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.metaLink {
   text-decoration: none;
+  font-size: 13px;
+  color: #6B7280;
+  transition: color 0.2s ease;
 }
 
-.logoText {
-  font-size: 15px;
-  font-weight: 600;
-  color: #18181B;
+.metaLink:hover {
+  color: #111827;
 }
 
-.builtWith {
-  font-size: 14px;
-  color: #71717A;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+@media (max-width: 768px) {
+  .footer {
+    padding: 20px;
+  }
 
-.iconWrapper {
-  display: inline-flex;
-  vertical-align: middle;
-  line-height: 0;
-}
+  .productsList {
+    gap: 7px;
+  }
 
-.icon {
-  display: block;
-}
+  .productLink {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
 
-.socialLinks {
-  display: flex;
-  gap: 24px;
-}
+  .bottomRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 
-.socialLink {
-  color: #71717A;
+  .metaLinks {
+    gap: 12px;
+  }
 }

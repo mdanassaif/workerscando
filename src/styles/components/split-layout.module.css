@@ -1,0 +1,307 @@
+/* 
+  Universal Ultra-Clean Split Layout
+  No glowing borders, no heavy shadows. Flat, professional, native-feeling.
+*/
+
+.wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  color: #111827;
+  font-family: var(--font-sans);
+}
+
+/* LEFT PANEL: Setup, Forms, Controls */
+.leftPanel {
+  width: 420px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border-right: 1px solid #E5E7EB;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.leftHeader {
+  padding: 32px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+/* Simple, flat tags without heavy backdrops */
+.metaTags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dayTag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #E5E7EB;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.liveTag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #059669;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  background-color: #10B981;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #111827;
+  margin: 0;
+}
+
+.description {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.backLink {
+  font-size: 13px;
+  color: #6B7280;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  transition: color 0.1s;
+}
+
+.backLink:hover {
+  color: #111827;
+}
+
+.leftBody {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Functional Forms */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.hint {
+  font-size: 12px;
+  color: #9CA3AF;
+  line-height: 1.4;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: var(--font-mono);
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.1s, box-shadow 0.1s;
+}
+
+.input:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 1px #111827;
+}
+
+.input::placeholder {
+  color: #9CA3AF;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Clean, flat action button - NO gradients */
+.primaryBtn {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: #111827;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.1s;
+}
+
+.primaryBtn:hover:not(:disabled) {
+  background-color: #374151;
+}
+
+.primaryBtn:disabled {
+  background-color: #F3F4F6;
+  color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.secondaryBtn {
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  background-color: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.1s;
+}
+
+.secondaryBtn:hover:not(:disabled) {
+  background-color: #F9FAFB;
+}
+
+/* RIGHT PANEL: Results, Code, Visuals */
+.rightPanel {
+  flex: 1;
+  background-color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+.rightHeader {
+  padding: 16px 32px;
+  border-bottom: 1px solid #E5E7EB;
+  background: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rightBody {
+  padding: 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Empty State - extremely minimal */
+.emptyState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #9CA3AF;
+}
+
+.emptyTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4B5563;
+}
+
+.emptyText {
+  font-size: 13px;
+  text-align: center;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+/* Results Content generic wrappers */
+.resultCard {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.codeBlock {
+  background: #111827;
+  color: #F3F4F6;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* Basic utilities for within the tools */
+.errorBanner {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .wrapper {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+  .leftPanel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .rightPanel {
+    min-height: 500px;
+  }
+}

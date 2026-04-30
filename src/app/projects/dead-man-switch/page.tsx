@@ -61,12 +61,6 @@ export default function DeadManSwitchPage() {
         return null;
     }
 
-    return (
-        <main>
-            <Navbar />
-            <DeadManSwitchClient project={project} />
-            <LinksSection />
-            <Footer />
-        </main>
-    );
+    return <DeadManSwitchClient project={project} />;
 }
+

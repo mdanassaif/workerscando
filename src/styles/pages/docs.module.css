@@ -1,150 +1,197 @@
 .main {
   display: flex;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 57px);
+  background: #ffffff;
 }
 
 .sidebar {
-  width: 220px;
-  border-right: 1px solid #E5E5E5;
-  background: white;
-  padding: 24px 0;
-  height: calc(100vh - 80px);
+  width: 240px;
+  border-right: 1px solid #F3F4F6;
+  background: #FAFAFA;
+  padding: 28px 0;
+  height: calc(100vh - 57px);
   position: sticky;
-  top: 80px;
+  top: 57px;
   align-self: flex-start;
   overflow-y: auto;
   z-index: 2;
+  flex-shrink: 0;
 }
 
 .sidebarHeader {
-  padding: 0 18px;
-  margin-bottom: 18px;
+  padding: 0 20px;
+  margin-bottom: 20px;
 }
 
 .sidebarLabel {
   font-size: 11px;
-  font-weight: 600;
-  color: #A1A1AA;
+  font-weight: 700;
+  color: #9CA3AF;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
+}
+
+.sidebarDivider {
+  height: 1px;
+  background: #F3F4F6;
+  margin: 12px 16px;
 }
 
 .sidebarButton {
-  display: block;
-  width: 100%;
-  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  width: calc(100% - 20px);
+  padding: 8px 14px;
+  margin: 1px 10px;
   text-align: left;
   background: transparent;
   border: none;
-  border-left: 3px solid transparent;
-  color: #52525B;
-  font-size: 14px;
+  border-radius: 8px;
+  color: #6B7280;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  font-family: var(--font-sans);
+}
+
+.sidebarButton:hover {
+  background: #F3F4F6;
+  color: #111827;
 }
 
 .sidebarButtonActive {
   background: #FFF7ED;
-  border-left-color: #F97316;
-  color: #F97316;
+  color: #EA580C;
   font-weight: 600;
+}
+
+.sidebarButtonActive:hover {
+  background: #FFEDD5;
+  color: #C2410C;
 }
 
 .content {
   flex: 1;
-  padding: 32px 40px 0;
+  padding: 40px 56px 0;
   overflow-y: auto;
+  min-width: 0;
+  background: #ffffff;
 }
 
-.content>div {
-  max-width: 800px;
+.content > div {
+  max-width: 780px;
 }
 
 /* Footer takes full width in docs */
-.content>footer {
-  margin: 60px -40px 0;
-  width: calc(100% + 80px);
+.content > footer {
+  margin: 60px -56px 0;
+  width: calc(100% + 112px);
 }
 
 .sectionTitle {
-  font-size: 28px;
-  font-weight: 700;
-  color: #18181B;
-  margin-bottom: 16px;
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 20px;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .sectionText {
-  font-size: 16px;
-  color: #52525B;
-  line-height: 1.8;
-  margin-bottom: 24px;
+  font-size: 15px;
+  color: #4B5563;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  font-weight: 400;
 }
 
 .subsectionTitle {
-  font-size: 20px;
-  font-weight: 600;
-  color: #18181B;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
   margin-bottom: 12px;
+  margin-top: 28px;
+  letter-spacing: -0.01em;
 }
 
 .statusBadge {
-  display: inline-block;
-  padding: 4px 10px;
-  background: #DCFCE7;
-  color: #16A34A;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #D1FAE5;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
 }
 
 .infoBox {
   background: #FFF7ED;
-  border: 1px solid #FED7AA;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
+  border: 1px solid #FFEDD5;
+  border-left: 3px solid #F97316;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
 }
 
 .infoText {
   font-size: 14px;
-  color: #EA580C;
+  color: #374151;
   font-weight: 500;
+  line-height: 1.6;
 }
 
+/* Code blocks */
 .codeBlock {
-  background: #18181B;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  color: #22C55E;
-  overflow-x: auto;
-}
-
-.codeBlockLight {
-  background: #18181B;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
+  background: #111827;
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
   font-family: var(--font-mono);
   font-size: 13px;
-  color: #E5E5E5;
   overflow-x: auto;
+  color: #E5E7EB;
+  border: none;
+}
+
+.codeBlock::before {
+  display: none;
 }
 
 .codeBlock pre {
   margin: 0;
+  color: #E5E7EB;
+  overflow-x: auto;
+}
+
+.codeBlockLight {
+  background: #FAFAFA;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #111827;
+  overflow-x: auto;
+  border: 1px solid #F3F4F6;
+  line-height: 1.7;
+}
+
+.codeBlockLight pre {
+  margin: 0;
 }
 
 .tableContainer {
-  background: #FAFAFA;
-  border-radius: 8px;
-  border: 1px solid #E5E5E5;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #F3F4F6;
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .table {
@@ -154,155 +201,198 @@
 }
 
 .tableHeader {
-  background: #F4F4F5;
+  background: #FAFAFA;
+  border-bottom: 1px solid #F3F4F6;
 }
 
 .tableHeaderCell {
-  padding: 12px 16px;
+  padding: 12px 18px;
   text-align: left;
   font-weight: 600;
-  color: #18181B;
+  color: #374151;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 .tableRow {
-  border-top: 1px solid #E5E5E5;
+  border-top: 1px solid #F3F4F6;
+  transition: background 0.15s ease;
+}
+
+.tableRow:hover {
+  background: #FAFAFA;
 }
 
 .tableCell {
-  padding: 12px 16px;
+  padding: 14px 18px;
+  vertical-align: middle;
+  font-size: 14px;
 }
 
 .tableCellCode {
   font-family: var(--font-mono);
-  color: #F97316;
+  color: #EA580C;
+  font-size: 13px;
+  font-weight: 600;
+  background: #FFF7ED;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  margin: 6px 14px;
 }
 
 .tableCellText {
-  color: #52525B;
+  color: #4B5563;
+  line-height: 1.6;
 }
 
 .list {
-  font-size: 16px;
-  color: #52525B;
-  line-height: 2;
-  margin-bottom: 24px;
-  padding-left: 24px;
+  font-size: 15px;
+  color: #4B5563;
+  line-height: 1.8;
+  margin-bottom: 28px;
+  padding-left: 20px;
 }
 
-/* Mobile menu toggle button - hidden on desktop */
+.list li {
+  margin-bottom: 6px;
+}
+
+.list strong {
+  color: #111827;
+}
+
+/* API Cards */
+.apiCard {
+  background: #FAFAFA;
+  border: 1px solid #F3F4F6;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.apiMethod {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.methodBadge {
+  background: #111827;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+
+.apiEndpoint {
+  font-family: var(--font-mono);
+  color: #111827;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.parametersTable {
+  border: 1px solid #F3F4F6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.responseContainer {
+  background: #ffffff;
+  border: 1px solid #F3F4F6;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.responseLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  letter-spacing: 0.06em;
+}
+
+.paramName {
+  font-family: var(--font-mono);
+  background: #FFF7ED;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #EA580C;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Mobile menu toggle */
 .mobileMenuToggle {
   display: none;
 }
 
 @media (max-width: 900px) {
-  .content {
-    max-width: 100vw;
+  .sidebar { width: 200px; }
+  .content { padding: 32px 32px 0; }
+  .content > footer {
+    margin: 60px -32px 0;
+    width: calc(100% + 64px);
   }
 }
 
 @media (max-width: 768px) {
-  .main {
-    flex-direction: column;
-  }
+  .main { flex-direction: column; }
 
-  /* Mobile menu toggle button */
   .mobileMenuToggle {
     display: flex;
     align-items: center;
     gap: 8px;
     width: 100%;
-    padding: 12px 16px;
-    background: #fff;
+    padding: 14px 20px;
+    background: #ffffff;
     border: none;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid #F3F4F6;
     font-size: 14px;
     font-weight: 600;
-    color: #18181B;
+    color: #111827;
     cursor: pointer;
     position: sticky;
-    top: 80px;
+    top: 57px;
     z-index: 10;
+    font-family: var(--font-sans);
   }
 
-  .mobileMenuToggle svg {
-    width: 20px;
-    height: 20px;
-    color: #F97316;
-  }
+  .mobileMenuToggle svg { width: 18px; height: 18px; color: #9CA3AF; }
+  .mobileMenuToggle span { flex: 1; text-align: left; }
 
-  .mobileMenuToggle span {
-    flex: 1;
-  }
-
-  .mobileMenuToggle::after {
-    content: '▼';
-    font-size: 10px;
-    color: #A1A1AA;
-    transition: transform 0.2s;
-  }
-
-  .mobileMenuToggle.open::after {
-    transform: rotate(180deg);
-  }
-
-  /* Sidebar hidden by default on mobile */
   .sidebar {
     display: none;
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid #E5E5E5;
-    padding: 8px 0 16px;
+    border-bottom: 1px solid #F3F4F6;
+    padding: 12px 0;
     height: auto;
     position: static;
-    background: #FAFAFA;
   }
 
-  .sidebar.sidebarOpen {
-    display: block;
-  }
-
-  .sidebarHeader {
-    display: none;
-  }
-
-  .sidebarButton {
-    padding: 10px 16px;
-    border-left: none;
-    border-radius: 8px;
-    margin: 0 8px;
-    width: calc(100% - 16px);
-  }
-
-  .sidebarButtonActive {
-    background: #FFF7ED;
-    border-left: none;
-  }
-
-  .content {
-    padding: 20px 16px !important;
-  }
-
-  .content>footer {
-    margin: 40px -16px 0;
-    width: calc(100% + 32px);
+  .sidebar.sidebarOpen { display: block; }
+  .sidebarHeader { display: none; }
+  
+  .content { padding: 24px 20px 0 !important; }
+  .content > footer {
+    margin: 48px -20px 0;
+    width: calc(100% + 40px);
   }
 }
 
 @media (max-width: 480px) {
-  .content {
-    padding: 16px 12px !important;
-  }
-
-  .sectionTitle {
-    font-size: 22px;
-  }
-
-  .subsectionTitle {
-    font-size: 18px;
-  }
-
-  .codeBlock, .codeBlockLight {
-    font-size: 11px;
-    padding: 12px;
-  }
+  .content { padding: 20px 16px 0 !important; }
+  .sectionTitle { font-size: 24px; }
+  .subsectionTitle { font-size: 16px; }
+  .codeBlock, .codeBlockLight { font-size: 11px; padding: 14px 16px; }
+  .codeBlock pre { font-size: 11px; }
 }

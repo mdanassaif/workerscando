@@ -1,71 +1,86 @@
 .section {
-  padding: 80px 48px;
-  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
-}
-
-.container {
-  max-width: 700px;
+  max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
+  padding: 80px 32px 64px;
+  background: #ffffff;
 }
 
-.label {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #F97316;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 12px;
-  font-family: var(--font-mono);
-}
-
-.title {
-  font-size: 36px;
+.sectionLabel {
+  font-size: 13px;
   font-weight: 700;
-  color: #18181B;
-  margin-bottom: 16px;
-  letter-spacing: -0.02em;
-}
-
-.description {
-  font-size: 17px;
-  color: #71717A;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4F46E5;
   margin-bottom: 32px;
-  line-height: 1.7;
 }
 
-.actionsContainer {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
+.commitList {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  width: 100%;
 }
 
-.primaryButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #18181B;
-  color: white;
-  padding: 14px 28px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 15px;
+.commitItem {
+  padding: 32px 24px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.commitItem:hover {
+  background: #ffffff;
+  border-color: #D1D5DB;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.ciNum {
+  font-size: 14px;
+  font-family: var(--font-mono);
+  color: #6B7280;
   font-weight: 600;
+  margin-bottom: 32px;
 }
 
-.secondaryButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: white;
-  color: #18181B;
-  padding: 14px 28px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 15px;
+.ciTitle {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+.ciTag {
+  font-size: 12px;
+  color: #9CA3AF;
   font-weight: 600;
-  border: 1px solid #E5E5E5;
-  transition: all 0.2s ease;
+  margin-top: 24px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .commitList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .commitList {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .commitList {
+    grid-template-columns: 1fr;
+  }
 }

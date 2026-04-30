@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function VerifyPage() {
     return (
         <main>
-            <Navbar />
+            
             <Suspense fallback={
                 <div style={{
                     minHeight: '60vh',
@@ -24,7 +24,7 @@ export default function VerifyPage() {
             }>
                 <VerifyClient />
             </Suspense>
-            <Footer />
+            
         </main>
     );
 }

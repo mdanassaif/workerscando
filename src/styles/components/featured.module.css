@@ -1,0 +1,131 @@
+.section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 96px 32px;
+  background: #ffffff;
+}
+
+.sectionTopZero {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+  background: #ffffff;
+}
+
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4F46E5;
+  margin-bottom: 32px;
+}
+
+.sectionTitle {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #111827;
+  max-width: 640px;
+  margin-bottom: 48px;
+}
+
+/* NEWS GRID (Latest Releases) */
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.newsCard {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 36px 32px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 260px;
+  height: 100%;
+}
+
+.newsCard:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.ncTag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #F97316;
+  background: rgba(249, 115, 22, 0.1);
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+.ncTitle {
+  font-size: 16px;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+.ncTitle b {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+
+.ncFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid #E5E7EB;
+  color: #111827;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.newsCard:hover .ncFooter {
+  color: #4F46E5;
+}
+
+.ncDate {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.newsCard:hover .ncDate {
+  color: #4F46E5;
+}
+
+@media (max-width: 960px) {
+  .newsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sectionTopZero {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .newsGrid {
+    grid-template-columns: 1fr;
+  }
+}

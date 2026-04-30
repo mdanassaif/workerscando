@@ -59,11 +59,6 @@ export default function DynamicOgImagesPage() {
     return null;
   }
 
-  return (
-    <main>
-      <Navbar />
-      <OgImageClient project={project} />
-      <Footer />
-    </main>
-  );
+  return <OgImageClient project={project} />;
 }
+
