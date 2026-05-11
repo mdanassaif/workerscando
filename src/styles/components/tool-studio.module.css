@@ -1,0 +1,23 @@
+/* Full viewport tool shell: global nav + flex fill for split-layout tools */
+
+.root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+/* Desktop: lock to viewport so only the two panes scroll — left stays a fixed column */
+@media (min-width: 901px) {
+  .root {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}

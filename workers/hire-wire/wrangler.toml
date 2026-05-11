@@ -1,0 +1,7 @@
+name = "hire-wire"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+[[kv_namespaces]]
+binding = "HIREWIRE_DB"
+id = "1b8a2ce24c814ce4a31e77806ca8d76d"

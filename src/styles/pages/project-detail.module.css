@@ -1,0 +1,161 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.shell {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 24px 96px;
+  box-sizing: border-box;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.crumb {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.crumb:hover {
+  color: var(--foreground);
+}
+
+.crumbSep {
+  color: var(--border);
+  user-select: none;
+}
+
+.crumbHere {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+.pillLive,
+.pillSoon {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pillLive {
+  background: color-mix(in oklab, #10b981 14%, var(--muted));
+  color: #047857;
+}
+
+.pillSoon {
+  background: var(--muted);
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+}
+
+.kickerRest {
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: clamp(26px, 4vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--foreground);
+  margin: 0 0 12px;
+}
+
+.lead {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+  margin: 0 0 24px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border-radius: var(--radius);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: opacity 0.12s ease;
+}
+
+.btnPrimary:hover {
+  opacity: 0.92;
+}
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.btnGhost:hover {
+  background: var(--muted);
+}
+
+.back {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--foreground) 25%, transparent);
+  padding-bottom: 1px;
+  width: fit-content;
+  display: inline-block;
+}
+
+.back:hover {
+  border-bottom-color: var(--foreground);
+}
+
+@media (max-width: 520px) {
+  .shell {
+    padding: 20px 16px 80px;
+  }
+}

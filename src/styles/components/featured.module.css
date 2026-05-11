@@ -1,0 +1,223 @@
+.section {
+  background: var(--background);
+  padding: 56px 24px 72px;
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.progressBlock {
+  margin-bottom: 40px;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.progressTitle {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin: 0 0 4px;
+}
+
+.progressSub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+}
+
+.progressMeta {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.progressCount {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+
+.progressTotal {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 6px;
+  background: var(--muted);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--foreground);
+  border-radius: 999px;
+  transition: width 0.8s ease-out;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.sectionLabel {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.viewAll {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  margin: -6px -10px;
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease;
+}
+
+.viewAll:hover {
+  background: var(--muted);
+}
+
+.viewAllIcon {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.newsCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  height: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.newsCard:hover {
+  border-color: color-mix(in oklab, var(--foreground) 14%, var(--border));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ncTag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.ncTitle {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.ncName {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.ncDesc {
+  display: block;
+}
+
+.ncFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.ncCta {
+  font-size: 13px;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.ncArrow {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+
+.newsCard:hover .ncArrow {
+  color: var(--foreground);
+}
+
+@media (max-width: 960px) {
+  .newsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 40px 16px 56px;
+  }
+  .newsGrid {
+    grid-template-columns: 1fr;
+  }
+  .progressHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .progressMeta {
+    text-align: left;
+  }
+}

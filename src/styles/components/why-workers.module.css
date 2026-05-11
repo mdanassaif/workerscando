@@ -1,0 +1,251 @@
+.section {
+  background: var(--background);
+  padding: 24px 24px 96px;
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ── Intro ── */
+.introBlock {
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+  margin-bottom: 14px;
+}
+
+.desc {
+  font-size: 17px;
+  color: var(--muted-foreground);
+  line-height: 1.65;
+}
+
+/* ── Feature cards ── */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 52px;
+}
+
+.feature {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.feature:hover {
+  border-color: color-mix(in oklab, var(--foreground) 14%, var(--border));
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.featureIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  margin-bottom: 16px;
+}
+
+.feature h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 5px;
+  letter-spacing: -0.01em;
+}
+
+.feature p {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+}
+
+/* ── Contribute block ── */
+.challengeBlock {
+  position: relative;
+  overflow: hidden;
+  background: var(--foreground);
+  border-radius: var(--radius-lg);
+  padding: 48px 48px 48px 52px;
+}
+
+.cbDecor {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      color-mix(in oklab, var(--background) 7%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+.cbContent {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.cbLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--background) 50%, transparent);
+  margin-bottom: 10px;
+}
+
+.cbTitle {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--background);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.cbDesc {
+  font-size: 16px;
+  color: color-mix(in oklab, var(--background) 65%, transparent);
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.cbActions {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex-shrink: 0;
+  min-width: 160px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 11px 18px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: color-mix(in oklab, var(--background) 75%, transparent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 11px 18px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in oklab, var(--background) 18%, transparent);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btnSecondary:hover {
+  background: color-mix(in oklab, var(--background) 10%, transparent);
+  color: var(--background);
+  border-color: color-mix(in oklab, var(--background) 32%, transparent);
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .featuresGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .challengeBlock {
+    padding: 36px 32px;
+  }
+  .cbContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .cbActions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: unset;
+    width: 100%;
+  }
+  .btnPrimary,
+  .btnSecondary {
+    flex: 1;
+    min-width: 130px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 16px 16px 72px;
+  }
+  .featuresGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .challengeBlock {
+    padding: 28px 24px;
+  }
+  .cbActions {
+    flex-direction: column;
+  }
+  .btnPrimary,
+  .btnSecondary {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+}

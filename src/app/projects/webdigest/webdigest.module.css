@@ -1,0 +1,93 @@
+.tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #15803d;
+  background: color-mix(in oklab, #22c55e 14%, var(--card));
+  border: 1px solid color-mix(in oklab, #22c55e 28%, var(--border));
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--foreground);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.resultContent {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted-foreground);
+  margin: 0 0 14px;
+}
+
+.summaryText {
+  font-size: 14px;
+  color: var(--foreground);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.takeaways {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.takeawayLine {
+  font-size: 14px;
+  color: var(--foreground);
+  line-height: 1.55;
+  padding-left: 16px;
+  position: relative;
+}
+
+.takeawayLine::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--muted-foreground);
+}
+
+.footer {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  padding-top: 4px;
+}
+
+.sourceLink {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: break-all;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.sourceLink:hover {
+  opacity: 0.75;
+}

@@ -1,0 +1,241 @@
+/* Projects catalog shell — matches site zinc tokens */
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.mobileBar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+  cursor: pointer;
+  gap: 10px;
+}
+
+.mobileBar svg {
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  background: var(--card);
+  overflow-y: auto;
+  max-height: calc(100dvh - 56px);
+  position: sticky;
+  top: 56px;
+  align-self: flex-start;
+  z-index: 5;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 56px;
+  background: color-mix(in oklab, var(--foreground) 22%, transparent);
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.backdropOn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  min-height: calc(100dvh - 56px);
+  background: var(--background);
+}
+
+/* Sidebar inner (ProjectsSidebar) */
+
+.sidebarInner {
+  padding: 20px 0 32px;
+}
+
+.sidebarHeader {
+  padding: 0 18px 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin: 0 0 12px;
+}
+
+.filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.filterBtn:hover {
+  color: var(--foreground);
+  border-color: color-mix(in oklab, var(--foreground) 18%, var(--border));
+}
+
+.filterBtnOn {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
+.filterBtnLive.filterBtnOn {
+  background: color-mix(in oklab, #22c55e 22%, var(--foreground));
+  border-color: color-mix(in oklab, #22c55e 35%, var(--foreground));
+}
+
+.filterBtnComing.filterBtnOn {
+  background: var(--muted);
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+.navList {
+  list-style: none;
+  padding: 0 10px;
+  margin: 0;
+}
+
+.navItem {
+  margin: 0;
+}
+
+.navLink {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.12s ease;
+  margin-bottom: 2px;
+}
+
+.navLink:hover {
+  background: var(--muted);
+}
+
+.navLinkActive {
+  background: var(--muted);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.dotLive,
+.dotSoon {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+.dotLive {
+  background: #22c55e;
+  box-shadow: 0 0 0 2px color-mix(in oklab, #22c55e 35%, transparent);
+}
+
+.dotSoon {
+  background: var(--muted-foreground);
+  opacity: 0.45;
+}
+
+.day {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  min-width: 22px;
+  margin-top: 3px;
+}
+
+.navMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.navName {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--foreground);
+}
+
+.navStatus {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 900px) {
+  .mobileBar {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 56px;
+    height: calc(100dvh - 56px);
+    max-height: none;
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .sidebarOpen {
+    box-shadow: 8px 0 32px color-mix(in oklab, var(--foreground) 12%, transparent);
+  }
+
+  .backdrop {
+    display: block;
+  }
+}

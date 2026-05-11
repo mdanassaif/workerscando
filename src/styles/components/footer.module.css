@@ -1,0 +1,169 @@
+.footer {
+  padding: 64px 24px 40px;
+  margin-top: auto;
+  background: var(--background);
+  border-top: 1px solid var(--border);
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.2fr) repeat(3, minmax(140px, 1fr));
+  gap: 40px 32px;
+  align-items: start;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 280px;
+}
+
+.brandLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.brandMark {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.brandAccent {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.socialLabel {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+.socialIcons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.socialIcon {
+  color: var(--muted-foreground);
+  display: flex;
+  transition: color 0.12s ease;
+}
+
+.socialIcon:hover {
+  color: var(--foreground);
+}
+
+.col {
+  min-width: 0;
+}
+
+.colTitle {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listLink {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  line-height: 1.45;
+  transition: color 0.12s ease;
+}
+
+.listLink:hover {
+  color: var(--foreground);
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 56px;
+  padding-top: 24px;
+}
+
+.copy,
+.attribution {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 28px;
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer {
+    padding: 48px 20px 32px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .brand {
+    grid-column: auto;
+  }
+
+  .bottom {
+    margin-top: 40px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
