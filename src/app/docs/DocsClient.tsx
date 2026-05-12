@@ -6,11 +6,14 @@ import { Navbar } from '@/components';
 import styles from '@/styles/pages/docs.module.css';
 
 const W = {
-  SHORTENER: 'https://urlshortener.brogee9o9.workers.dev',
-  METADATA:  'https://url-metadata-api.brogee9o9.workers.dev',
-  OG:        'https://og-image-generator.brogee9o9.workers.dev',
-  DEAD:      'https://dead-man-switch.brogee9o9.workers.dev',
-  REDIRECT:  'https://redirect-chain.brogee9o9.workers.dev',
+  SHORTENER:  'https://urlshortener.brogee9o9.workers.dev',
+  METADATA:   'https://url-metadata-api.brogee9o9.workers.dev',
+  OG:         'https://og-image-generator.brogee9o9.workers.dev',
+  DEAD:       'https://dead-man-switch.brogee9o9.workers.dev',
+  REDIRECT:   'https://redirect-chain.brogee9o9.workers.dev',
+  THROTTLE:   'https://apithrottle.workerscando.workers.dev',
+  WEBDIGEST:  'https://webdigest.brogee9o9.workers.dev',
+  DOCTOMD:    'https://doctomd.brogee9o9.workers.dev',
 };
 
 function Badge({ method }: { method: 'GET' | 'POST' | 'DELETE' }) {
@@ -59,21 +62,43 @@ const sections: Section[] = [
     content: (
       <div>
         <h2 className={styles.sectionTitle}>Quick start</h2>
-        <p className={styles.lead}>All workers are public — no API keys, CORS enabled.</p>
-        <CodeBlock label="Base URLs">{`
-${W.METADATA}/api/metadata?url={url}
-${W.OG}/api/og?title={title}
+        <p className={styles.lead}>Nine tools, all public. No API keys. CORS open on every endpoint.</p>
+        <CodeBlock label="All Worker base URLs">{`
+# Day 1 — URL Shortener
 ${W.SHORTENER}/api/shorten
+
+# Day 2 — Dead Man's Switch
 ${W.DEAD}/api/create
+
+# Day 3 — OG Image Generator
+${W.OG}/api/og?title={title}
+
+# Day 4 — HireWire contact form
+https://hire-wire.brogee9o9.workers.dev/register
+
+# Day 5 — URL Metadata
+${W.METADATA}/api/metadata?url={url}
+
+# Day 6 — Redirect Chain Tracer
 ${W.REDIRECT}/api/trace?url={url}
+
+# Day 7 — API Throttle
+${W.THROTTLE}/api/check
+
+# Day 8 — Web Digest
+${W.WEBDIGEST}
+
+# Day 9 — DocToMD
+${W.DOCTOMD}
         `}</CodeBlock>
-        <CodeBlock label="JavaScript — shorten a URL">{`
-const res = await fetch('${W.SHORTENER}/api/shorten', {
+        <CodeBlock label="Quick example — convert a file to Markdown">{`
+const form = new FormData();
+form.append('file', fileInput.files[0]);
+
+const { markdown } = await fetch('${W.DOCTOMD}', {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ url: 'https://github.com' }),
-});
-const { shortUrl } = await res.json();
+  body: form,
+}).then(r => r.json());
         `}</CodeBlock>
       </div>
     ),
@@ -294,9 +319,9 @@ x-throttle-remaining: 18
           <h2 className={styles.sectionTitle}>Redirect Chain Tracer</h2>
           <span className={styles.liveBadge}>Live</span>
         </div>
-        <p className={styles.lead}>Follows up to 20 redirect hops. Reports per-hop latency, protocol downgrades, and tracking params.</p>
+        <p className={styles.lead}>Follows every redirect hop from a URL — up to 20 deep. Reports status codes, per-hop latency, protocol downgrades, and added/removed query params.</p>
         <EndpointRow method="GET" path={`${W.REDIRECT}/api/trace?url={url}`} />
-        <ParamTable rows={[['url', 'URL to trace (URL-encoded)', 'required']]} />
+        <ParamTable rows={[['url', 'Starting URL to trace (URL-encoded)', 'required']]} />
         <CodeBlock label="Response">{`
 {
   "originalUrl": "https://bit.ly/example",
@@ -305,12 +330,107 @@ x-throttle-remaining: 18
   "totalTime": "245ms",
   "chain": [
     { "hop": 1, "url": "https://bit.ly/example", "status": 301, "latency": "42ms" },
-    { "hop": 2, "url": "https://t.co/redirect",  "status": 302, "latency": "89ms" }
+    { "hop": 2, "url": "https://t.co/redirect",  "status": 302, "latency": "89ms" },
+    { "hop": 3, "url": "https://example.com/page","status": 200, "latency": "114ms" }
   ],
   "warnings": ["Protocol downgrade at hop 2"]
 }
         `}</CodeBlock>
         <Link href="/projects/redirect-chain-tracer" className={styles.tryLink}>Try the tool →</Link>
+      </div>
+    ),
+  },
+  {
+    id: 'web-digest', title: 'Web Digest', group: 'Workers',
+    content: (
+      <div>
+        <div className={styles.titleRow}>
+          <h2 className={styles.sectionTitle}>Web Digest</h2>
+          <span className={styles.liveBadge}>Live</span>
+        </div>
+        <p className={styles.lead}>Pass any public URL and get back an AI-generated summary and bullet-point takeaways. Uses BART for summarization and Llama 3 for key points — both running on Workers AI.</p>
+        <EndpointRow method="POST" path={W.WEBDIGEST} />
+        <ParamTable rows={[
+          ['url',   'Public webpage URL to summarize', 'required'],
+          ['brief', 'Set true for a shorter summary (default false)'],
+        ]} />
+        <CodeBlock label="JavaScript">{`
+const { summary, takeaways } = await fetch('${W.WEBDIGEST}', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ url: 'https://blog.cloudflare.com/agents-week-in-review/' }),
+}).then(r => r.json());
+        `}</CodeBlock>
+        <CodeBlock label="Response">{`
+{
+  "url": "https://blog.cloudflare.com/agents-week-in-review/",
+  "summary": "Cloudflare's Agents Week introduced sandboxes, Durable Object facets...",
+  "takeaways": "- Sandboxes give AI agents persistent, isolated environments\\n- Workflows v2 supports 50,000 concurrent runs\\n- Voice Pipeline adds real-time voice in ~30 lines"
+}
+        `}</CodeBlock>
+        <p className={styles.note}>Pages with paywalls or heavy JavaScript may not extract well. Works best on article and blog pages.</p>
+        <Link href="/projects/webdigest" className={styles.tryLink}>Try the tool →</Link>
+      </div>
+    ),
+  },
+  {
+    id: 'doctomd', title: 'DocToMD', group: 'Workers',
+    content: (
+      <div>
+        <div className={styles.titleRow}>
+          <h2 className={styles.sectionTitle}>DocToMD</h2>
+          <span className={styles.liveBadge}>Live</span>
+        </div>
+        <p className={styles.lead}>
+          Upload any file and get clean Markdown back. Powered by <code className={styles.inlineCode}>env.AI.toMarkdown()</code> — a native Workers AI binding that handles the conversion entirely on the edge.
+        </p>
+
+        <h3 className={styles.h3}>Supported formats</h3>
+        <ParamTable rows={[
+          ['PDF',           'Full text extraction including metadata'],
+          ['DOCX',          'Word documents with headings and tables'],
+          ['XLSX / XLS',    'Spreadsheets converted to Markdown tables'],
+          ['ODS / ODT',     'OpenDocument Spreadsheet and Text'],
+          ['CSV',           'Tabular data as a Markdown table'],
+          ['HTML / XML',    'Markup stripped to clean Markdown'],
+          ['JPEG / PNG / WebP / SVG', 'Images described via Workers AI vision models'],
+        ]} />
+
+        <h3 className={styles.h3}>Convert a file</h3>
+        <EndpointRow method="POST" path={W.DOCTOMD} />
+        <ParamTable rows={[
+          ['file', 'File to convert, sent as multipart/form-data', 'required'],
+        ]} />
+        <CodeBlock label="JavaScript — browser">{`
+const form = new FormData();
+form.append('file', document.querySelector('input[type=file]').files[0]);
+
+const { markdown, mimeType, elapsed } = await fetch('${W.DOCTOMD}', {
+  method: 'POST',
+  body: form,
+}).then(r => r.json());
+
+console.log(\`Converted in \${elapsed}ms\`);
+        `}</CodeBlock>
+        <CodeBlock label="curl">{`
+curl -X POST ${W.DOCTOMD} \\
+  -F "file=@report.pdf"
+        `}</CodeBlock>
+        <CodeBlock label="Response">{`
+{
+  "markdown": "# Report\\n\\n## Summary\\n\\nThis quarter...",
+  "name": "report.pdf",
+  "mimeType": "application/pdf",
+  "elapsed": 512
+}
+        `}</CodeBlock>
+        <CodeBlock label="Error response">{`
+{
+  "error": "File too large. Maximum size is 10 MB"
+}
+        `}</CodeBlock>
+        <p className={styles.note}>Max file size is 10 MB. Image conversion uses Workers AI vision models and may take 2–5s depending on complexity.</p>
+        <Link href="/projects/doctomd" className={styles.tryLink}>Try the tool →</Link>
       </div>
     ),
   },
