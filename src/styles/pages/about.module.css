@@ -11,13 +11,13 @@
 
 /* ── Hero ── */
 .hero {
-  padding: 80px 24px 72px;
+  padding: 52px 24px 44px;
   border-bottom: 1px solid var(--border);
   background: var(--card);
 }
 
 .heroInner {
-  max-width: 620px;
+  max-width: 580px;
   margin: 0 auto;
 }
 
@@ -28,28 +28,28 @@
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--brand);
-  margin-bottom: 22px;
+  margin-bottom: 16px;
   background: color-mix(in oklab, var(--brand) 10%, transparent);
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 99px;
   border: 1px solid color-mix(in oklab, var(--brand) 22%, transparent);
 }
 
 .heroTitle {
-  font-size: clamp(34px, 5.5vw, 56px);
+  font-size: clamp(28px, 4vw, 42px);
   font-weight: 700;
   color: var(--foreground);
   letter-spacing: -0.04em;
   line-height: 1.1;
-  margin: 0 0 22px;
+  margin: 0 0 14px;
 }
 
 .heroSub {
-  font-size: 17px;
+  font-size: 15px;
   color: var(--muted-foreground);
-  line-height: 1.7;
+  line-height: 1.65;
   margin: 0;
-  max-width: 500px;
+  max-width: 480px;
 }
 
 .heroSub em {
@@ -64,7 +64,7 @@
 }
 
 .statsInner {
-  max-width: 760px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
@@ -77,12 +77,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 28px 16px;
+  gap: 3px;
+  padding: 18px 12px;
 }
 
 .statNum {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--foreground);
   letter-spacing: -0.03em;
@@ -91,7 +91,7 @@
 }
 
 .statLabel {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -103,12 +103,12 @@
   width: 1px;
   background: var(--border);
   align-self: stretch;
-  margin: 16px 0;
+  margin: 12px 0;
 }
 
 /* ── Chapters ── */
 .chapter {
-  padding: 88px 24px;
+  padding: 52px 24px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -117,38 +117,38 @@
 }
 
 .chapterInner {
-  max-width: 960px;
+  max-width: 920px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 72px;
+  gap: 48px;
   align-items: center;
 }
 
 .chapterNum {
   display: inline-block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--muted-foreground);
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .chapterTitle {
-  font-size: clamp(22px, 2.8vw, 28px);
+  font-size: clamp(18px, 2.2vw, 22px);
   font-weight: 700;
   color: var(--foreground);
   letter-spacing: -0.03em;
   line-height: 1.2;
-  margin: 0 0 22px;
+  margin: 0 0 14px;
 }
 
 .chapterBody {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--muted-foreground);
-  line-height: 1.8;
-  margin: 0 0 14px;
+  line-height: 1.7;
+  margin: 0 0 10px;
 }
 
 .chapterBody:last-child {
@@ -164,9 +164,9 @@
   color: var(--foreground);
   font-weight: 600;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12px;
   background: var(--muted);
-  padding: 1px 6px;
+  padding: 1px 5px;
   border-radius: 4px;
 }
 
@@ -193,12 +193,12 @@
 .chapterMedia {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .tweetFrame {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   background: var(--card);
   box-shadow:
@@ -209,23 +209,23 @@
 
 .tweetFrame:hover {
   box-shadow:
-    0 10px 36px color-mix(in oklab, var(--foreground) 10%, transparent),
-    0 2px 8px color-mix(in oklab, var(--foreground) 5%, transparent);
-  transform: translateY(-3px);
+    0 8px 28px color-mix(in oklab, var(--foreground) 10%, transparent),
+    0 2px 6px color-mix(in oklab, var(--foreground) 5%, transparent);
+  transform: translateY(-2px);
 }
 
 .tweetFrameBar {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
+  gap: 5px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   background: var(--muted);
 }
 
 .tweetFrameDot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
 }
 
@@ -240,7 +240,7 @@
 }
 
 .mediaCaption {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted-foreground);
   line-height: 1.5;
   margin: 0;
@@ -259,34 +259,34 @@
 
 /* ── Manifesto ── */
 .manifesto {
-  padding: 88px 24px;
+  padding: 52px 24px;
   border-bottom: 1px solid var(--border);
   background: var(--foreground);
 }
 
 .manifestoInner {
-  max-width: 900px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
 .manifestoTitle {
-  font-size: clamp(24px, 3vw, 34px);
+  font-size: clamp(20px, 2.5vw, 28px);
   font-weight: 700;
   color: var(--background);
   letter-spacing: -0.03em;
-  margin: 0 0 40px;
+  margin: 0 0 24px;
 }
 
 .manifestoGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 14px;
 }
 
 .manifestoCard {
-  padding: 28px 24px;
+  padding: 20px 18px;
   border: 1px solid color-mix(in oklab, var(--background) 12%, transparent);
-  border-radius: 12px;
+  border-radius: 10px;
   background: color-mix(in oklab, var(--background) 5%, transparent);
   transition: background 0.15s ease, border-color 0.15s ease;
 }
@@ -300,43 +300,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
   background: color-mix(in oklab, var(--background) 10%, transparent);
   border: 1px solid color-mix(in oklab, var(--background) 14%, transparent);
   color: color-mix(in oklab, var(--background) 75%, transparent);
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .manifestoCardTitle {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--background);
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   letter-spacing: -0.02em;
 }
 
 .manifestoCardBody {
-  font-size: 14px;
+  font-size: 13px;
   color: color-mix(in oklab, var(--background) 55%, transparent);
-  line-height: 1.7;
+  line-height: 1.6;
   margin: 0;
 }
 
-/* ── The Gap section (dark, honest) ── */
+/* ── The Gap section ── */
 .gap {
-  padding: 88px 24px;
+  padding: 52px 24px;
   background: var(--foreground);
   border-bottom: 1px solid var(--foreground);
 }
 
 .gapInner {
-  max-width: 960px;
+  max-width: 880px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 64px;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
   align-items: start;
 }
 
@@ -347,16 +347,16 @@
 
 .gapNum {
   display: block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: color-mix(in oklab, var(--background) 45%, transparent);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .gapTitle {
-  font-size: clamp(22px, 2.5vw, 28px);
+  font-size: clamp(18px, 2vw, 22px);
   font-weight: 700;
   color: var(--background);
   letter-spacing: -0.03em;
@@ -369,73 +369,73 @@
 }
 
 .gapBody {
-  font-size: 16px;
+  font-size: 14px;
   color: color-mix(in oklab, var(--background) 58%, transparent);
-  line-height: 1.8;
-  margin: 0 0 18px;
+  line-height: 1.75;
+  margin: 0 0 14px;
 }
 
 .gapBodyAccent {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--background);
   letter-spacing: -0.02em;
   margin: 0;
-  padding-top: 8px;
+  padding-top: 14px;
   border-top: 1px solid color-mix(in oklab, var(--background) 12%, transparent);
 }
 
 /* ── Comeback ── */
 .comeback {
-  padding: 96px 24px;
+  padding: 60px 24px;
   border-bottom: 1px solid var(--border);
 }
 
 .comebackInner {
-  max-width: 680px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .comeback .eyebrow {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .comebackTitle {
-  font-size: clamp(30px, 4.5vw, 46px);
+  font-size: clamp(24px, 3.5vw, 36px);
   font-weight: 700;
   color: var(--foreground);
   letter-spacing: -0.04em;
   line-height: 1.1;
-  margin: 0 0 28px;
+  margin: 0 0 18px;
 }
 
 .comebackBody {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--muted-foreground);
-  line-height: 1.8;
-  margin: 0 0 16px;
+  line-height: 1.75;
+  margin: 0 0 12px;
 }
 
 .comebackBody:last-of-type {
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
 .comebackLinks {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .comebackBtnPrimary {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  gap: 7px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--primary-foreground);
   background: var(--primary);
   text-decoration: none;
-  padding: 12px 22px;
+  padding: 10px 18px;
   border-radius: var(--radius);
   transition: opacity 0.12s ease;
   letter-spacing: -0.01em;
@@ -448,13 +448,13 @@
 .comebackBtnSecondary {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  gap: 7px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--foreground);
   background: transparent;
   text-decoration: none;
-  padding: 12px 22px;
+  padding: 10px 18px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   transition: background 0.12s ease, border-color 0.12s ease;
@@ -467,57 +467,57 @@
 
 /* ── Builder ── */
 .builder {
-  padding: 80px 24px 100px;
+  padding: 52px 24px 64px;
 }
 
 .builderInner {
-  max-width: 560px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
 .builderBadge {
   display: inline-block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--muted-foreground);
   border: 1px solid var(--border);
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: 99px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .builderName {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--foreground);
   letter-spacing: -0.03em;
-  margin: 0 0 16px;
+  margin: 0 0 10px;
 }
 
 .builderBio {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--muted-foreground);
-  line-height: 1.75;
-  margin: 0 0 28px;
+  line-height: 1.65;
+  margin: 0 0 20px;
 }
 
 .builderLinks {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .builderLink {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-size: 13px;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--foreground);
   text-decoration: none;
-  padding: 9px 16px;
+  padding: 7px 13px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--card);
@@ -533,12 +533,12 @@
 @media (max-width: 840px) {
   .chapterInner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 28px;
   }
 
   .gapInner {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 24px;
   }
 
   .gapLeft {
@@ -547,29 +547,29 @@
 
   .manifestoGrid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 10px;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 52px 20px 44px;
+    padding: 36px 20px 32px;
   }
 
   .chapter {
-    padding: 60px 20px;
+    padding: 40px 20px;
   }
 
   .gap {
-    padding: 60px 20px;
+    padding: 40px 20px;
   }
 
   .comeback {
-    padding: 64px 20px;
+    padding: 44px 20px;
   }
 
   .builder {
-    padding: 60px 20px 80px;
+    padding: 40px 20px 52px;
   }
 
   .statsInner {
@@ -577,11 +577,11 @@
   }
 
   .stat {
-    padding: 22px 8px;
+    padding: 16px 8px;
   }
 
   .statNum {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 

@@ -97,6 +97,18 @@ export const projects: Project[] = [
     url: '/projects/webdigest',
     github: 'https://github.com/mdanassaif/workerscando',
   },
+  {
+    id: '9',
+    slug: 'doctomd',
+    name: 'DocToMD',
+    description: 'Convert any file — PDF, Word, Excel, images — to clean Markdown instantly.',
+    longDescription: 'Drop any document or image and get clean Markdown back in milliseconds. Powered by Workers AI toMarkdown — supports PDF, DOCX, XLSX, ODS, HTML, XML, CSV, JPEG, PNG, WebP, and SVG.',
+    tag: 'AI',
+    day: 9,
+    status: 'live',
+    url: '/projects/doctomd',
+    github: 'https://github.com/mdanassaif/workerscando',
+  },
 ];
 
 export function getLiveProjects(): Project[] {

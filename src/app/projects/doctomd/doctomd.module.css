@@ -1,0 +1,373 @@
+/* ── Drop Zone ── */
+.dropZone {
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  background: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+  user-select: none;
+  outline: none;
+}
+
+.dropZone:hover,
+.dropZone:focus-visible {
+  border-color: color-mix(in oklab, var(--foreground) 35%, var(--border));
+  background: color-mix(in oklab, var(--foreground) 3%, var(--muted));
+}
+
+.dropZoneDragging {
+  border-color: var(--ring);
+  background: color-mix(in oklab, var(--ring) 8%, var(--muted));
+  border-style: solid;
+}
+
+.dropZoneHasFile {
+  border-style: solid;
+  border-color: color-mix(in oklab, var(--foreground) 18%, var(--border));
+  background: var(--card);
+  min-height: auto;
+  padding: 14px 16px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Drop prompt (empty state inside drop zone) */
+.dropPrompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.dropIcon {
+  color: var(--muted-foreground);
+  opacity: 0.7;
+  display: flex;
+}
+
+.dropTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.dropSub {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+/* File chosen state */
+.fileChosen {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.fileIcon {
+  color: var(--foreground);
+  flex-shrink: 0;
+  display: flex;
+  opacity: 0.75;
+}
+
+.fileInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fileName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileMeta {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+}
+
+.clearFile {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.clearFile:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* Spinner */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 2.5px solid var(--border);
+  border-top-color: var(--foreground);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinnerInline {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid color-mix(in oklab, var(--primary-foreground) 35%, transparent);
+  border-top-color: var(--primary-foreground);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Format groups */
+.formatGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formatGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formatGroupLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted-foreground);
+}
+
+.formatChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.formatChip {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--foreground);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.02em;
+}
+
+/* View toggle */
+.viewToggle {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: none;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.viewToggle:hover {
+  color: var(--foreground);
+}
+
+.viewToggleOn {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* Result */
+.resultWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+/* Stats row */
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.statPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+}
+
+.statPillLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+.statPillVal {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+}
+
+.statPillActions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+  white-space: nowrap;
+}
+
+.actionBtn:hover {
+  background: var(--muted);
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+}
+
+/* Raw markdown output */
+.mdOutput {
+  flex: 1;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--foreground);
+  min-height: 320px;
+}
+
+.mdPre {
+  margin: 0;
+  padding: 20px 22px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: #e4e4e7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.65;
+}
+
+/* Rendered preview */
+.mdPreview {
+  flex: 1;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 24px 28px;
+  min-height: 320px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--foreground);
+}
+
+.mdPreview h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  color: var(--foreground);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.mdPreview h2 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 22px 0 10px;
+  color: var(--foreground);
+}
+
+.mdPreview h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 18px 0 8px;
+  color: var(--foreground);
+}
+
+.mdPreview p {
+  margin: 0 0 12px;
+  color: var(--muted-foreground);
+}
+
+.mdPreview ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  color: var(--muted-foreground);
+}
+
+.mdPreview li {
+  margin-bottom: 4px;
+}
+
+.mdPreview strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.mdPreview em {
+  font-style: italic;
+}
+
+.mdPreview code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--foreground);
+}
