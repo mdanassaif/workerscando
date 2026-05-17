@@ -129,16 +129,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Script
-          src="https://analytics.ahrefs.com/analytics.js"
-          data-key="vNzZucODIrqYLu0gpfjRLw"
-          async
-        />
-        <Script
-          defer
-          src="https://puffinanalytics.com/script"
-          data-api-key="pk_live_cfb3c5081d1ce324fd61c04e154c57bc56e2dd8c98cfec55c8b3a5dc29a95074"
-        />
+        <Script defer src="https://piqo.app/piqo.js" data-site="ua0w72ib" />
       </head>
       <body
         className={`${dmSans.variable} ${jetbrainsMono.variable} flex min-h-screen flex-col bg-background text-foreground antialiased`}
